@@ -1,4 +1,4 @@
-package prepare;
+package com.epam;
 
 
 

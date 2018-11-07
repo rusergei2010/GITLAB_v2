@@ -1,0 +1,32 @@
+plugins {
+    id 'me.champeau.gradle.jmh' version '0.4.7'
+    id 'java'
+    id 'maven'
+}
+
+group = 'com.epam'
+version = '1.0'
+
+description = """JMH benchmark sample: Java"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+repositories {
+     maven { url 'https://plugins.gradle.org/m2/' }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    jmh 'commons-io:commons-io:2.4'
+//    jmh 'org.openjdk.jmh:jmh-core:1.21'
+//    jmh 'org.openjdk.jmh:jmh-generator-annprocess:1.21'
+    compile group: 'org.openjdk.jmh', name: 'jmh-core', version:'1.21'
+    compileOnly group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version:'1.21'
+}
+
+task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
+    gradleVersion = '4.10.2'
+}

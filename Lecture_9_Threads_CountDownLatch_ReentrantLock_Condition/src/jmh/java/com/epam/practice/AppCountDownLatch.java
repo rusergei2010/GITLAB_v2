@@ -1,4 +1,4 @@
-package prepare.practice;
+package com.epam.practice;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;

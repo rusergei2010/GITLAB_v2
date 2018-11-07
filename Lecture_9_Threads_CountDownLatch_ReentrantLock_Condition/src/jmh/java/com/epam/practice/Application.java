@@ -1,4 +1,4 @@
-package prepare.practice;
+package com.epam.practice;
 
 import java.util.function.Function;
 import java.util.stream.Stream;

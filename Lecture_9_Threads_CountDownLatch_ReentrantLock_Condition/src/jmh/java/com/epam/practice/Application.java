@@ -1,6 +1,5 @@
 package com.epam.practice;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Application {

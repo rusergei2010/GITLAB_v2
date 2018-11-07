@@ -2,54 +2,52 @@ package com.epam.practice;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
-import java.util.stream.IntStream;
 
 // Repeate from lecture 9
 public class CountDownLatchExample {
 
-    public static class WorkThread implements Runnable {
-        final CountDownLatch startLatch;
-//        final CountDownLatch executeLatch;
+    public static class WorkerThread implements Runnable {
 
-        public WorkThread(CountDownLatch startLatch/*, CountDownLatch executeLatch*/) {
+        CountDownLatch startLatch;
+        CountDownLatch doneLatch;
+
+        public WorkerThread(CountDownLatch startLatch, CountDownLatch doneLatch) {
             this.startLatch = startLatch;
-//            this.executeLatch = executeLatch;
+            this.doneLatch = doneLatch;
         }
 
         @Override
         public void run() {
-//            System.out.println("Thread : " + Thread.currentThread().getName());
-//            try {
-//                executeLatch.await();
-                executeJob();
-                startLatch.countDown();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-        }
-
-        private void executeJob(){
-            System.out.println("Thread:" + Thread.currentThread().getName() + " Completed.");
             try {
-                Thread.currentThread().sleep(100 + new Random().nextInt(100));
+                startLatch.await();
+                // do some valuable job
+                execute();
+                System.out.println("Thread has completed: " + Thread.currentThread().getName());
+//                Thread.sleep(100);
+                doneLatch.countDown();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        private void execute() throws InterruptedException {
+            Thread.sleep(1000 + new Random().nextInt(1000));
+        }
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
-        final CountDownLatch startLatch = new CountDownLatch(5);
-//        final CountDownLatch executeLatch = new CountDownLatch(1);
+    public static void main( String[] args ) throws InterruptedException {
 
-        IntStream.range(0, 5).forEach((i) -> {
-                    new Thread(new WorkThread(startLatch/*, executeLatch*/)).start();
-                }
-        );
+        CountDownLatch startLatch = new CountDownLatch(1);
+        CountDownLatch doneLatch = new CountDownLatch(5);
 
-//        executeLatch.countDown(); // start all thread
-        startLatch.await();// wait all thread being completed
-        System.out.println("All threads executed. Continue execution.");
+        for (int i = 0; i < 5; i++) {
+            new Thread(new WorkerThread(startLatch, doneLatch)).start();
+        }
+
+        startLatch.countDown();
+        System.out.println("Awaiting jobs...");
+        doneLatch.await();
+        System.out.println("Start new Job when all workers has been completed");
     }
 }

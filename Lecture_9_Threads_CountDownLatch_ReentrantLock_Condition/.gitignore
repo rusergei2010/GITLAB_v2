@@ -18,6 +18,7 @@
 *target/
 *.iml
 *.idea
+.gradle
 
 # Package Files #
 *.jar

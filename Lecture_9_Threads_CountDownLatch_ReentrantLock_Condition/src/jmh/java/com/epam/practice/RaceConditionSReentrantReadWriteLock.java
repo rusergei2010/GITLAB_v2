@@ -36,7 +36,7 @@ public class RaceConditionSReentrantReadWriteLock {
             writeLock.lock();
             System.out.println("Write is locked");
             try {
-                Util.threadSleep(1000);
+                Util.threadSleep(2000);
                 this.name = name;
             } finally {
                 System.out.println("Write is unlocked");
@@ -68,7 +68,7 @@ public class RaceConditionSReentrantReadWriteLock {
         });
 
 
-        putDown(service, 4);
+        putDown(service, 6);
     }
 
     private static void putDown(ExecutorService service, int delay) throws InterruptedException {

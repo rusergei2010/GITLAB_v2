@@ -41,7 +41,7 @@ public class RaceConditionSReentrantLock {
             lock.lock();
             System.out.println("Write is locked");
             try {
-                Util.threadSleep(1000);
+                Util.threadSleep(2000);
                 this.name = name;
             } finally {
                 System.out.println("Write is unlocked");

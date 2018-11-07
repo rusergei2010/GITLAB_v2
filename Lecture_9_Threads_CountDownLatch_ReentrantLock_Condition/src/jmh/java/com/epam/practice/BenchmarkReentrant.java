@@ -42,6 +42,8 @@ public class BenchmarkReentrant {
         counter.count = 0;
         while (counter.count < COUNTS)
             counter.inc();
+
+        System.out.println("Completed testSyncInc");
     }
 
     @Benchmark

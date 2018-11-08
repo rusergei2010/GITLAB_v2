@@ -1,17 +1,10 @@
-package prepare;
-
-
-
-// Create custom Manageable Thread to handle interface (reference)
-// Shared resource between threads
-// Before execute ask what is expected output and total sum
+package com.epam.practice;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
-public class App {
-
-
+// Repeate from lecture 9
+public class CountDownLatchExample {
 
     public static class WorkerThread implements Runnable {
 

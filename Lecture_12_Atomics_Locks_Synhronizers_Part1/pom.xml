@@ -46,7 +46,7 @@
                 <finalName>${artifactId}-${version}</finalName>
 
                 <!--<resources>-->
-                    <!--<resource>-->
+                    <!--<computation>-->
                         <!--<targetPath>META-INF/plexus</targetPath>-->
                         <!--<filtering>false</filtering>-->
                         <!--<directory>${basedir}/src/main/plexus</directory>-->
@@ -56,7 +56,7 @@
                         <!--<excludes>-->
                             <!--<exclude>**/*.properties</exclude>-->
                         <!--</excludes>-->
-                    <!--</resource>-->
+                    <!--</computation>-->
                 <!--</resources>-->
 
             </build>

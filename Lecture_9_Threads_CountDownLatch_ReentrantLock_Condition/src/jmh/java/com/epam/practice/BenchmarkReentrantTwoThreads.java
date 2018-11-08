@@ -10,6 +10,7 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.runner.RunnerException;
 
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(value = 1)
 @State(Scope.Benchmark)
-public class BenchmarkReentrant {
+public class BenchmarkReentrantTwoThreads {
 
     private static final int COUNTS = 10000000;
     Counter counter;
@@ -38,36 +39,53 @@ public class BenchmarkReentrant {
     }
 
     @Benchmark
+    @Threads(2)
     public void testSyncInc() throws InterruptedException {
+//        threadPrint();
         counter.count = 0;
         while (counter.count < COUNTS)
             counter.inc();
+
+        System.out.println("Completed testSyncInc");
     }
 
     @Benchmark
+    @Threads(2)
     public void testNonSyncInc() throws InterruptedException {
+//        threadPrint();
         counter.count = 0;
         while (counter.count < COUNTS)
             counter.syncInc();
     }
 
     @Benchmark
+    @Threads(2)
     public void testReentrantLock() throws InterruptedException {
+//        threadPrint();
         counter.count = 0;
         while (counter.count < COUNTS)
             counter.incrementWithReentrantLock();
     }
 
     @Benchmark
+    @Threads(2)
     public void testCASCount() throws InterruptedException {
+//        threadPrint();
         counter.casCount.set(0);
         while (counter.CASInc() < COUNTS);
     }
 
     @Benchmark
+    @Threads(2)
     public void testVolatileCount() throws InterruptedException {
+//        threadPrint();
         counter.volCount = 0;
         while (counter.volCount < COUNTS)
             counter.volatileInc();
     }
+
+    private void threadPrint() {
+        System.out.println(Thread.currentThread().getName());
+    }
+
 }

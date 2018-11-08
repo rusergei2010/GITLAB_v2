@@ -1,8 +1,6 @@
-package com.epam.executors.addition.benchmark.queues.blocking;
+package com.benchmark.queues.blocking;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlockingQueueEx {

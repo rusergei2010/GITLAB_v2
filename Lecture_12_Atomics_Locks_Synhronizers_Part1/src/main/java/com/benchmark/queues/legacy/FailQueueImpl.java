@@ -1,4 +1,4 @@
-package com.epam.executors.addition.benchmark.queues.legacy;
+package com.benchmark.queues.legacy;
 
 import java.util.stream.IntStream;
 

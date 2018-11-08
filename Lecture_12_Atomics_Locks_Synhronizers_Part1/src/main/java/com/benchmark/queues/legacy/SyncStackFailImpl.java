@@ -1,4 +1,4 @@
-package com.epam.executors.addition.prepare;
+package com.benchmark.queues.legacy;
 
 import java.util.Stack;
 

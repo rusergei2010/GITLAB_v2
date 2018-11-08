@@ -1,4 +1,4 @@
-//package com.epam.executors.addition.benchmark;
+//package com.benchmark;
 //
 //
 //import org.openjdk.jmh.annotations.Benchmark;

@@ -80,7 +80,10 @@ public class Java8 {
 
         MyPredicator<Person> predicator = (p) -> p.age > 17 && p.gender == Person.Gender.MALE;
 
-        Stream.of(new Person("Kirill", 20, Person.Gender.MALE))
+        Stream.of(
+                new Person("Kirill", 20, Person.Gender.MALE),
+                new Person("Marry", 10, Person.Gender.FEMALE)
+        )
                 .filter((p) -> p.gender == Person.Gender.MALE)
                 .map(Java8::getGetAge)
                 .mapToLong(Integer::longValue)

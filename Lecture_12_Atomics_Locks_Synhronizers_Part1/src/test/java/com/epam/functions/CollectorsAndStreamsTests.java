@@ -13,8 +13,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// Task:
-// 1 - Create the static transofrmation method to print any Map into Json objecct
+/**
+ * TODO: Fix it
+ */
 public class CollectorsAndStreamsTests {
 
     @Test

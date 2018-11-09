@@ -1,6 +1,7 @@
 package com;
 
 import com.mycompany.prepare.utils.Utils;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 import java.util.concurrent.locks.Lock;
@@ -16,18 +17,29 @@ public class SyncTest {
 
     Lock lock = new ReentrantLock();
 
+
+
     public void change() {
 
-        lock.lock();
+        boolean flag = false;
         try {
+            flag = lock.tryLock(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        lock.lock();
+        if (flag) {
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 

@@ -17,8 +17,6 @@ public class SyncTest {
 
     Lock lock = new ReentrantLock();
 
-
-
     public void change() {
 
         boolean flag = false;

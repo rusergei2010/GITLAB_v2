@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class OptionalApplicationTests {
+public class OptionalStreamsGroupingTests {
 
     @Test
     public void contextLoads() {
@@ -65,6 +65,7 @@ public class OptionalApplicationTests {
         );
 
         Collection<Item> result = items.stream().filter(this::filterInRange).collect(Collectors.toList());
+        // use of Optional (not in real projects)
         Collection<Item> result2 = items.stream().filter(this::filterInRangeOptional).collect(Collectors.toList());
 
         assertEquals(1, result.size());
@@ -85,7 +86,7 @@ public class OptionalApplicationTests {
 
     @Test
     public void processUnwrapProducts() {
-        Collection<Product> products = Arrays.asList(new Product("Sergey"), new Product(""));
+        Collection<Product> products = Arrays.asList(new Product("Andy"), new Product(""));
         Collection<String> strs = products.stream()
                 .map(Product::getName)
                 .filter(Optional::isPresent)

@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+// Task:
+// 1 - Create the static transofrmation method to print any Map into Json objecct
 public class CollectorsAndStreamsTests {
 
     @Test
@@ -59,7 +62,7 @@ public class CollectorsAndStreamsTests {
     }
 
     @Test
-    public void testMatchAny(){
+    public void testMatchAny() {
         IntStream stream = IntStream.rangeClosed(0, 10);
 
         Function<Integer, String> mapper = (Integer intValue) -> String.valueOf(intValue);
@@ -74,8 +77,19 @@ public class CollectorsAndStreamsTests {
         final String reqStr = t.getProduct();
         return Integer.valueOf(reqStr.substring(reqStr.length() - 1, reqStr.length()));
     }
+
+    @Test
+    public void findFirst() {
+        IntStream stream = IntStream.rangeClosed(0, 9);
+        OptionalInt result = stream.parallel().filter(i -> i < 5 && i > 0).findFirst();
+        System.out.println("result: " + result.getAsInt());
+    }
+
+    @Test
+    public void findAny() {
+        IntStream stream = IntStream.rangeClosed(0, 9);
+        OptionalInt result = stream.parallel().filter(i -> i < 5 && i > 0).findAny();
+        System.out.println("result: " + result.getAsInt());
+    }
 }
 
-
-// Task:
-// 1 - Create the static transofrmation method to print any Map into Json objecct

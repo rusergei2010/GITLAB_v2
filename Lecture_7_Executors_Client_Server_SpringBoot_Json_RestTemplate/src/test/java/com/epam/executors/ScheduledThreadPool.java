@@ -43,5 +43,4 @@ public class ScheduledThreadPool {
         Util.sleep(1000);
         return "Result";
     }
-
 }

@@ -1,6 +1,7 @@
 package com.epam.functions;
 
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class Valudate {
@@ -20,21 +23,24 @@ public class Valudate {
         BiFunction<Integer, Integer, Two> constructor = Two::new;
 
         Function<Integer, Two> constructorOneParam = Two::new;
-        System.out.println("Result: " + constructorOneParam.apply(2));
+        Two two = constructorOneParam.apply(20); // TODO: fix in this line
+        assertEquals((long) two.i, (long) 22);
 
-        Two two = constructor.apply(1, 1);
-        System.out.println("Result: " + two);
+        Two two_ = constructor.apply(10, 10); // TODO: fix in this line
+        assertEquals((long) two_.i, (long) 11);
     }
 
     @Test
     public void testFlatMap() {
-        List<String> first = Arrays.asList("1", "2");
-        List<String> second = Arrays.asList("3", "4");
+        List<String> first = Arrays.asList("1", "2"); // TODO: fix in this line
+        List<String> second = Arrays.asList("3", "4"); // TODO: fix in this line
 
         List<List<String>> combined = Arrays.asList(first, second);
 
         List<String> full = combined.stream().flatMap(Collection::stream).collect(Collectors.toList());
-        full.stream().forEach(System.out::println);
+        full.stream().forEach(x -> {
+            Assert.assertTrue("0335".contains(x));
+        });
     }
 }
 
@@ -46,6 +52,7 @@ class Two {
     public Two(Integer i) {
         this.i = i;
     }
+
     public Two(Integer i, Integer j) {
         this.i = i;
         this.j = j;

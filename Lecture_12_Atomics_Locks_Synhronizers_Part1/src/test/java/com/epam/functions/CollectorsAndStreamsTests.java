@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * TODO: Fix it
+ * TODO: Fix failing tests
  */
 public class CollectorsAndStreamsTests {
 
@@ -39,7 +39,7 @@ public class CollectorsAndStreamsTests {
 
         lists.add(sr);
 
-        // Apply the colector to convert to the String
+        // Apply the collector to convert to the String
 
         final String listString = lists.stream().map(SearchRequestInstant::getProduct).collect(Collectors.joining(", ", "[", "]"));
         System.out.println("Collectors product: " + listString);

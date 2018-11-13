@@ -10,13 +10,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * TODO: Fix failing tests
+ */
 public class OptionalStreamsGroupingTests {
 
     @Test
@@ -27,29 +35,27 @@ public class OptionalStreamsGroupingTests {
     @Test(expected = NullPointerException.class)
     public void testNullPointerExcetion() {
         final String name = null;
-        Optional<String> nameOptional = Optional.of(name);
+        Optional<String> nameOptional = Optional.ofNullable(name); // TODO: fix in this line
+        assertFalse(nameOptional.isPresent());
     }
 
-    //    @Test
-    public void testNullAble() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testNullAble() throws Exception {
         final String name = null;
         Optional<String> nameOptional = Optional.ofNullable(name);
+        nameOptional.orElseThrow(Exception::new);
         assertTrue(nameOptional.get() == null);
     }
 
     @Test
     public void getNotNull() {
         final String name = null;
-        String nameOptional = Optional.ofNullable(name).orElseGet(() -> "Joe Doe");
-        assertEquals(nameOptional, "Joe Doe");
-
-        Integer object = null;
-        Integer derived = Optional.ofNullable(object).orElseGet(this::culcNumber);
-        System.out.println("Number: " + derived);
+        String nameOptional = Optional.ofNullable(name).orElse("Joe Doe");  // TODO: fix with orElse()
+        assertTrue(Optional.ofNullable(nameOptional).isPresent()); //
 
         String brand = null;
         String result = Optional.ofNullable(brand).orElseGet(this::getDefuault);
-        assertNotNull(result);
+        assertEquals(result, "a,D,I,D,A,S");
     }
 
 
@@ -64,12 +70,15 @@ public class OptionalStreamsGroupingTests {
                 item, item2, item3, item4
         );
 
-        Collection<Item> result = items.stream().filter(this::filterInRange).collect(Collectors.toList());
-        // use of Optional (not in real projects)
         Collection<Item> result2 = items.stream().filter(this::filterInRangeOptional).collect(Collectors.toList());
-
-        assertEquals(1, result.size());
         assertEquals(1, result2.size());
+
+        // TODO: Add one more filter in a chain like
+        // .filter(item_ -> {
+        //     return Objects.nonNull(item_.price);
+        //  })
+        Collection<Item> result = items.stream().filter(this::filterInRange).collect(Collectors.toList());
+        assertEquals(1, result.size());
     }
 
     class Product {
@@ -86,13 +95,16 @@ public class OptionalStreamsGroupingTests {
 
     @Test
     public void processUnwrapProducts() {
-        Collection<Product> products = Arrays.asList(new Product("Andy"), new Product(""));
+        // TODO: Fix in 1,2 or 3
+        Collection<Product> products = Arrays.asList(new Product("Andy"), new Product(""), new Product("LG"));
         Collection<String> strs = products.stream()
                 .map(Product::getName)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(item -> item.length() > 0)
+                .filter(Optional::isPresent) // 1
+                .map(Optional::get) // 2
+                .filter(item -> item.length() > 1) // 3
                 .collect(Collectors.toList());
+
+
         assertEquals(1, strs.size());
     }
 
@@ -117,7 +129,10 @@ public class OptionalStreamsGroupingTests {
     }
 
     /**
-     * Grouping with JsonObjects
+     * Grouping with JsonObjects.
+     * TODO: Fix in 1 and 2
+     * TODO: remove one unnecessary line
+     *
      */
     @Test
     public void grouping() {
@@ -129,15 +144,17 @@ public class OptionalStreamsGroupingTests {
         );
 
         Map<RequestType, List<Item>> map = items.stream().collect(groupingBy(Item::getType));
-        assertEquals(2, map.size());
-        assertEquals(2, map.values().size());
+
+        assertEquals(1, map.size()); // 1
+        assertEquals(1, map.values().size()); // 2
 
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
-
         map.forEach((key, value) -> jsonObjectBuilder.add(key.name(), value.stream().map(Item::toString).collect(Collectors.joining(", "))));
-        System.out.println("Result : " + jsonObjectBuilder.build());
 
+        jsonObjectBuilder.add("Hello", "Dude");
+
+        assertEquals("{\"TWO\":\"Item{price=3, type=TWO}, Item{price=4, type=TWO}\",\"ONE\":\"Item{price=1, type=ONE}, Item{price=2, type=ONE}\"}", jsonObjectBuilder.build().toString());
     }
 
 
@@ -177,11 +194,17 @@ public class OptionalStreamsGroupingTests {
     }
 
     private String getDefuault() {
-        return "Adidas";
+        return "Adidas".chars().mapToObj(x -> {
+            if (Character.isLowerCase(x))
+                return (char)Character.toUpperCase(x);
+            if (Character.isUpperCase(x))
+                return (char)Character.toLowerCase(x);
+            return null;
+        }).map(String::valueOf).collect(Collectors.joining(", ")); // TODO: Fix here
     }
 
     private Integer culcNumber() {
-        return new Random().nextInt(2);
+        return 1;
     }
 
 }

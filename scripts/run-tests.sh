@@ -3,3 +3,15 @@ set -ev
 echo $TRAVIS_BUILD_DIR
 cd $TRAVIS_BUILD_DIR/Lecture_4_Threads_1
 mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_5_Sync_Wait_Notify_Ctitical_Sections
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_6_part_1_ThreadExecutors_Working_Thread_Queue_Tasks_Singleton
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_7_Executors_Client_Server_SpringBoot_Json_RestTemplate
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_8_FixedSizeThreadPool_CachedThreadPool_Scheaduled_ForkJoinPool_Locks
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_9_Threads_CountDownLatch_ReentrantLock_Condition
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_10_ForkJoinPool_lambda
+mvn test

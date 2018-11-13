@@ -24,13 +24,11 @@ public class Lambdas05 {
         printResult(changeFirstName.apply(person, "newName"), Person::getFirstName);
     }
 
-
     private static class PersonHelper {
         public static String stringRepresentation(Person person) {
             return person.toString();
         }
     }
-
 
     @Test
     public void printStringRepresentation() {

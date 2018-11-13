@@ -13,5 +13,5 @@ cd $TRAVIS_BUILD_DIR/Lecture_8_FixedSizeThreadPool_CachedThreadPool_Scheaduled_F
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_9_Threads_CountDownLatch_ReentrantLock_Condition
 mvn test
-cd $TRAVIS_BUILD_DIR/Lecture_10_ForkJoinPool_lambda
+cd $TRAVIS_BUILD_DIR/Lecture_10_Barrier_ScheduledThreadPool
 mvn test

@@ -80,7 +80,7 @@ public class BenchmarkParallelStreams {
     public List<String> forEachReplacedWithStream_1000_000() {
         return
                 bigArray.stream()
-                        .map(x -> x.toLowerCase())
+                        .map(String::toLowerCase)
                         .collect(Collectors.toList());
     }
 
@@ -225,7 +225,7 @@ public class BenchmarkParallelStreams {
         return null;
     }
 
-    private void sleep_10() {
+    private static void sleep_10() {
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -234,7 +234,7 @@ public class BenchmarkParallelStreams {
     }
 
 
-    private void sleep_100() {
+    private static void sleep_100() {
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -243,7 +243,7 @@ public class BenchmarkParallelStreams {
     }
 
 
-    private void sleep_1000() {
+    private static void sleep_1000() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

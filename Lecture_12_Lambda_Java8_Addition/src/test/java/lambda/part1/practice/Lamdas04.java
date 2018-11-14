@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.junit.Assert.assertEquals;
+
 public class Lamdas04 {
 
     static class Person {
@@ -85,7 +87,7 @@ public class Lamdas04 {
                 .mapToInt(Person::getAge)
                 .sum();
 
-        System.out.println("Age " + sumAge);
+        assertEquals(new Integer(23), sumAge); // TODO: fix the age
     }
 
     private boolean testAgeGender(Person p) {

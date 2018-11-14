@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class Lambda03 {
 
     class Person {
@@ -92,11 +94,10 @@ public class Lambda03 {
                 });
 
         //person.setName("Putin");
-        System.out.println("Lamda = " + person.getName());
-
         Arrays.sort(personsAged, Lambda03::compare); // reference
 
-        System.out.println(Arrays.toString(personsAged));
+//        System.out.println(Arrays.toString(personsAged));
+        assertEquals("Andrey", personsAged[2].name);// Fix the name
     }
 
     public static int compare(Person o1, Person o2) {

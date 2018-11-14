@@ -14,7 +14,7 @@ public class FunctionCombination {
         // Person -> Integer
         final Function<Person, Integer> lastNameLength = p -> p.getLastName().length();
 
-        assertEquals(Integer.valueOf(5), lastNameLength.apply(new Person("a", "abcde", 0)));
+        assertEquals(Integer.valueOf(4), lastNameLength.apply(new Person("a", "abcde", 0))); // TODO : fix
     }
 
     // (Person -> String, String -> Integer) -> (Person -> Integer)
@@ -48,15 +48,6 @@ public class FunctionCombination {
         final Function<String, Integer> getLength = String::length;
         final Function<Person, Integer> lastNameLength = andThen(getLastName, getLength);
 
-        assertEquals(Integer.valueOf(5), lastNameLength.apply(new Person("a", "abcde", 0)));
-    }
-
-    @Test
-    public void personToInt3() {
-        final Function<Person, String> getLastName = Person::getLastName;
-        final Function<String, Integer> getLength = String::length;
-        final Function<Person, Integer> lastNameLength = getLastName.andThen(getLength);
-
-        assertEquals(Integer.valueOf(5), lastNameLength.apply(new Person("a", "abcde", 0)));
+        assertEquals(Integer.valueOf(4), lastNameLength.apply(new Person("a", "abcde", 0))); // TODO: fix
     }
 }

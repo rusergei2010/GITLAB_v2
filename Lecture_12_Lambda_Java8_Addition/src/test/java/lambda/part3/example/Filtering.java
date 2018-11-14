@@ -3,6 +3,7 @@ package lambda.part3.example;
 import data.Employee;
 import data.JobHistoryEntry;
 import data.Person;
+import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class Filtering {
+    // old style
     @Test
     public void filtering0() {
         final List<Employee> employees =
@@ -21,13 +24,13 @@ public class Filtering {
                         new Employee(
                                 new Person("Bob", "Galt", 30),
                                 Arrays.asList(
-                                        new JobHistoryEntry(2, "dev", "epam"),
+                                        new JobHistoryEntry(2, "dev", "epam"), // 1 dev
                                         new JobHistoryEntry(1, "dev", "google")
                                 )),
                         new Employee(
                                 new Person("John", "Galt", 30),
                                 Arrays.asList(
-                                        new JobHistoryEntry(2, "dev", "epam"),
+                                        new JobHistoryEntry(2, "dev", "epam"), // 2 dev
                                         new JobHistoryEntry(1, "dev", "google")
                                 )),
                         new Employee(
@@ -45,12 +48,13 @@ public class Filtering {
                 );
 
         // Johns with dev experience worked in epam more then 1 year
-
         final List<Employee> result = new ArrayList<>();
         for (Employee employee : employees) {
-            final boolean isJohn = employee.getPerson().getFirstName().equals("John");
-
+            // TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
+            // TODO: DEV name should be 'John'
+            // Store all matching output in 'result' collection
         }
+        TestCase.assertEquals(1, result.size());
     }
 
 
@@ -80,7 +84,7 @@ public class Filtering {
 
     private static boolean hasDevExperience(Employee e) {
         return new FilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getPosition().equals("dev"))
+                .filter(j -> j.getPosition().equals("QA")) // TODO: fix here
                 .getList()
                 .size() > 0;
     }
@@ -126,7 +130,7 @@ public class Filtering {
         final FilterUtil<Employee> johns = new FilterUtil<>(employees)
                 .filter(e -> e.getPerson().getFirstName().equals("John"));
         final List<Employee> filteredList = johns
-                .filter(Filtering::hasDevExperience)
+                .filter(Filtering::hasDevExperience) //
                 .filter(Filtering::workedInEpamMoreThenOneYear)
                 .getList();
 
@@ -172,7 +176,7 @@ public class Filtering {
     private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
         return new LazyFilterUtil<>(e.getJobHistory())
                 .filter(j -> j.getEmployer().equals("epam"))
-                .filter(j -> j.getDuration() > 1)
+                .filter(j -> j.getDuration() > 2)// TODO: fix it in this line (1,2 or more?)
                 .force()
                 .size() > 0;
     }

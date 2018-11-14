@@ -16,7 +16,7 @@ public class AtomicInteger2 {
 
         synchronized void inc() {
             counter++;
-        }
+        } // 500 times degradation
     }
 
 

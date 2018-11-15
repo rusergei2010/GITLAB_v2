@@ -14,6 +14,31 @@ public class ReentrantLockSignalTest {
 
     private static final int OPERS = 10;
 
+    /**
+     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
+     * // Fix the CounterTest#run method only (look into finally block) <===== What CounterTest? What run?
+     */
+    @Test
+    public void testQueue() throws InterruptedException {
+        BlockingSyncQueue queue = new BlockingSyncQueue();
+        Consumer con = new Consumer(OPERS, queue);
+        Thread threadC = new Thread(con);
+        threadC.setName("Consumer");
+        Thread threadP = new Thread(new Producer(OPERS, queue));
+        threadP.setName("Producer");
+
+        threadC.start();
+        threadP.start();
+//
+//        thread1.join();
+//        thread2.join();
+//        thread3.join();
+//
+        Thread.sleep(1000);
+        assertEquals(10, con.received.size());
+//        System.out.println("Main exit: " + count.count);
+    }
+
     public static class BlockingSyncQueue {
         private ReentrantLock lock = new ReentrantLock();
         private Condition readCondition = lock.newCondition();
@@ -34,8 +59,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 writeCondition.signal();
+                lock.unlock();
             }
             return msg;
         }
@@ -51,8 +76,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 readCondition.signal();
+                lock.unlock();
             }
         }
     }
@@ -73,7 +98,7 @@ public class ReentrantLockSignalTest {
             for (int i = 0; i < reads; i++) {
                 final String s = syncQueue.readMsg();
                 received.add(s);
-                System.out.println("Received:"  +s);
+                System.out.println("Received:" + s);
             }
         }
     }
@@ -92,31 +117,8 @@ public class ReentrantLockSignalTest {
             for (int i = 0; i < writes; i++) {
                 String s = "Send: " + i;
                 System.out.println(s);
-                syncQueue.writeMsg("Send: " + i);
+                syncQueue.writeMsg(s);
             }
         }
-    }
-
-    /**
-     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
-     * // TODO: Fix the CounterTest#run method only (look into finally block)
-     */
-    @Test
-    public void testQueue() throws InterruptedException {
-        BlockingSyncQueue queue = new BlockingSyncQueue();
-        Consumer con = new Consumer(OPERS, queue);
-        Thread threadC = new Thread(con);
-        Thread threadP = new Thread(new Producer(OPERS, queue));
-
-        threadC.start();
-        threadP.start();
-//
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
-//
-        Thread.sleep(1000);
-        assertEquals(10, con.received.size());
-//        System.out.println("Main exit: " + count.count);
     }
 }

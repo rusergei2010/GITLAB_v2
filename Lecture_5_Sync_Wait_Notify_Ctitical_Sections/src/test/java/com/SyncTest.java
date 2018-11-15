@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import static org.junit.Assert.assertEquals;
 
 // Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
@@ -18,31 +19,30 @@ public class SyncTest {
 
     public void change() {
 
-        lock.lock();
-        try {
+        if (lock.tryLock()) {
             try {
                 Thread.sleep(1000);
-            } catch (Exception e){
+                counter++;
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 
-    @Test
-    public void testSync() {
-        new Thread(() -> {
-            change();
-        }).start();
-        new Thread(() -> {
-            change();
-        }).start();
+        @Test
+        public void testSync () {
+            new Thread(() -> {
+                change();
+            }).start();
+            new Thread(() -> {
+                change();
+            }).start();
 
-        Utils.sleep(2000);
+            Utils.sleep(2000);
 
-        // TODO: fix it with use of 'if(tryLock())' for heavy calculations (~sleep(1000))
-        assertEquals(1, counter);
+            // TODO: fix it with use of 'if(tryLock())' for heavy calculations (~sleep(1000))
+            assertEquals(1, counter);
+        }
     }
-}

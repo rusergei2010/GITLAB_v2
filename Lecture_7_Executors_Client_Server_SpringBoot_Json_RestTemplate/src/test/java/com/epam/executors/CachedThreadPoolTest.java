@@ -3,12 +3,7 @@ package com.epam.executors;
 import com.epam.threads.util.Util;
 import org.junit.Test;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static com.epam.executors.TestUtil.shutdownWithDelay;
 import static junit.framework.TestCase.assertNotNull;
@@ -33,7 +28,7 @@ public class CachedThreadPoolTest {
     }
 
 
-    // TODO: Fix the Future usage in a test
+    // Fix the Future usage in a test
     @Test
     public void testCallableAndFuture() throws ExecutionException, InterruptedException {
         ExecutorService service = Executors.newCachedThreadPool();
@@ -43,9 +38,9 @@ public class CachedThreadPoolTest {
         Future<String> result3 = service.submit(callable("Thread 3"));
 
 
-        assertEquals("Result Thread 1", result1);
-        assertEquals("Result Thread 2", result2);
-        assertEquals("Result Thread 3", result3);
+        assertEquals("Result Thread 1", result1.get());
+        assertEquals("Result Thread 2", result2.get());
+        assertEquals("Result Thread 3", result3.get());
 
         System.out.println("Exiting...");
 
@@ -59,7 +54,6 @@ public class CachedThreadPoolTest {
         ExecutorService service = Executors.newCachedThreadPool();
 
         Future<?> result1 = service.submit(runnable("Thread 1"));
-        service.shutdown();
         Future<?> result2 = service.submit(runnable("Thread 2"));
 
         assertNotNull(result1);

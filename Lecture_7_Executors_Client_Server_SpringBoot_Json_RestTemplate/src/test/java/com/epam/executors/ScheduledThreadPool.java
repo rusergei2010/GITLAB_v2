@@ -3,16 +3,11 @@ package com.epam.executors;
 import com.epam.threads.util.Util;
 import org.junit.Test;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static org.junit.Assert.assertEquals;
 
-// TODO: Fix the Future (cancellation)
+// Fix the Future (cancellation)
 public class ScheduledThreadPool {
 
     @Test
@@ -20,6 +15,7 @@ public class ScheduledThreadPool {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
         ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
+        result.cancel(true);
 
         Thread.sleep(100);
 
@@ -34,7 +30,7 @@ public class ScheduledThreadPool {
         ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
         Thread.sleep(100);
-        result.cancel(false);
+//        result.cancel(false);
 
         assertEquals("Result", result.get());
         executor.shutdown();

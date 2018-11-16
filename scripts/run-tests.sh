@@ -19,3 +19,7 @@ cd $TRAVIS_BUILD_DIR/Lecture_11_Benchmark_ForkJoinPool_Lambda_Java8
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_12_Lambda_Java8_Addition
 mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_13_Atomics_Locks_Synhronizers_ReadWriteLock_Semaphore_PartII_CAS_CompletableFuture
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_14_Completable_Future_Concurrency_practice
+mvn test

@@ -4,23 +4,11 @@ import org.junit.Test;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * TODO: Fix failing tests
@@ -35,7 +23,7 @@ public class OptionalStreamsGroupingTests {
     @Test(expected = NullPointerException.class)
     public void testNullPointerExcetion() {
         final String name = null;
-        Optional<String> nameOptional = Optional.ofNullable(name); // TODO: fix in this line
+        Optional<String> nameOptional = Optional.of(name); // TODO: fix in this line
         assertFalse(nameOptional.isPresent());
     }
 
@@ -43,7 +31,7 @@ public class OptionalStreamsGroupingTests {
     public void testNullAble() throws Exception {
         final String name = null;
         Optional<String> nameOptional = Optional.ofNullable(name);
-        nameOptional.orElseThrow(Exception::new);
+        nameOptional.orElseThrow(IllegalArgumentException::new);
         assertTrue(nameOptional.get() == null);
     }
 
@@ -77,7 +65,7 @@ public class OptionalStreamsGroupingTests {
         // .filter(item_ -> {
         //     return Objects.nonNull(item_.price);
         //  })
-        Collection<Item> result = items.stream().filter(this::filterInRange).collect(Collectors.toList());
+        Collection<Item> result = items.stream().filter((x) -> x.price != null).filter(this::filterInRange).collect(Collectors.toList());
         assertEquals(1, result.size());
     }
 
@@ -101,7 +89,7 @@ public class OptionalStreamsGroupingTests {
                 .map(Product::getName)
                 .filter(Optional::isPresent) // 1
                 .map(Optional::get) // 2
-                .filter(item -> item.length() > 1) // 3
+                .filter(item -> item.length() > 2) // 3
                 .collect(Collectors.toList());
 
 
@@ -132,27 +120,26 @@ public class OptionalStreamsGroupingTests {
      * Grouping with JsonObjects.
      * TODO: Fix in 1 and 2
      * TODO: remove one unnecessary line
-     *
      */
     @Test
     public void grouping() {
         List<Item> items = Arrays.asList(
-                new Item(1, RequestType.ONE),
-                new Item(2, RequestType.ONE),
                 new Item(3, RequestType.TWO),
-                new Item(4, RequestType.TWO)
+                new Item(4, RequestType.TWO),
+                new Item(1, RequestType.ONE),
+                new Item(2, RequestType.ONE)
         );
 
         Map<RequestType, List<Item>> map = items.stream().collect(groupingBy(Item::getType));
 
-        assertEquals(1, map.size()); // 1
-        assertEquals(1, map.values().size()); // 2
+        assertEquals(2, map.size()); // 1
+        assertEquals(2, map.values().size()); // 2
 
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
         map.forEach((key, value) -> jsonObjectBuilder.add(key.name(), value.stream().map(Item::toString).collect(Collectors.joining(", "))));
 
-        jsonObjectBuilder.add("Hello", "Dude");
+        //jsonObjectBuilder.add("Hello", "Dude");
 
         assertEquals("{\"TWO\":\"Item{price=3, type=TWO}, Item{price=4, type=TWO}\",\"ONE\":\"Item{price=1, type=ONE}, Item{price=2, type=ONE}\"}", jsonObjectBuilder.build().toString());
     }
@@ -161,7 +148,8 @@ public class OptionalStreamsGroupingTests {
     enum RequestType {
         ONE,
         TWO
-    }
+
+        }
 
     class Item {
         Integer price;
@@ -196,11 +184,11 @@ public class OptionalStreamsGroupingTests {
     private String getDefuault() {
         return "Adidas".chars().mapToObj(x -> {
             if (Character.isLowerCase(x))
-                return (char)Character.toUpperCase(x);
+                return (char) Character.toUpperCase(x);
             if (Character.isUpperCase(x))
-                return (char)Character.toLowerCase(x);
+                return (char) Character.toLowerCase(x);
             return null;
-        }).map(String::valueOf).collect(Collectors.joining(", ")); // TODO: Fix here
+        }).map(String::valueOf).collect(Collectors.joining(",")); // TODO: Fix here
     }
 
     private Integer culcNumber() {

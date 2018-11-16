@@ -28,7 +28,7 @@ public class SemaphoreTest {
         public void connect(String uri) {
             boolean permit = false;
             try {
-                permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
+                permit = semaphore.tryAcquire(500, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
                     Util.threadSleep(400); // Anchor 2

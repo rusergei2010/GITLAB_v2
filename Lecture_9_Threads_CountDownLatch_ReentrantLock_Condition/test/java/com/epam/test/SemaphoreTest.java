@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
@@ -20,6 +22,7 @@ public class SemaphoreTest {
 
         private Semaphore semaphore;
         int connections = 0;
+        Lock lock = new ReentrantLock();
 
         public Resource(Semaphore semaphore) {
             this.semaphore = semaphore;
@@ -28,11 +31,11 @@ public class SemaphoreTest {
         public void connect(String uri) {
             boolean permit = false;
             try {
-                permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
+                permit = semaphore.tryAcquire(500, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
                     Util.threadSleep(400); // Anchor 2
-
+                    lock.lock();
                     connections++;
                 } else {
                     System.out.println("Connection rejected");
@@ -40,8 +43,10 @@ public class SemaphoreTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                if (permit)
+                if (permit) {
                     semaphore.release();
+                    lock.unlock();
+                }
             }
         }
     }

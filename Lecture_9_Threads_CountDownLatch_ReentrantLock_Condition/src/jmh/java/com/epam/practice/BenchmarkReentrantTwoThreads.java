@@ -1,3 +1,4 @@
+/*
 package com.epam.practice;
 
 import com.epam.practice.counter.Counter;
@@ -89,3 +90,4 @@ public class BenchmarkReentrantTwoThreads {
     }
 
 }
+*/

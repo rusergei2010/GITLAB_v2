@@ -1,3 +1,4 @@
+/*
 package com.epam.practice;
 
 import com.epam.practice.counter.Counter;
@@ -71,3 +72,4 @@ public class BenchmarkReentrant {
             counter.volatileInc();
     }
 }
+*/

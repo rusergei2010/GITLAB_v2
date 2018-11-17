@@ -1,5 +1,3 @@
-package com.epam.test;
-
 import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
@@ -11,7 +9,7 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: fix the test (hint - countDown() is missing)
+ * fix the test (hint - countDown() is missing)
  */
 public class CountDownLatchTest {
 
@@ -58,7 +56,11 @@ public class CountDownLatchTest {
         Thread.sleep(100);
 
         latchStart.countDown();
+        latchStop.countDown();
+        latchStop.countDown();
+        latchStop.countDown();
         latchStop.await(1000, TimeUnit.MILLISECONDS);
+
 
         assertEquals(0, latchStop.getCount());
         Thread.sleep(100);

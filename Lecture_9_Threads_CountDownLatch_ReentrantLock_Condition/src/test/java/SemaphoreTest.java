@@ -1,5 +1,3 @@
-package com.epam.test;// Benchmark Шипилев: @link{https://www.youtube.com/watch?v=8pMfUopQ9Es}
-
 import com.epam.practice.RaceConditionSemaphore;
 import com.epam.util.Util;
 
@@ -28,12 +26,14 @@ public class SemaphoreTest {
         public void connect(String uri) {
             boolean permit = false;
             try {
-                permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
+                permit = semaphore.tryAcquire(500, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
                     Util.threadSleep(400); // Anchor 2
 
-                    connections++;
+                    synchronized (this){
+                        connections++;
+                    }
                 } else {
                     System.out.println("Connection rejected");
                 }

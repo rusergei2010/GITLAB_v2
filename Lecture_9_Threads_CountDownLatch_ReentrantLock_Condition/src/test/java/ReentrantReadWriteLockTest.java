@@ -1,5 +1,3 @@
-package com.epam.test;
-
 import com.epam.util.Util;
 import org.junit.Test;
 
@@ -14,7 +12,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-// TODO: Fix in one line
+// Fix in one line
 public class ReentrantReadWriteLockTest {
 
 
@@ -35,7 +33,7 @@ public class ReentrantReadWriteLockTest {
                 }
             } finally {
                 if (locked) {
-//                    readLock.unlock();
+                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }

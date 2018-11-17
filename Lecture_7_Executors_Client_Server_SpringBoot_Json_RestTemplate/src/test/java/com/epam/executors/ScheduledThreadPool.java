@@ -22,6 +22,7 @@ public class ScheduledThreadPool {
         ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
         Thread.sleep(100);
+        result.cancel(false);
 
         assertEquals(true, result.isCancelled());
         executor.shutdown();
@@ -33,7 +34,7 @@ public class ScheduledThreadPool {
 
         ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
-        Thread.sleep(100);
+        Thread.sleep(2000);
         result.cancel(false);
 
         assertEquals("Result", result.get());

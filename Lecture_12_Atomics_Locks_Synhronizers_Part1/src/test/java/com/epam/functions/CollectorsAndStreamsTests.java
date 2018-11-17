@@ -3,18 +3,13 @@ package com.epam.functions;
 import com.epam.functions.model.SearchRequestInstant;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * TODO: Fix it
+ * Fix it
  */
 public class CollectorsAndStreamsTests {
 

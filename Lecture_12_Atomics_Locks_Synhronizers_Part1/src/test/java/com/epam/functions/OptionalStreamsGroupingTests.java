@@ -4,18 +4,11 @@ import org.junit.Test;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class OptionalStreamsGroupingTests {
 
@@ -97,7 +90,7 @@ public class OptionalStreamsGroupingTests {
     }
 
     private boolean filterInRange(Item item) {
-        if (item == null)
+        if (item.price == null)
             return false;
         if (item.price >= 11) return false;
         if (item.price <= 9) return false;

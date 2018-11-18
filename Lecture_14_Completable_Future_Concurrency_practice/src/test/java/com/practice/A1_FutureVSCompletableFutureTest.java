@@ -54,7 +54,7 @@ public class A1_FutureVSCompletableFutureTest {
             try {
                 Thread.sleep(1000);
                 completableFuture.complete("Result is ready");
-            } catch(Throwable th) {
+            } catch (Throwable th) {
                 System.out.println("Exception: " + th.getMessage());
             }
         }).start();
@@ -62,7 +62,7 @@ public class A1_FutureVSCompletableFutureTest {
         completableFuture.completeExceptionally(new RuntimeException("Complete with exception"));
         try {
             System.err.println("Print: " + completableFuture.get());
-        }catch (Throwable ex) {
+        } catch (Throwable ex) {
             System.out.println("Cause: " + ex.getCause());
             System.out.println("Exception: " + ex.getCause().getClass());
             System.out.println("Top class Exception: " + ex.getClass());

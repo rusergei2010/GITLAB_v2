@@ -50,8 +50,10 @@ public class Filtering {
         // Johns with dev experience worked in epam more then 1 year
         final List<Employee> result = new ArrayList<>();
         for (Employee employee : employees) {
-            // TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
-            // TODO: DEV name should be 'John'
+            if (
+            hasDevExperience(employee)// TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
+             & workedInEpamMoreThenOneYear(employee) & employee.getPerson().getFirstName() == "John")// TODO: DEV name should be 'John'
+                result.add(employee);
             // Store all matching output in 'result' collection
         }
         TestCase.assertEquals(1, result.size());
@@ -84,7 +86,7 @@ public class Filtering {
 
     private static boolean hasDevExperience(Employee e) {
         return new FilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getPosition().equals("QA")) // TODO: fix here
+                .filter(j -> j.getPosition().equals("dev")) // TODO: fix here
                 .getList()
                 .size() > 0;
     }
@@ -176,7 +178,7 @@ public class Filtering {
     private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
         return new LazyFilterUtil<>(e.getJobHistory())
                 .filter(j -> j.getEmployer().equals("epam"))
-                .filter(j -> j.getDuration() > 2)// TODO: fix it in this line (1,2 or more?)
+                .filter(j -> j.getDuration() > 1)// TODO: fix it in this line (1,2 or more?)
                 .force()
                 .size() > 0;
     }

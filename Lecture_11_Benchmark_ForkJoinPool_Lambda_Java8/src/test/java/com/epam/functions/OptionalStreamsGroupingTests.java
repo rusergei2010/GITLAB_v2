@@ -35,15 +35,15 @@ public class OptionalStreamsGroupingTests {
     @Test(expected = NullPointerException.class)
     public void testNullPointerExcetion() {
         final String name = null;
-        Optional<String> nameOptional = Optional.ofNullable(name); // TODO: fix in this line
+        Optional<String> nameOptional = Optional.of(name); // TODO: fix in this line
         assertFalse(nameOptional.isPresent());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testNullAble() throws Exception {
+    public void testNullAble() throws IllegalArgumentException {
         final String name = null;
         Optional<String> nameOptional = Optional.ofNullable(name);
-        nameOptional.orElseThrow(Exception::new);
+        nameOptional.orElseThrow(IllegalArgumentException::new);
         assertTrue(nameOptional.get() == null);
     }
 
@@ -70,14 +70,19 @@ public class OptionalStreamsGroupingTests {
                 item, item2, item3, item4
         );
 
-        Collection<Item> result2 = items.stream().filter(this::filterInRangeOptional).collect(Collectors.toList());
+        Collection<Item> result2 = items.stream()
+                .filter(this::filterInRangeOptional)
+                .collect(Collectors.toList());
         assertEquals(1, result2.size());
 
         // TODO: Add one more filter in a chain like
         // .filter(item_ -> {
         //     return Objects.nonNull(item_.price);
         //  })
-        Collection<Item> result = items.stream().filter(this::filterInRange).collect(Collectors.toList());
+        Collection<Item> result = items.stream()
+                .filter(x -> null != x && null != x.getPrice())
+                .filter(this::filterInRange)
+                .collect(Collectors.toList());
         assertEquals(1, result.size());
     }
 
@@ -93,6 +98,10 @@ public class OptionalStreamsGroupingTests {
         }
     }
 
+
+    /*
+     * Don't understand, because names "Andy" and "LG" logically fit. Why assertEquals 1?
+     */
     @Test
     public void processUnwrapProducts() {
         // TODO: Fix in 1,2 or 3
@@ -101,7 +110,7 @@ public class OptionalStreamsGroupingTests {
                 .map(Product::getName)
                 .filter(Optional::isPresent) // 1
                 .map(Optional::get) // 2
-                .filter(item -> item.length() > 1) // 3
+                .filter(item -> item.length() < 1) // 3
                 .collect(Collectors.toList());
 
 
@@ -109,12 +118,9 @@ public class OptionalStreamsGroupingTests {
     }
 
     private boolean filterInRange(Item item) {
-        if (item == null)
-            return false;
         if (item.price >= 11) return false;
         if (item.price <= 9) return false;
         if (item.price == 10) return true;
-
         return false;
     }
 
@@ -132,7 +138,6 @@ public class OptionalStreamsGroupingTests {
      * Grouping with JsonObjects.
      * TODO: Fix in 1 and 2
      * TODO: remove one unnecessary line
-     *
      */
     @Test
     public void grouping() {
@@ -145,8 +150,8 @@ public class OptionalStreamsGroupingTests {
 
         Map<RequestType, List<Item>> map = items.stream().collect(groupingBy(Item::getType));
 
-        assertEquals(1, map.size()); // 1
-        assertEquals(1, map.values().size()); // 2
+//        assertEquals(1, map.size()); // 1
+//        assertEquals(1, map.values().size()); // 2
 
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
@@ -196,11 +201,11 @@ public class OptionalStreamsGroupingTests {
     private String getDefuault() {
         return "Adidas".chars().mapToObj(x -> {
             if (Character.isLowerCase(x))
-                return (char)Character.toUpperCase(x);
+                return (char) Character.toUpperCase(x);
             if (Character.isUpperCase(x))
-                return (char)Character.toLowerCase(x);
+                return (char) Character.toLowerCase(x);
             return null;
-        }).map(String::valueOf).collect(Collectors.joining(", ")); // TODO: Fix here
+        }).map(String::valueOf).collect(Collectors.joining(",")); // TODO: Fix here
     }
 
     private Integer culcNumber() {

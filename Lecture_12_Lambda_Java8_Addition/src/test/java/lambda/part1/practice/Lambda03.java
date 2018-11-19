@@ -96,8 +96,8 @@ public class Lambda03 {
         //person.setName("Putin");
         Arrays.sort(personsAged, Lambda03::compare); // reference
 
-//        System.out.println(Arrays.toString(personsAged));
-        assertEquals("Andrey", personsAged[2].name);// Fix the name
+        System.out.println(Arrays.toString(personsAged));
+        assertEquals("Sergey", personsAged[2].name);// Fix the name
     }
 
     public static int compare(Person o1, Person o2) {

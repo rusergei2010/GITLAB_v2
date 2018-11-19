@@ -4,13 +4,7 @@ import org.junit.Test;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -150,15 +144,16 @@ public class OptionalStreamsGroupingTests {
 
         Map<RequestType, List<Item>> map = items.stream().collect(groupingBy(Item::getType));
 
-//        assertEquals(1, map.size()); // 1
-//        assertEquals(1, map.values().size()); // 2
+        assertEquals(2, map.size()); // 1
+        assertEquals(2, map.values().size()); // 2
 
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
         map.forEach((key, value) -> jsonObjectBuilder.add(key.name(), value.stream().map(Item::toString).collect(Collectors.joining(", "))));
 
-        jsonObjectBuilder.add("Hello", "Dude");
+//        jsonObjectBuilder.add("Hello", "Dude");
 
+        //the test fails because the keys in the map are not kept in order
         assertEquals("{\"TWO\":\"Item{price=3, type=TWO}, Item{price=4, type=TWO}\",\"ONE\":\"Item{price=1, type=ONE}, Item{price=2, type=ONE}\"}", jsonObjectBuilder.build().toString());
     }
 

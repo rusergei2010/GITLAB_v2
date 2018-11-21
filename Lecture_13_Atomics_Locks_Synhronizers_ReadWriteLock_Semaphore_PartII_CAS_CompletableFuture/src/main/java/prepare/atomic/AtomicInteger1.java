@@ -14,7 +14,7 @@ public class AtomicInteger1 {
 
 
     public static class Counter {
-        int counter = 0;
+        int counter = 0; // volatile???
 
         void inc() {
             counter++;

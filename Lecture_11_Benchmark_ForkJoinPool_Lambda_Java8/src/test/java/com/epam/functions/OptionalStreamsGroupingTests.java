@@ -1,5 +1,9 @@
 package com.epam.functions;
 
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import org.junit.Test;
 
 import javax.json.Json;
@@ -35,7 +39,7 @@ public class OptionalStreamsGroupingTests {
     @Test(expected = NullPointerException.class)
     public void testNullPointerExcetion() {
         final String name = null;
-        Optional<String> nameOptional = Optional.ofNullable(name); // TODO: fix in this line
+        Optional<String> nameOptional = Optional.of(name); // TODO: fix in this line
         assertFalse(nameOptional.isPresent());
     }
 
@@ -43,7 +47,7 @@ public class OptionalStreamsGroupingTests {
     public void testNullAble() throws Exception {
         final String name = null;
         Optional<String> nameOptional = Optional.ofNullable(name);
-        nameOptional.orElseThrow(Exception::new);
+        nameOptional.orElseThrow(IllegalArgumentException::new);
         assertTrue(nameOptional.get() == null);
     }
 
@@ -77,7 +81,8 @@ public class OptionalStreamsGroupingTests {
         // .filter(item_ -> {
         //     return Objects.nonNull(item_.price);
         //  })
-        Collection<Item> result = items.stream().filter(this::filterInRange).collect(Collectors.toList());
+        Collection<Item> result = items.stream().filter(item1 -> {return Objects
+            .nonNull(item1.price);}).filter(this::filterInRange).collect(Collectors.toList());
         assertEquals(1, result.size());
     }
 
@@ -101,7 +106,7 @@ public class OptionalStreamsGroupingTests {
                 .map(Product::getName)
                 .filter(Optional::isPresent) // 1
                 .map(Optional::get) // 2
-                .filter(item -> item.length() > 1) // 3
+                .filter(item -> item.length() < 2) // 3
                 .collect(Collectors.toList());
 
 
@@ -145,16 +150,26 @@ public class OptionalStreamsGroupingTests {
 
         Map<RequestType, List<Item>> map = items.stream().collect(groupingBy(Item::getType));
 
-        assertEquals(1, map.size()); // 1
-        assertEquals(1, map.values().size()); // 2
+        assertEquals(2, map.size()); // 1
+        assertEquals(2, map.values().size()); // 2
 
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
-        map.forEach((key, value) -> jsonObjectBuilder.add(key.name(), value.stream().map(Item::toString).collect(Collectors.joining(", "))));
+        SortedMap<RequestType, List<Item>> sortedMap = new TreeMap<RequestType, List<Item>>(
+            new Comparator<RequestType>() {
+                @Override
+                public int compare(RequestType o1, RequestType o2) {
+                    return o2.compareTo(o1);                }
+            });
+        sortedMap.putAll(map);
 
-        jsonObjectBuilder.add("Hello", "Dude");
 
-        assertEquals("{\"TWO\":\"Item{price=3, type=TWO}, Item{price=4, type=TWO}\",\"ONE\":\"Item{price=1, type=ONE}, Item{price=2, type=ONE}\"}", jsonObjectBuilder.build().toString());
+            sortedMap.forEach((key, value) -> jsonObjectBuilder.add(key.name(), value.stream().map(Item::toString).collect(Collectors.joining(", "))));
+
+            //jsonObjectBuilder.add("Hello", "Dude");
+
+            assertEquals("{\"TWO\":\"Item{price=3, type=TWO}, Item{price=4, type=TWO}\",\"ONE\":\"Item{price=1, type=ONE}, Item{price=2, type=ONE}\"}", jsonObjectBuilder.build().toString());
+
     }
 
 
@@ -200,7 +215,7 @@ public class OptionalStreamsGroupingTests {
             if (Character.isUpperCase(x))
                 return (char)Character.toLowerCase(x);
             return null;
-        }).map(String::valueOf).collect(Collectors.joining(", ")); // TODO: Fix here
+        }).map(String::valueOf).collect(Collectors.joining(",")); // TODO: Fix here
     }
 
     private Integer culcNumber() {

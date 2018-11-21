@@ -1,5 +1,3 @@
-package com.epam.test;
-
 import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
@@ -28,6 +26,7 @@ public class CountDownLatchTest {
             System.out.println("Task is started");
             try {
                 latchStart.await();
+                latchStop.countDown();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

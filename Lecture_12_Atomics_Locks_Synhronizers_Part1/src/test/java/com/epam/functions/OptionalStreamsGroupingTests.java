@@ -97,7 +97,7 @@ public class OptionalStreamsGroupingTests {
     }
 
     private boolean filterInRange(Item item) {
-        if (item == null)
+        if (item.price == null)
             return false;
         if (item.price >= 11) return false;
         if (item.price <= 9) return false;

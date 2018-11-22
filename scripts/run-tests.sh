@@ -23,5 +23,3 @@ cd $TRAVIS_BUILD_DIR/Lecture_13_Atomics_Locks_Synhronizers_ReadWriteLock_Semapho
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_14_Completable_Future_Concurrency_practice
 mvn test
-cd $TRAVIS_BUILD_DIR/Lecture_15_Concurrent_Collection
-mvn test

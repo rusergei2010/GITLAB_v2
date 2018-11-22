@@ -116,7 +116,7 @@ public class ConcurrentOperators {
     }
 
     /**
-     * Size() operation is weak even in ConcurrentHashMap during data modification (but in the end of modifications it gives correct size)
+     * Size() operation is weak even in ConcurrentHashMap during com.data modification (but in the end of modifications it gives correct size)
      * But in the end of all modifications it gives correct result
      * putIfAbsent() - Atomic operation of Insertion
      * Run several times the test

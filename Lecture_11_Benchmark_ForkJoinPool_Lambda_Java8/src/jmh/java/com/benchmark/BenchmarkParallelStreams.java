@@ -172,7 +172,7 @@
 //            return forkJoinPool.submit(() -> smallArray.parallelStream()
 //                    .unordered() // very important for better performance in parallel streams !!!
 //                    .map(String::toLowerCase)
-//                    .peek((x) -> sleep_10()) // very important to set up the maximum number of threads for operations requiring physical data exchange (network, filesystem, etc.)
+//                    .peek((x) -> sleep_10()) // very important to set up the maximum number of threads for operations requiring physical com.data exchange (network, filesystem, etc.)
 //                    .collect(Collectors.toList())).get();
 //
 //        } catch (InterruptedException | ExecutionException e) {
@@ -193,7 +193,7 @@
 //            return forkJoinPool.submit(() -> smallArray.parallelStream()
 //                    .unordered() // very important for better performance in parallel streams !!!
 //                    .map(String::toLowerCase)
-//                    .peek((x) -> sleep_100()) // very important to set up the maximum number of threads for operations requiring physical data exchange (network, filesystem, etc.)
+//                    .peek((x) -> sleep_100()) // very important to set up the maximum number of threads for operations requiring physical com.data exchange (network, filesystem, etc.)
 //                    .collect(Collectors.toList())).get();
 //
 //        } catch (InterruptedException | ExecutionException e) {
@@ -214,7 +214,7 @@
 //            return forkJoinPool.submit(() -> smallArray.parallelStream()
 //                    .unordered() // very important for better performance in parallel streams !!!
 //                    .map(String::toLowerCase)
-//                    .peek((x) -> sleep_1000()) // very important to set up the maximum number of threads for operations requiring physical data exchange (network, filesystem, etc.)
+//                    .peek((x) -> sleep_1000()) // very important to set up the maximum number of threads for operations requiring physical com.data exchange (network, filesystem, etc.)
 //                    .collect(Collectors.toList())).get();
 //
 //        } catch (InterruptedException | ExecutionException e) {

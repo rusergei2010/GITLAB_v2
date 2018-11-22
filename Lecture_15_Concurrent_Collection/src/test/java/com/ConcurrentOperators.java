@@ -2,6 +2,7 @@ package com;
 
 import org.junit.Test;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -224,7 +225,7 @@ public class ConcurrentOperators {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    @Test
+    @Test(expected = ExecutionException.class)
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
 //        ForkJoinPool.commonPool().submit(()->{});
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {

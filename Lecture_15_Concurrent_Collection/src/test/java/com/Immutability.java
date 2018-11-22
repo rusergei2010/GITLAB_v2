@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -27,7 +28,7 @@ public class Immutability {
         System.out.println(car);
     }
 
-    @Test
+    @Test(expected = ConcurrentModificationException.class)
     public void mutableCollections() throws InterruptedException {
         ArrayList<Integer> mutable = new ArrayList<>();
 

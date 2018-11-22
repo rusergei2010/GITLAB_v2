@@ -66,12 +66,12 @@ public class CrunchifyConcurrentHashMapVsSynchronizedMap {
 				});
 			}
  
-			// Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted. Invocation
+			// Initiates an orderly shutdown in which previously submitted completablefuture are executed, but no new completablefuture will be accepted. Invocation
 			// has no additional effect if already shut down.
-			// This method does not wait for previously submitted tasks to complete execution. Use awaitTermination to do that.
+			// This method does not wait for previously submitted completablefuture to complete execution. Use awaitTermination to do that.
 			crunchifyExServer.shutdown();
  
-			// Blocks until all tasks have completed execution after a shutdown request, or the timeout occurs, or the current thread is
+			// Blocks until all completablefuture have completed execution after a shutdown request, or the timeout occurs, or the current thread is
 			// interrupted, whichever happens first.
 			crunchifyExServer.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
  

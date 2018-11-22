@@ -1,25 +1,15 @@
-package com.tasks;
+package home.completablefuture;
 
 import org.junit.Test;
 
-import javax.naming.OperationNotSupportedException;
-import java.rmi.UnexpectedException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class HomeTask {
@@ -57,7 +47,7 @@ public class HomeTask {
             });
             return null;
         });
-        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two tasks are finished and return result
+        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
         map.clear();
     }

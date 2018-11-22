@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 public class Immutability {
 
+
     /**
      * Use the Builder pattern to code the immutable objects
      */
@@ -25,6 +26,7 @@ public class Immutability {
                 .withOwner(new Owner("Vova", "Vladimirov"));
 
         Car car = builder.build();
+
         System.out.println(car);
     }
 

@@ -240,7 +240,7 @@ public class ConcurrentOperators {
 
         // second traversal
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
-        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two tasks are finished and return result
+        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
         map.clear();
     }

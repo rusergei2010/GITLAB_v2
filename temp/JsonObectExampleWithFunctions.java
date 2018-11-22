@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
 import com.epam.functions.model.SearchRequestInstant;
 import org.springframework.boot.SpringApplication;
@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.Optional;
 
 /**

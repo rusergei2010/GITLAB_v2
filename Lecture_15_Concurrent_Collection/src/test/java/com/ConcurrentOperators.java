@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -59,7 +60,7 @@ public class ConcurrentOperators {
     /**
      * Size() operation is weak in the map and return right value just in single threaded apps (!= 1000)
      * size() can be violated for HashMap even if it is calculated after all modifications
-     * But it doesn't cause ConcurrentModification Exception of iterator is not extracted
+     * But it doesn't cause ConcurrentModification Exception of iterator if it is not extracted
      * Insertion is not atomic for HashMap if it is performed in different threads
      * Run several times the test
      *
@@ -116,6 +117,7 @@ public class ConcurrentOperators {
     /**
      * Size() operation is weak even in ConcurrentHashMap during data modification (but in the end of modifications it gives correct size)
      * But in the end of all modifications it gives correct result
+     * putIfAbsent() - Atomic operation of Insertion
      * Run several times the test
      * ThreadSafe Concurrent Case
      *
@@ -181,7 +183,7 @@ public class ConcurrentOperators {
         Future futureA = executorService.submit(() -> {
             IntStream.range(0, 1000).forEach(
                     (i) -> {
-                        Integer key = ThreadLocalRandom.current().nextInt(2);
+                        Integer key = ThreadLocalRandom.current().nextInt(100);
                         concurrentHashMap.put(i, "" + i);
                         sleep(1);
                     }
@@ -191,7 +193,7 @@ public class ConcurrentOperators {
         Future futureB = executorService.submit(() -> {
             IntStream.range(0, 1000).forEach(
                     (i) -> {
-                        Integer key = ThreadLocalRandom.current().nextInt(2);
+                        Integer key = ThreadLocalRandom.current().nextInt(100);
                         concurrentHashMap.put(key, "" + i);
                         sleep(1);
                     }
@@ -216,7 +218,7 @@ public class ConcurrentOperators {
 
     /**
      * Concurrent modification of HashMap without iteration through it doesn't cause any issues or exceptions
-     * Use of CompletableFuture
+     * Use of CompletableFuture (Consider ForkJoinPool.commonPool().submit()) instead
      * Fail-Fast example with HashSet - Iteration is not allowed if new elements are submitted into the NonThread-Safe Collection
      *
      * @throws ExecutionException
@@ -224,6 +226,7 @@ public class ConcurrentOperators {
      */
     @Test
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
+//        ForkJoinPool.commonPool().submit(()->{});
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
@@ -234,9 +237,9 @@ public class ConcurrentOperators {
             return null;
         });
 
-
+        // second traversal
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
-        CompletableFuture.allOf(futureA, futureB).get();
+        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two tasks are finished and return result
 
         map.clear();
     }

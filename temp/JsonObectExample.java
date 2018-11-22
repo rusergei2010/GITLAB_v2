@@ -1,10 +1,8 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
-import com.epam.functions.model.SearchRequest;
 import com.epam.functions.model.SearchRequestInstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
-import sun.misc.IOUtils;
 
 import javax.json.Json;
 import javax.json.JsonObject;

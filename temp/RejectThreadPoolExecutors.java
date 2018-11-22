@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
 import prepare.util.Util;
 

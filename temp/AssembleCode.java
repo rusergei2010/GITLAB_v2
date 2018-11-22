@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
 import javax.json.JsonObject;
 import java.util.function.Function;

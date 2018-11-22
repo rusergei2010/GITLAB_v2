@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
 import com.epam.functions.model.SearchRequest;
 import org.springframework.boot.SpringApplication;

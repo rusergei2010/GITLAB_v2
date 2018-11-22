@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
 import com.google.common.base.Joiner;
 import org.springframework.boot.SpringApplication;

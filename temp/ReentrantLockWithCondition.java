@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates;
+package temp;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

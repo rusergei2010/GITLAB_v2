@@ -1,18 +1,15 @@
 package com.epam.test;
 
-import com.epam.util.Util;
+import com.epam.test.util.Util;
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 // TODO: Fix in one line
 public class ReentrantReadWriteLockTest {

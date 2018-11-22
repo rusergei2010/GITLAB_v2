@@ -1,8 +1,7 @@
 package com.epam.test;// Benchmark Шипилев: @link{https://www.youtube.com/watch?v=8pMfUopQ9Es}
 
-import com.epam.practice.RaceConditionSemaphore;
-import com.epam.util.Util;
 
+import com.epam.test.util.Util;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;

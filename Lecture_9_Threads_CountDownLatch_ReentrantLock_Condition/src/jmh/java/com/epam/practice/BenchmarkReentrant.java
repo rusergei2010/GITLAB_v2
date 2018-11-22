@@ -42,15 +42,13 @@ public class BenchmarkReentrant {
         counter.count = 0;
         while (counter.count < COUNTS)
             counter.inc();
-
-        System.out.println("Completed testSyncInc");
     }
 
     @Benchmark
-    public void testNonSyncDec() throws InterruptedException {
-        counter.count = COUNTS;
-        while (counter.count > 0)
-            counter.dec();
+    public void testNonSyncInc() throws InterruptedException {
+        counter.count = 0;
+        while (counter.count < COUNTS)
+            counter.syncInc();
     }
 
     @Benchmark
@@ -58,5 +56,18 @@ public class BenchmarkReentrant {
         counter.count = 0;
         while (counter.count < COUNTS)
             counter.incrementWithReentrantLock();
+    }
+
+    @Benchmark
+    public void testCASCount() throws InterruptedException {
+        counter.casCount.set(0);
+        while (counter.CASInc() < COUNTS);
+    }
+
+    @Benchmark
+    public void testVolatileCount() throws InterruptedException {
+        counter.volCount = 0;
+        while (counter.volCount < COUNTS)
+            counter.volatileInc();
     }
 }

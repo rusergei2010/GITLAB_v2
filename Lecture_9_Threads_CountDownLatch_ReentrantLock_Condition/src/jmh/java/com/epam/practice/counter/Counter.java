@@ -1,17 +1,20 @@
 package com.epam.practice.counter;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Counter {
     public int count = 0;
+    public AtomicInteger casCount = new AtomicInteger(0);
     ReentrantLock lock = new ReentrantLock();
+    public static volatile int volCount = 0;
 
-    public synchronized void inc() {
+    public void inc() {
         count++;
     }
 
-    public void dec() {
-        count--;
+    public synchronized void syncInc() {
+        count++;
     }
 
     public void incrementWithReentrantLock() {
@@ -21,5 +24,13 @@ public class Counter {
         } finally {
             lock.unlock();
         }
+    }
+
+    public int CASInc() {
+        return casCount.incrementAndGet();
+    }
+
+    public void volatileInc() {
+        volCount++;
     }
 }

@@ -15,7 +15,7 @@ public class ScheduledThreadPool {
         // Basic Runnable interface
 //        executor.scheduleAtFixedRate(ScheduledThreadPool::healthCheckRunnable, 4, 1, TimeUnit.SECONDS);
 
-        // Callable as a method reference lambda (one of lambda representations)
+        // Callable as a method reference com.data.lambda (one of com.data.lambda representations)
 //        ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 1, TimeUnit.SECONDS);
 //        System.out.println(result.get());
 

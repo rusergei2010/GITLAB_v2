@@ -61,7 +61,7 @@ public class Lambda2 {
      */
     @Test
     public void testLambda() throws InterruptedException {
-        // TODO: replace with lambda all person access points
+        // TODO: replace with com.data.lambda all person access points
 
         Person person1 = new Person("Andrey", 10, Person.Gender.MALE);
         Person person2 = new Person("Evgenii", 20, Person.Gender.MALE);
@@ -76,7 +76,7 @@ public class Lambda2 {
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with lambda and stream().forEach()
+        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter
             if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
                 males.add(p);
@@ -91,7 +91,7 @@ public class Lambda2 {
 
         males.clear();
 
-        for (Person p : list) { // replace with lambda and stream().forEach()
+        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter and (p) -> {} statement inside
             if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
                 males.add(p);
@@ -109,7 +109,7 @@ public class Lambda2 {
 
 
         // TODO: make one : Integer result = people.stream()....filter()....map()....sum();
-        for (Person p : list) { // replace with lambda and stream().forEach()
+        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter and (p) -> {} statement inside
             if ((p.gender == Person.Gender.MALE && p.age > 10) || (p.gender == Person.Gender.FEMALE)) { // replace with '::' access
                 peopleWithSalary.add(p);

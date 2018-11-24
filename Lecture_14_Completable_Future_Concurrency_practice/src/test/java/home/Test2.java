@@ -1,12 +1,11 @@
 package home;
 
-import org.junit.Test;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

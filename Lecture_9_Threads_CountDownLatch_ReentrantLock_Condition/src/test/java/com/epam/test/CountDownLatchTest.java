@@ -1,12 +1,11 @@
 package com.epam.test;
 
-import org.junit.Test;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,8 +1,7 @@
 package com;
 
-import org.junit.Test;
-
 import java.util.concurrent.atomic.AtomicReference;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

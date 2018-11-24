@@ -1,15 +1,9 @@
 package com.practice.clazz;
 
-import org.junit.Test;
-
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadLocalRandom;
+import org.junit.Test;
 
 
 public class A2_CompletableFutureTest {

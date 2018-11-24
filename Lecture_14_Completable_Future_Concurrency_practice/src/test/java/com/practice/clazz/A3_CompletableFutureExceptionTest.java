@@ -1,13 +1,9 @@
 package com.practice.clazz;
 
-import org.junit.Test;
-
-import java.io.Serializable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.ThreadLocalRandom;
+import org.junit.Test;
 
 
 public class A3_CompletableFutureExceptionTest {

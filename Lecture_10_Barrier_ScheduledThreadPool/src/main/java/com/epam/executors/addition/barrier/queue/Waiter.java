@@ -1,7 +1,6 @@
 package com.epam.executors.addition.barrier.queue;
 
 import com.epam.executors.addition.prepare.util.Util;
-
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 

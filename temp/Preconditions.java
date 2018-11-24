@@ -1,14 +1,14 @@
 package com.epam.functions.util;
 
-import java.util.Optional;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
 import java.io.File;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Optional;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 public interface Preconditions {
 

@@ -1,11 +1,6 @@
 package temp;
 
 import com.epam.functions.model.SearchRequestInstant;
-import org.springframework.boot.SpringApplication;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.util.Optional;
 
 /**

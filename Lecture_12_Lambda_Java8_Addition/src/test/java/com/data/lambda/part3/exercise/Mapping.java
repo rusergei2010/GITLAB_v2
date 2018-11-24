@@ -3,16 +3,12 @@ package com.data.lambda.part3.exercise;
 import com.data.Employee;
 import com.data.JobHistoryEntry;
 import com.data.Person;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

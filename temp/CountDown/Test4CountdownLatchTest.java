@@ -2,8 +2,6 @@ package com.practice.home;
 
 import com.practice.home.model.Cook;
 import com.practice.home.model.Waiter;
-import org.junit.Test;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
@@ -11,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

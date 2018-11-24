@@ -2,9 +2,6 @@ package temp;
 
 import com.epam.functions.model.SearchRequest;
 import com.google.common.base.Joiner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;

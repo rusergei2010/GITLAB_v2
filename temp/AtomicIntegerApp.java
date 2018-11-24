@@ -1,7 +1,6 @@
 package temp;
 
 import com.epam.util.Util;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

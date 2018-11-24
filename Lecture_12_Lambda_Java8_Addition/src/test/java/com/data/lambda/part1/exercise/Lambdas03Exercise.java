@@ -2,8 +2,6 @@ package com.data.lambda.part1.exercise;
 
 import org.junit.Test;
 
-import java.util.StringJoiner;
-
 import static org.junit.Assert.assertEquals;
 
 public class Lambdas03Exercise {

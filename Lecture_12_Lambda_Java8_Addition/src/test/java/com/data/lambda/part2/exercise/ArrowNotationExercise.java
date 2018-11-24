@@ -1,11 +1,9 @@
 package com.data.lambda.part2.exercise;
 
 import com.data.Person;
-import org.junit.Test;
-
 import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
 import java.util.function.Function;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

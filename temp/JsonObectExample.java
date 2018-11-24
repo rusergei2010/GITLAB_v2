@@ -1,15 +1,12 @@
 package temp;
 
 import com.epam.functions.model.SearchRequestInstant;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.SpringApplication;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Optional;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 /**
  * How to write Json objects and attributes to the file

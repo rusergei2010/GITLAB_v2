@@ -1,11 +1,10 @@
 package com.epam.functions;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

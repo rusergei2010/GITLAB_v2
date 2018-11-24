@@ -1,9 +1,8 @@
 package com.data.lambda.part1.practice;
 
-import org.junit.Test;
-
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

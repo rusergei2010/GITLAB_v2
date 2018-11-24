@@ -1,12 +1,11 @@
 package com.practice.clazz;
 
-import org.junit.Test;
-
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import org.junit.Test;
 
 
 public class A1_FutureVSCompletableFutureTest {

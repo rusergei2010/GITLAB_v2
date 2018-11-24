@@ -1,12 +1,11 @@
 package com.epam.functions;
 
-import org.junit.Test;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

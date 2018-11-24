@@ -14,10 +14,14 @@ public class ReentrantLockTest {
 
         @Override
         public void run() {
-            lock.lock();
-            Util.threadSleep(100);
-            count++;
-            validate();
+            try {
+                lock.lock();
+                Util.threadSleep(100);
+                count++;
+                validate();
+            } finally {
+                lock.unlock();
+            }
         }
 
         private void validate() {

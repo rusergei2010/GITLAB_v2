@@ -31,7 +31,7 @@ public class Lambda3 {
         Consumer<AtomicInteger> result = wrap(wrap(wrap(wrap(wrap(consumer)))));
 
         // TODO: fix it
-        //result.accept();
+        result.accept(counter);
 
         assertEquals(1, counter.get());
     }
@@ -42,9 +42,7 @@ public class Lambda3 {
     }
 
     Consumer<AtomicInteger> wrap(Consumer<AtomicInteger> consumer){
-        return (AtomicInteger count) -> {
-            // TODO: fix it
-            // consumer.accept();
-        };
+        // TODO: fix it
+        return consumer::accept;
     }
 }

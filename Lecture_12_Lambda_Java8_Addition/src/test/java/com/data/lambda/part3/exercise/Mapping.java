@@ -3,6 +3,7 @@ package com.data.lambda.part3.exercise;
 import com.data.Employee;
 import com.data.JobHistoryEntry;
 import com.data.Person;
+import java.util.stream.Collectors;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -32,8 +33,12 @@ public class Mapping {
         // [T] -> (T -> R) -> [R]
         // [T1, T2, T3] -> (T -> R) -> [R1, R2, R3]
         public <R> MapHelper<R> map(Function<T, R> f) {
-            // TODO
-            throw new UnsupportedOperationException();
+            final List<R> result = new ArrayList<>();
+            list.forEach((T t) ->
+                result.add(f.apply(t))
+            );
+
+            return new MapHelper<>(result);
         }
 
         // [T] -> (T -> [R]) -> [R]
@@ -41,12 +46,12 @@ public class Mapping {
         // map: [T, T, T], T -> [R] => [[], [R1, R2], [R3, R4, R5]]
         // flatMap: [T, T, T], T -> [R] => [R1, R2, R3, R4, R5]
         public <R> MapHelper<R> flatMap(Function<T, List<R>> f) {
-            final List<R> result = new ArrayList<R>();
+            final List<R> result = new ArrayList<>();
             list.forEach((T t) ->
                     f.apply(t).forEach(result::add)
             );
 
-            return new MapHelper<R>(result);
+            return new MapHelper<>(result);
         }
     }
 
@@ -81,7 +86,19 @@ public class Mapping {
                 .map(TODO) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))
                 .map(TODO) // replace qa with QA
                 * */
-                .getList();
+                    .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                    .map(e -> e.withJobHistory(
+                        e.getJobHistory().stream().map(jhe -> jhe.withDuration(jhe.getDuration() + 1))
+                            .collect(Collectors.toList())
+                    ))
+                    .map(e -> e.withJobHistory(
+                        e.getJobHistory().stream()
+                            .map(jhe -> jhe.getPosition().equals("qa") ?
+                                jhe.withPosition(jhe.getPosition().toUpperCase()) :
+                                jhe)
+                            .collect(Collectors.toList())
+                    ))
+                    .getList();
 
         final List<Employee> expectedResult =
                 Arrays.asList(
@@ -111,7 +128,12 @@ public class Mapping {
 
     private static class LazyMapHelper<T, R> {
 
+        private List<T> list;
+        private Function<T, R> function;
+
         public LazyMapHelper(List<T> list, Function<T, R> function) {
+            this.list = list;
+            this.function = function;
         }
 
         public static <T> LazyMapHelper<T, T> from(List<T> list) {
@@ -119,13 +141,11 @@ public class Mapping {
         }
 
         public List<R> force() {
-            // TODO
-            throw new UnsupportedOperationException();
+            return new MapHelper<>(list).map(function).getList();
         }
 
         public <R2> LazyMapHelper<T, R2> map(Function<R, R2> f) {
-            // TODO
-            throw new UnsupportedOperationException();
+            return new LazyMapHelper<>(list, (t) -> f.apply(function.apply(t)));
         }
 
     }
@@ -198,7 +218,19 @@ public class Mapping {
                 .map(TODO) // add 1 year to experience duration
                 .map(TODO) // replace qa with QA
                 * */
-                .force();
+                    .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                    .map(e -> e.withJobHistory(
+                        e.getJobHistory().stream().map(jhe -> jhe.withDuration(jhe.getDuration() + 1))
+                            .collect(Collectors.toList())
+                    ))
+                    .map(e -> e.withJobHistory(
+                        e.getJobHistory().stream()
+                            .map(jhe -> jhe.getPosition().equals("qa") ?
+                                jhe.withPosition(jhe.getPosition().toUpperCase()) :
+                                jhe)
+                            .collect(Collectors.toList())
+                    ))
+                    .force();
 
         final List<Employee> expectedResult =
                 Arrays.asList(

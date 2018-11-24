@@ -16,8 +16,10 @@ public class ZTestReentrantLock {
     static void inc() {
         // TODO: add ReentrantLock
         try {
+            lock.lock();
             counter++;
         } finally {
+            lock.unlock();
         }
     }
 
@@ -37,8 +39,10 @@ public class ZTestReentrantLock {
         //TODO: make runnable
         //TODO: make runnable
         // TODO: Insert start of threada
-        assertEquals(thread1.getState(), Thread.State.RUNNABLE);
-        assertEquals(thread2.getState(), Thread.State.RUNNABLE);
+        thread1.start();
+        assertEquals(Thread.State.RUNNABLE, thread1.getState());
+        thread2.start();
+        assertEquals(Thread.State.RUNNABLE, thread2.getState());
 
         // Add delay if necessary
         Thread.currentThread().sleep(100);

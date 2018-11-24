@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ZInfiniteAppRun {
 
-    private static boolean running = true;
+    private static volatile boolean running = true;
 
     public static class MyThread extends Thread {
         public void run() {
@@ -35,6 +35,7 @@ public class ZInfiniteAppRun {
         Thread.sleep(500);
         System.out.println(Thread.currentThread().getName() + " exited");
         // TODO: App is running and cannot exit. Fix it.
+        myThread.join();
         assertEquals(Thread.State.TERMINATED, myThread.getState());
     }
 }

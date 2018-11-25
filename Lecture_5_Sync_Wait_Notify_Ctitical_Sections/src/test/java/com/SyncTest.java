@@ -1,11 +1,11 @@
 package com;
 
-import com.mycompany.prepare.utils.Utils;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
+import com.mycompany.prepare.utils.Utils;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 // Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
 // Intrinsic lock is associated with the Class instance (static context)
@@ -17,28 +17,25 @@ public class SyncTest {
     Lock lock = new ReentrantLock();
 
     public void change() {
-
-        lock.lock();
-        try {
+        if (lock.tryLock()) {
+            lock.lock();
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 
     @Test
     public void testSync() {
-        new Thread(() -> {
-            change();
-        }).start();
-        new Thread(() -> {
-            change();
-        }).start();
+        new Thread(this::change).start();
+        new Thread(this::change).start();
 
         Utils.sleep(2000);
 

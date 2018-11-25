@@ -11,27 +11,28 @@ public class ATestThreadState {
 
     /**
      * Fill in the gaps and insert instructions to make code executable
+     *
      * @throws InterruptedException
      */
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+        Thread thread1 = createThread(ATestThreadState::sleep);
+        Thread thread2 = createThread(ATestThreadState::sleep);
 
         assertEquals(thread1.getState(), Thread.State.NEW);
         assertEquals(thread2.getState(), Thread.State.NEW);
 
 
-        // TODO: fill the gap
-        // TODO: fill the gap
+        thread1.start();
+        thread2.start();
 
         assertEquals(thread1.getState(), Thread.State.RUNNABLE);
         assertEquals(thread2.getState(), Thread.State.RUNNABLE);
 
         // Add delay if necessary
         // TODO: fill the gap
-
+        Thread.sleep(1000);
         // threads should run task to be put on hold
         assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
         assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
@@ -46,6 +47,14 @@ public class ATestThreadState {
     private Thread createThread(Runnable runnable) {
         final Thread thread = new Thread(runnable);
         return thread;
+    }
+
+    private static void sleep() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

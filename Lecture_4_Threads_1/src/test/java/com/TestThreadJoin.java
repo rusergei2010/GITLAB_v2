@@ -1,33 +1,37 @@
 package com;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 
 public class TestThreadJoin {
+
     /**
      * Fill in the gaps and insert instructions to make code executable
-     *
-     * @throws InterruptedException
      */
     @Test
     public void testThread() throws InterruptedException {
         Thread thread1 = createThread(() -> {
-            try {
-                // TODO: design wait right way
-                wait(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (this) {
+                try {
+                    // TODO: design wait right way
+                    wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         Thread thread2 = createThread(() -> {
-            try {
-                // TODO: design wait right way
-                wait(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (this) {
+
+                try {
+                    // TODO: design wait right way
+                    wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -44,12 +48,14 @@ public class TestThreadJoin {
 
         // TODO: Wait till both threads are completed or terminated
 
-        // threads should run task to be put on hold
+        thread1.join();
+        thread2.join();
         assertEquals(thread1.getState(), Thread.State.TERMINATED);
         assertEquals(thread2.getState(), Thread.State.TERMINATED);
 
         // TODO: fill in action with Thread to exit loop
         while (!Thread.currentThread().isInterrupted()) {
+            Thread.currentThread().interrupt();
         }
 
         assertTrue(Thread.currentThread().isInterrupted());

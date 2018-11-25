@@ -16,12 +16,12 @@ public class Test1 {
 
     @Test
     public void testFuture() throws ExecutionException, InterruptedException {
-        Future<String> future = new FutureTask<String>(() -> {
+        FutureTask<String> future = new FutureTask<String>(() -> {
             Thread.sleep(2000);
             System.out.println("Task is executed");
             return "Future result";
         });
-        ((FutureTask<String>) future).run();
+        future.run();
         System.out.println(future.get());
     }
 
@@ -42,7 +42,7 @@ public class Test1 {
 
         new Thread(() -> {
             sleep(1000);
-            completableFuture.complete("XXXX"); // TODO: Fix it in the string
+            completableFuture.complete("Result"); // TODO: Fix it in the string
         }).start();
 
         assertEquals("Result", completableFuture.get());
@@ -61,6 +61,8 @@ public class Test1 {
             }
         }).start();
         sleep(100);
+
+        completableFuture.completeExceptionally(new RuntimeException("Own exception"));
         // TODO: Complete Exceptionally with RuntimeException
         // TODO: Code the exception in this line
         try {

@@ -1,13 +1,13 @@
 package com.practice.home;
 
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
+import com.practice.home.Lambda2.Person.Gender;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * TODO: Convert to Lambda
@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class Lambda2 {
 
     public static class Person {
+
         String name;
         int age;
         Gender gender;
@@ -67,7 +68,6 @@ public class Lambda2 {
         Person person2 = new Person("Evgenii", 20, Person.Gender.MALE);
         Person person3 = new Person("Vala", 12, Person.Gender.FEMALE);
 
-
         List<Person> list = Arrays.asList(person1, person2, person3);
         List<Person> males = new ArrayList<>();
 
@@ -76,12 +76,7 @@ public class Lambda2 {
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter
-            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
-                males.add(p);
-            }
-        }
+        list.stream().filter(person -> person.getGender().equals(Gender.MALE)).forEach(males::add);
         assertArrayEquals(males.toArray(), Arrays.asList(person1, person2).toArray());
 
         // ###############################
@@ -91,15 +86,9 @@ public class Lambda2 {
 
         males.clear();
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter and (p) -> {} statement inside
-            if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
-                males.add(p);
-            }
-        }
-
+        list.stream().filter(person -> person.getGender().equals(Gender.MALE))
+                .filter(person -> person.getAge() > 10).forEach(males::add);
         assertArrayEquals(males.toArray(), Arrays.asList(person2).toArray());
-
 
         // ###############################
         // ########## TASK 3 #############
@@ -107,23 +96,15 @@ public class Lambda2 {
         // Filter all MALES elder than 10 and include FEMALE of any age. Then calculate total age of them.
         List<Person> peopleWithSalary = new ArrayList<>();
 
-
-        // TODO: make one : Integer result = people.stream()....filter()....map()....sum();
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter and (p) -> {} statement inside
-            if ((p.gender == Person.Gender.MALE && p.age > 10) || (p.gender == Person.Gender.FEMALE)) { // replace with '::' access
-                peopleWithSalary.add(p);
-            }
-        }
+        list.stream()
+                .filter(person -> (person.getGender().equals(Gender.MALE) && person.getAge() > 10)
+                        || (person.getGender().equals(Gender.FEMALE)))
+                .forEach(peopleWithSalary::add);
         // use map() to convert to Integer and .sum() to collect the total age
 
-        int age = 0;
-        for (Person p : peopleWithSalary) {
-            age = age + p.age;
-        }
+        int age = peopleWithSalary.stream().mapToInt(Person::getAge).sum();
 
         assertEquals(age, 32);
-
 
         // ###############################
         // ########## TASK 4 #############
@@ -131,13 +112,7 @@ public class Lambda2 {
         // TODO: Apply StringBuilder and access to static method  in a stream expression
 
         StringBuilder sb = new StringBuilder();
-        for (Person p : list) {
-          // TODO: make the statement
-          //  (p) -> {
-          //      sb.append(getName); // with ::
-          // }
-            sb.append(getName(p) + " ");
-        }
+        list.forEach(p -> sb.append(p.getName()).append(" "));
 
         assertEquals("Andrey Evgenii Vala ", sb.toString());
     }

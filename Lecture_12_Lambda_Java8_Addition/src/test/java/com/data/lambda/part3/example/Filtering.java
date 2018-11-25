@@ -1,21 +1,21 @@
 package com.data.lambda.part3.example;
 
+import static org.junit.Assert.assertEquals;
+
 import com.data.Employee;
 import com.data.JobHistoryEntry;
 import com.data.Person;
-import junit.framework.TestCase;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
+import java.util.stream.Collectors;
+import junit.framework.TestCase;
+import org.junit.Test;
 
 public class Filtering {
+
     // old style
     @Test
     public void filtering0() {
@@ -53,12 +53,22 @@ public class Filtering {
             // TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
             // TODO: DEV name should be 'John'
             // Store all matching output in 'result' collection
+            if (employee.getPerson().getFirstName().equals("John")) {
+                List<JobHistoryEntry> jobInEpam = employee.getJobHistory().stream()
+                        .filter((x) -> x.getEmployer().equals("epam") && x.getDuration() > 1 && x
+                                .getPosition().equals("dev")).collect(
+                                Collectors.toList());
+                if (jobInEpam.size() > 0) {
+                    result.add(employee);
+                }
+            }
         }
         TestCase.assertEquals(1, result.size());
     }
 
 
     public static class FilterUtil<T> {
+
         private final List<T> list;
 
         public FilterUtil(List<T> list) {
@@ -84,7 +94,7 @@ public class Filtering {
 
     private static boolean hasDevExperience(Employee e) {
         return new FilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getPosition().equals("QA")) // TODO: fix here
+                .filter(j -> j.getPosition().equals("dev")) // TODO: fix here
                 .getList()
                 .size() > 0;
     }
@@ -139,6 +149,7 @@ public class Filtering {
     }
 
     public static class LazyFilterUtil<T> {
+
         private final List<T> list;
         private final Predicate<T> condition;
 
@@ -176,7 +187,7 @@ public class Filtering {
     private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
         return new LazyFilterUtil<>(e.getJobHistory())
                 .filter(j -> j.getEmployer().equals("epam"))
-                .filter(j -> j.getDuration() > 2)// TODO: fix it in this line (1,2 or more?)
+                .filter(j -> j.getDuration() >= 2)// TODO: fix it in this line (1,2 or more?)
                 .force()
                 .size() > 0;
     }

@@ -32,7 +32,7 @@ public class ReentrantReadWriteLockTest {
                 }
             } finally {
                 if (locked) {
-//                    readLock.unlock();
+                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }
@@ -88,9 +88,7 @@ public class ReentrantReadWriteLockTest {
         cache.getName().ifPresent(IllegalArgumentException::new);
         Util.threadSleep(100);
 
-        service.submit(() -> {
-            cache.setName(Optional.of("Agent 007"));
-        });
+        service.submit(() -> cache.setName(Optional.of("Agent 007")));
 
         Util.threadSleep(100);
 
@@ -99,9 +97,7 @@ public class ReentrantReadWriteLockTest {
         assertEquals("Agent 007", cache.getName().get());
 
         Util.threadSleep(100);
-        service.submit(() -> {
-            cache.setNameImmediately(Optional.of("Agent 008"));
-        });
+        service.submit(() -> cache.setNameImmediately(Optional.of("Agent 008")));
 
         Thread.sleep(9000);
 

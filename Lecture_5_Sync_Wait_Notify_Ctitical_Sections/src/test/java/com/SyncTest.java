@@ -18,7 +18,9 @@ public class SyncTest {
 
     public void change() {
 
-        lock.lock();
+        if(!lock.tryLock()){
+            return;
+        }
         try {
             try {
                 Thread.sleep(1000);

@@ -1,29 +1,27 @@
 package com;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.atomic.AtomicReference;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 
 public class TestSingleton {
 
     static TestSingleton instance;
 
-    public TestSingleton(){}
+    public TestSingleton() {
+    }
 
-    public static TestSingleton getInstance(){
+    public static TestSingleton getInstance() {
         if (instance == null) {
-            // TODO: complete
+            instance = new TestSingleton();
         }
         return instance;
     }
 
     /**
      * Fill in the gaps and insert instructions to make code executable
-     *
-     * @throws InterruptedException
      */
     @Test
     public void testThread() throws InterruptedException {
@@ -31,7 +29,7 @@ public class TestSingleton {
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null);
+            instance.compareAndSet(null, getInstance());
         });
 
         thread1.start();

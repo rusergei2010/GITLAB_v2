@@ -33,6 +33,7 @@ public class CountDownLatchTest {
             }
             executeJob();
             System.out.println("Job is Executed");
+            latchStop.countDown();
         }
 
         private void executeJob() {

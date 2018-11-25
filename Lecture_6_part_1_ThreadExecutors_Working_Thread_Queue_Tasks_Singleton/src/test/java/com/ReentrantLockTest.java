@@ -19,10 +19,15 @@ public class ReentrantLockTest {
             lock.lock();
             Util.sleep(100);
             count++;
-            validate();
+            try {
+                validate();
+            } catch (RuntimeException ex){
+
+            }
+            lock.unlock();
         }
 
-        private void validate() {
+        private void validate() throws RuntimeException {
             if (count == 2) {
                 throw new RuntimeException();
             }

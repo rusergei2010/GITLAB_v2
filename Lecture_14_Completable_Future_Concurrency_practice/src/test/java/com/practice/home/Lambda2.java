@@ -1,5 +1,6 @@
 package com.practice.home;
 
+import com.practice.home.Lambda2.Person.Gender;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -76,12 +77,16 @@ public class Lambda2 {
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter
-            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
-                males.add(p);
-            }
-        }
+        list.stream()
+            .filter(p -> p.gender == Person.Gender.MALE)
+            .forEach(p -> males.add(p));
+
+//        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+//            // TODO: make Java 8 filter
+//            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
+//                males.add(p);
+//            }
+//        }
         assertArrayEquals(males.toArray(), Arrays.asList(person1, person2).toArray());
 
         // ###############################
@@ -91,12 +96,16 @@ public class Lambda2 {
 
         males.clear();
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter and (p) -> {} statement inside
-            if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
-                males.add(p);
-            }
-        }
+        list.stream()
+            .filter(p -> p.gender == Gender.MALE && p.age > 10)
+            .forEach(p -> males.add(p));
+
+//        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+//            // TODO: make Java 8 filter and (p) -> {} statement inside
+//            if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
+//                males.add(p);
+//            }
+//        }
 
         assertArrayEquals(males.toArray(), Arrays.asList(person2).toArray());
 
@@ -105,8 +114,14 @@ public class Lambda2 {
         // ########## TASK 3 #############
         // ###############################
         // Filter all MALES elder than 10 and include FEMALE of any age. Then calculate total age of them.
-        List<Person> peopleWithSalary = new ArrayList<>();
 
+        int age = list.stream()
+            .filter(p -> (p.gender == Gender.MALE && p.age > 10) || (p.gender == Gender.FEMALE))
+            .mapToInt(p -> p.age)
+            .sum();
+
+        /*
+        List<Person> peopleWithSalary = new ArrayList<>();
 
         // TODO: make one : Integer result = people.stream()....filter()....map()....sum();
         for (Person p : list) { // replace with com.data.lambda and stream().forEach()
@@ -121,6 +136,7 @@ public class Lambda2 {
         for (Person p : peopleWithSalary) {
             age = age + p.age;
         }
+        */
 
         assertEquals(age, 32);
 
@@ -131,13 +147,16 @@ public class Lambda2 {
         // TODO: Apply StringBuilder and access to static method  in a stream expression
 
         StringBuilder sb = new StringBuilder();
-        for (Person p : list) {
-          // TODO: make the statement
-          //  (p) -> {
-          //      sb.append(getName); // with ::
-          // }
-            sb.append(getName(p) + " ");
-        }
+
+        list.forEach(p -> sb.append(getName(p) + " "));
+
+//        for (Person p : list) {
+//          // TODO: make the statement
+//          //  (p) -> {
+//          //      sb.append(getName); // with ::
+//          // }
+//            sb.append(getName(p) + " ");
+//        }
 
         assertEquals("Andrey Evgenii Vala ", sb.toString());
     }

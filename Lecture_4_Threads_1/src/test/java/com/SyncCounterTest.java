@@ -43,11 +43,11 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        public synchronized void inc() {
             counter++;
         }
 
-        public Integer getCounter(){
+        public synchronized Integer getCounter(){
             return counter;
         }
     }
@@ -69,7 +69,8 @@ public class SyncCounterTest {
         thread1.start();
         thread2.start();
 
-//        thread2.join();
+        thread1.join();
+        thread2.join();
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

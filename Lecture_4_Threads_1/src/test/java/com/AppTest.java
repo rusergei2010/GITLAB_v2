@@ -1,5 +1,6 @@
 package com;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -7,11 +8,11 @@ import static org.junit.Assert.assertEquals;
 public class AppTest {
 
     static class MyRunnable implements Runnable {
-        int counter = 0;
+        AtomicInteger counter = new AtomicInteger(0);
 
         @Override
         public void run() {
-            counter++;
+            counter.incrementAndGet();
         }
     }
 
@@ -30,7 +31,10 @@ public class AppTest {
         thread1.start();
         thread2.start();
 
-        assertEquals(2, myRunnable.counter);
+        thread1.join();
+        thread2.join();
+
+        assertEquals(2, myRunnable.counter.get());
     }
 
 

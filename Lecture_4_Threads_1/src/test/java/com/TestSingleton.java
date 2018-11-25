@@ -31,7 +31,7 @@ public class TestSingleton {
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null);
+            instance.compareAndSet(instance.get(), getInstance());
         });
 
         thread1.start();

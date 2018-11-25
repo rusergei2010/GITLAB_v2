@@ -1,11 +1,10 @@
 package prepare.atomic;
 
-import prepare.util.Util;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
+import prepare.util.Util;
 
 /**
  * Race condition demo
@@ -14,7 +13,7 @@ public class AtomicInteger1 {
 
 
     public static class Counter {
-        int counter = 0;
+        int counter = 0; // volatile???
 
         void inc() {
             counter++;

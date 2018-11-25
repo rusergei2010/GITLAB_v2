@@ -1,15 +1,12 @@
 package prepare.atomic;
 
-import com.sun.jndi.toolkit.ctx.AtomicContext;
-import prepare.util.Util;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.LongStream;
+import prepare.util.Util;
 
 
 /**
@@ -21,7 +18,6 @@ public class AtomicInteger4 {
     static class Counter {
         AtomicLong counter = new AtomicLong(0);
 
-
         void inc(long addValue) {
             long initValue = counter.get();
             long newValue = addValue + initValue;
@@ -29,6 +25,18 @@ public class AtomicInteger4 {
                 initValue = counter.get();
                 newValue = addValue + initValue;
             }
+        }
+
+        long get() {
+            return counter.get();
+        }
+    }
+
+    static class AtomicCounter {
+        AtomicLong counter = new AtomicLong(0);
+
+        void inc(long addValue) {
+            counter.addAndGet(addValue);
         }
 
         long get() {
@@ -58,6 +66,7 @@ public class AtomicInteger4 {
 
         // closure
         Counter counter = new Counter();
+        AtomicCounter atomicCounter = new AtomicCounter();
         SyncCounter syncCounter = new SyncCounter();
 
         final long COUNTER = 1_000_000L;
@@ -80,7 +89,28 @@ public class AtomicInteger4 {
                 }
         ).get(); // wait
         long end = System.currentTimeMillis();
-        System.out.println("Atomic CAS Execution time = " + (end - start));
+        System.out.println("Atomic simulated CAS Execution time = " + (end - start));
+
+        // ######################### Direct Atomic Example #################
+        start = System.currentTimeMillis();
+        // thread 1
+        service.submit(() ->
+                {
+                    LongStream.range(0, COUNTER).forEach(i -> {
+                        atomicCounter.inc(10);
+                    });
+                }
+        );
+        // thread 2
+        service.submit(() ->
+                {
+                    LongStream.range(0, COUNTER).forEach(i -> {
+                        atomicCounter.inc(1);
+                    });
+                }
+        ).get(); // wait
+        end = System.currentTimeMillis();
+        System.out.println("Pure Atomic Example Execution time = " + (end - start));
 
         // ######################### Sync intricic Example #################
         start = System.currentTimeMillis();

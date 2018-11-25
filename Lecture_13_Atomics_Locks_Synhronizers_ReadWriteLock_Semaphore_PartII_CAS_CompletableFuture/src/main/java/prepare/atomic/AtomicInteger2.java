@@ -1,11 +1,10 @@
 package prepare.atomic;
 
-import prepare.util.Util;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
+import prepare.util.Util;
 
 /**
  * workaround with intrisic lock
@@ -16,7 +15,7 @@ public class AtomicInteger2 {
 
         synchronized void inc() {
             counter++;
-        }
+        } // 500 times degradation
     }
 
 

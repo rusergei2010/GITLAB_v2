@@ -10,7 +10,7 @@ public class SyncCounterTest {
     public static class CounterThread implements Runnable {
 
         private final String name;
-        private final Counter counter;
+        private volatile Counter counter;
         private final int total;
 
         public CounterThread(final String name, final Counter counter, int total) {
@@ -43,11 +43,11 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        public synchronized void inc() {
             counter++;
         }
 
-        public Integer getCounter(){
+        public synchronized Integer getCounter(){
             return counter;
         }
     }
@@ -69,7 +69,8 @@ public class SyncCounterTest {
         thread1.start();
         thread2.start();
 
-//        thread2.join();
+        thread2.join();
+        thread1.join();
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

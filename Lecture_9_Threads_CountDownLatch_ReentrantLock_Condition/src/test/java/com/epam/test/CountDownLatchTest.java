@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: fix the test (hint - countDown() is missing)
+ *
  */
 public class CountDownLatchTest {
 
@@ -28,6 +28,7 @@ public class CountDownLatchTest {
             System.out.println("Task is started");
             try {
                 latchStart.await();
+                latchStop.countDown();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

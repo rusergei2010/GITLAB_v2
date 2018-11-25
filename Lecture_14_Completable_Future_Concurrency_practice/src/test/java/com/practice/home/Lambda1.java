@@ -19,12 +19,12 @@ public class Lambda1 {
      */
     @Test
     public void testUpperCase() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("Berlin");
         list.add("Work");
         list.add("speed");
         List<String> result =  list.stream()
-                .map(str -> str) // TODO: replace with other com.data.lambda '::' expression
+                .map(String::toUpperCase) // TODO: replace with other com.data.lambda '::' expression
                 .collect(Collectors.toList());
 
 
@@ -37,13 +37,13 @@ public class Lambda1 {
      */
     @Test
     public void testCountAllWordsInAllSentences() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("Berlin One");
         list.add("Work Two Thres");
         list.add("speed man man");
 
         long sum1 = list.stream().mapToInt(str->{
-            return 1; // TODO: replace '1' with com.data.lambda expression
+            return str.split(" ").length; // TODO: replace '1' with com.data.lambda expression
         }).sum();
 
         Long sum = sum1;

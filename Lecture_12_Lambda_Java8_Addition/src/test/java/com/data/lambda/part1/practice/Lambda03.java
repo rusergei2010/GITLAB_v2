@@ -1,4 +1,4 @@
-package com.data.lambda.part1.practice;
+package lambda.part1.practice;
 
 import org.junit.Test;
 
@@ -7,9 +7,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class Lambda03 {
 
@@ -79,22 +77,27 @@ public class Lambda03 {
         }
 
 
+        Person person = new Person("Vladimir");
+        final int j = 0;
+
         List<Person> list = new ArrayList();
 
+        Arrays.sort(personsAged,
+                (person1_, person2_) -> {
+                    //j++;
+                    String name = person.getName();
+                    person.setName("Lamda Expression");
+                    list.add(person1_);
+//                    person = new Person();
+//                    System.out.println("Sorting..." + name);
+                    return person1_.name.compareTo(person2_.name); // statement
+                });
 
-        // TODO: Uncomment this first
-//        Arrays.sort(personsAged, myComparator); // reference
+        //person.setName("Putin");
+        Arrays.sort(personsAged, Lambda03::compare); // reference
 
-        // TODO: Uncomment another expression then (replace with this one)
-//        Arrays.sort(personsAged,
-//                (person1_, person2_) -> {
-//                    person.setName("Lambda Expression");
-//                    list.add(person1_);
-//                    return person1_.name.compareTo(person2_.name); // statement
-//                });
-
-        assertEquals("Sergey", personsAged[2].name);
-        assertEquals(2, list.size());
+//        System.out.println(Arrays.toString(personsAged));
+        assertEquals("Sergey", personsAged[2].name);// Fix the name
     }
 
     public static int compare(Person o1, Person o2) {

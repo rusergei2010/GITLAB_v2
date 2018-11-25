@@ -20,7 +20,7 @@ public class CounterTest {
         public void inc() throws InterruptedException {
             if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.threadSleep(200);
+                    Util.threadSleep(000);
                     counter++;
                 } finally {
                     lock.unlock();

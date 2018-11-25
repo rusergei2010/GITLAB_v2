@@ -21,7 +21,7 @@ public class FixedSizeThreadPoolTest {
         };
     }
 
-    // TODO: Fix - one line should be relocated
+
     @Test
     public void testSizedThreadPool() {
         ExecutorService service = Executors.newFixedThreadPool(1);
@@ -38,7 +38,6 @@ public class FixedSizeThreadPoolTest {
             e.printStackTrace();
         }
 
-        shutdownWithDelay(service, 1000);
 
         Future<String> res3 = service.submit(callable());
         try {
@@ -49,16 +48,17 @@ public class FixedSizeThreadPoolTest {
             e.printStackTrace();
         }
 
+        shutdownWithDelay(service, 1000);
         System.out.println("Exiting...");
 
         // wait while all tasks are completed
     }
 
 
-    // TODO: Fix - change the size of the ThreadPool
+
     @Test
     public void testSizedThreadPool2() {
-        ExecutorService service = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newFixedThreadPool(3);
 
         Future<String> res1 = service.submit(callable());
         Future<String> res2 = service.submit(callable());

@@ -1,8 +1,7 @@
 package com;
 
-import org.junit.Test;
-
 import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,19 +18,23 @@ public class TestThreadWaitNotify {
     @Test
     public void testThread() throws InterruptedException {
         Thread thread1 = createThread(() -> {
-            try {
-                counter.wait();
-                counter.incrementAndGet();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (counter) {
+                try {
+                    counter.wait();
+                    counter.incrementAndGet();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         Thread thread2 = createThread(() -> {
-            try {
-                counter.wait();
-                counter.incrementAndGet();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (counter) {
+                try {
+                    counter.wait();
+                    counter.incrementAndGet();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -47,6 +50,10 @@ public class TestThreadWaitNotify {
 
         // TODO: notify thread
         // TODO: notify thread
+
+        synchronized (counter) {
+            counter.notifyAll();
+        }
 
         // delay
         Thread.sleep(1000);

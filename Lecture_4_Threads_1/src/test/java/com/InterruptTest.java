@@ -26,8 +26,8 @@ public class InterruptTest {
     @Test
     public void testInterrupt() throws InterruptedException {
         final Thread thread = new MyThread();
-        thread.run();
-        thread.interrupt();
+        thread.start();
+        //thread.interrupt();
 
         thread.join(1000);
 

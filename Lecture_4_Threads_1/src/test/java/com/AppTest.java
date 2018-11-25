@@ -1,4 +1,4 @@
-package com;
+package com.AppTest;
 
 import org.junit.Test;
 
@@ -29,6 +29,7 @@ public class AppTest {
         Thread thread2 = createThread(myRunnable);
         thread1.start();
         thread2.start();
+        thread2.join();
 
         assertEquals(2, myRunnable.counter);
     }

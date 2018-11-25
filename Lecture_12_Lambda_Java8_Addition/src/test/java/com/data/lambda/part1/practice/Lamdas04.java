@@ -1,8 +1,9 @@
-package com.data.lambda.part1.practice;
+package lambda.part1.practice;
 
 import org.junit.Test;
 
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
@@ -68,7 +69,7 @@ public class Lamdas04 {
         PersonInterfacePredicate<Person> personInterfaceIsFemale = (Person p) -> p.gender == Person.GENDER.FEMALE;
         PersonInterfacePredicate<Person> testAgeGender = this::testAgeGender;
 
-        // com.data.lambda as statement
+        // lambda as statement
         PersonInterfaceCompare<Person> personPersonInterfaceCompare = (Person p1, Person p2) -> {
             System.out.println("Compare : " + p1 + ", " + p2);
             return p1.name.compareTo(p2.name);
@@ -85,7 +86,7 @@ public class Lamdas04 {
                 .mapToInt(Person::getAge)
                 .sum();
 
-        assertEquals(new Integer(23), sumAge); // TODO: fix the age
+        assertEquals(new Integer(25), sumAge); // TODO: fix the age
     }
 
     private boolean testAgeGender(Person p) {

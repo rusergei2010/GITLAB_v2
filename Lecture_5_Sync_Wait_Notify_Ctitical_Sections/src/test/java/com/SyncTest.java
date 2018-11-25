@@ -39,8 +39,7 @@ public class SyncTest {
         new Thread(() -> {
             change();
         }).start();
-
-        Utils.sleep(2000);
+        Utils.sleep(1200);
 
         // TODO: fix it with use of 'if(tryLock())' for heavy calculations (~sleep(1000))
         assertEquals(1, counter);

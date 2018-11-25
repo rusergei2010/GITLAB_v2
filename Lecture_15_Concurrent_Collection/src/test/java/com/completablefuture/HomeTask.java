@@ -26,7 +26,7 @@ public class HomeTask {
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
 //        ForkJoinPool.commonPool().submit(()->{});
 
-        Map<Integer, String> map = new HashMap();
+        Map<Integer, String> map = new ConcurrentHashMap<>();
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {

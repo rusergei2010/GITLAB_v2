@@ -33,7 +33,9 @@ public class Mapping {
         // [T1, T2, T3] -> (T -> R) -> [R1, R2, R3]
         public <R> MapHelper<R> map(Function<T, R> f) {
             // TODO
-            throw new UnsupportedOperationException();
+            final List<R> res = new ArrayList<>();
+            list.forEach(t -> res.add(f.apply(t)));
+            return new MapHelper<>(res);
         }
 
         // [T] -> (T -> [R]) -> [R]
@@ -76,12 +78,11 @@ public class Mapping {
 
         final List<Employee> mappedEmployees =
                 new MapHelper<>(employees)
-                /*
-                .map(TODO) // change name to John .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
-                .map(TODO) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))
-                .map(TODO) // replace qa with QA
-                * */
-                .getList();
+
+                        .map(e -> e.withPerson(e.getPerson().withFirstName("John"))) // change name to John .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                        .map(e -> e.withJobHistory(addOneYear(e.getJobHistory()))) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))
+                        .map(e -> e.withJobHistory(qaToUpper(e.getJobHistory()))) // replace qa with QA
+                        .getList();
 
         final List<Employee> expectedResult =
                 Arrays.asList(
@@ -109,9 +110,26 @@ public class Mapping {
     }
 
 
+    private List<JobHistoryEntry> qaToUpper(List<JobHistoryEntry> jobHistory) {
+        jobHistory.replaceAll(jobHistoryEntry ->
+                jobHistoryEntry.getPosition().toUpperCase().equals("QA") ?
+                        jobHistoryEntry.withPosition(jobHistoryEntry.getPosition().toUpperCase()) : jobHistoryEntry);
+        return jobHistory;
+    }
+
+    private List<JobHistoryEntry> addOneYear(List<JobHistoryEntry> jobHistory) {
+        jobHistory.replaceAll(jobHistoryEntry -> jobHistoryEntry.withDuration(1 + jobHistoryEntry.getDuration()));
+        return jobHistory;
+    }
+
     private static class LazyMapHelper<T, R> {
 
+        Function<T, R> function;
+        List<T> list;
+
         public LazyMapHelper(List<T> list, Function<T, R> function) {
+            this.list = list;
+            this.function = function;
         }
 
         public static <T> LazyMapHelper<T, T> from(List<T> list) {
@@ -120,12 +138,17 @@ public class Mapping {
 
         public List<R> force() {
             // TODO
-            throw new UnsupportedOperationException();
+            List<R> res = new ArrayList<>();
+            list.forEach(t -> res.add(function.apply(t)));
+            return res;
         }
 
         public <R2> LazyMapHelper<T, R2> map(Function<R, R2> f) {
             // TODO
-            throw new UnsupportedOperationException();
+            list.forEach(t -> function.apply(t));
+            Function<T, R2> functionRes = t -> f.apply(function.apply(t));
+            return new LazyMapHelper<>(list, functionRes);
+
         }
 
     }
@@ -166,7 +189,6 @@ public class Mapping {
     }
 
 
-
     @Test
     public void lazy_mapping() {
         final List<Employee> employees =
@@ -193,12 +215,10 @@ public class Mapping {
 
         final List<Employee> mappedEmployees =
                 LazyMapHelper.from(employees)
-                /*
-                .map(TODO) // change name to John
-                .map(TODO) // add 1 year to experience duration
-                .map(TODO) // replace qa with QA
-                * */
-                .force();
+                        .map(t -> t.withPerson(t.getPerson().withFirstName("John")))
+                        .map(t -> t.withJobHistory(addOneYear(t.getJobHistory())))
+                        .map(t -> t.withJobHistory(qaToUpper(t.getJobHistory())))
+                        .force();
 
         final List<Employee> expectedResult =
                 Arrays.asList(

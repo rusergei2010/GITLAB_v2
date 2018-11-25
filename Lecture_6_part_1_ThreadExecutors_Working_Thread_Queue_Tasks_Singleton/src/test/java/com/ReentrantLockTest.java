@@ -19,7 +19,14 @@ public class ReentrantLockTest {
             lock.lock();
             Util.sleep(100);
             count++;
-            validate();
+
+            try {
+                validate();
+            } catch (RuntimeException e){
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
         }
 
         private void validate() {

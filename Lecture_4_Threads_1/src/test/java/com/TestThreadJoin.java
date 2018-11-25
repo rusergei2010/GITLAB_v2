@@ -1,6 +1,7 @@
 package com;
 
 import org.junit.Test;
+import prepare.Interrupt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +26,6 @@ public class TestThreadJoin {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            main.interrupt();
         });
         Thread thread2 = createThread(() -> {
             try {
@@ -53,6 +53,7 @@ public class TestThreadJoin {
 
         thread1.join();
         thread2.join();
+        Thread.currentThread().interrupt();
 
         // threads should run task to be put on hold
         assertEquals(thread1.getState(), Thread.State.TERMINATED);

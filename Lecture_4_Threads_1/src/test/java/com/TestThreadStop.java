@@ -11,14 +11,15 @@ public class TestThreadStop {
 
         // TODO: think of volatile, interrup() or Atomic
         public static volatile boolean running = true;
-        public static volatile String str = "";
+        public static AtomicReference<String> str = new AtomicReference<>("");
 
         @Override
         public void run() {
 
             while (running) {
                 try {
-                    str = str + "a";
+                    while (!str.weakCompareAndSet(str.get(), str + "a"));
+                    //str = str + "a";
                     synchronized (this) {
                         wait(100);
                     }
@@ -39,7 +40,7 @@ public class TestThreadStop {
 
         //TODO: Employ TestThreadStop.Manageable.running = false inside of loop and stop thread when "aaa" is built
         for (int i = 0; i < 100; i++) {
-            if(Manageable.str.equals("aaa")) {
+            if (Manageable.str.get().equals("aaa")) {
                 Manageable.running = false;
                 break;
             } else {
@@ -48,6 +49,6 @@ public class TestThreadStop {
         }
 
         System.out.println("Received : " + Manageable.str);
-        assertEquals("aaa", Manageable.str);
+        assertEquals("aaa", Manageable.str.get());
     }
 }

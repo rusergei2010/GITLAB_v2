@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
  * @author Crunchify.com
  *
  */
- 
-public class CrunchifyConcurrentHashMapVsSynchronizedMap {
+
+ public class CrunchifyConcurrentHashMapVsSynchronizedMap {
  
 	public final static int THREAD_POOL_SIZE = 5;
  

@@ -12,7 +12,7 @@ public class LockTest {
     private static int counter = 0;
 
     public static void change() {
-        synchronized (LockTest.class) {
+        synchronized (/*LockTest.class*/ object) {
             counter++;
         }
     }
@@ -33,7 +33,6 @@ public class LockTest {
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> changeX());
         }).start();
-
 
         Utils.sleep(1000);
 

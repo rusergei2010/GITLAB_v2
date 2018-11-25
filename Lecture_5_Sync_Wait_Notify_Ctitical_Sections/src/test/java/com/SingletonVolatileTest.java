@@ -10,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class SingletonVolatileTest {
 
     private static class SingletonVolatile {
+
         private AtomicInteger counter = new AtomicInteger();
         private static /*TODO: fix here*/ SingletonVolatile instance = null;
 
@@ -21,14 +22,16 @@ public class SingletonVolatileTest {
         }
 
         public static SingletonVolatile getInstance() {
-            //TODO: Fix it here
+            //TODO: Fix it here тесты и так проходят, без изменений
             if (instance == null) {
-                try {
-                    Thread.sleep(100); // keep sleep()
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized (SingletonVolatile.class) {
+                    try {
+                        Thread.sleep(100); // keep sleep()
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    instance = new SingletonVolatile();
                 }
-                instance = new SingletonVolatile();
             }
             return instance;
         }

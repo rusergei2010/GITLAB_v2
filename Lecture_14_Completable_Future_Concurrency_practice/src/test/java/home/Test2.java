@@ -15,16 +15,19 @@ public class Test2 {
 
     @Test
     public void testSupply() throws ExecutionException, InterruptedException {
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task");
+        CompletableFuture<String> completableFuture = CompletableFuture
+                .supplyAsync(() -> "First Task");
         // TODO: Use com.data.lambda: (s -> s + " Second Task") with thenApply() termination operation for the CompletableFuture
-        CompletableFuture<String> result = completableFuture.supplyAsync(() -> " Second Task"); //thenApply(s -> s + " / Second Task");
+        CompletableFuture<String> result = completableFuture
+                .thenApply(s -> s + " / Second Task"); //thenApply(s -> s + " / Second Task");
 
         assertEquals("First Task / Second Task", result.get());
     }
 
     @Test
     public void testAccept() throws ExecutionException, InterruptedException {
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task");
+        CompletableFuture<String> completableFuture = CompletableFuture
+                .supplyAsync(() -> "First Task");
         AtomicReference<String> reference = new AtomicReference<>();
         CompletableFuture<Void> result = completableFuture.thenAccept(s -> {
             reference.set("Hey!");
@@ -38,11 +41,15 @@ public class Test2 {
     @Test
     public void testCombine() throws ExecutionException, InterruptedException {
 
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task. Hello");
+        CompletableFuture<String> completableFuture = CompletableFuture
+                .supplyAsync(() -> "First Task. Hello");
 
-        BiFunction<String, String, String> func = (s1, s2) -> {return "";}; // TODO: Fix the return value in BiFunction
+        BiFunction<String, String, String> func = (s1, s2) -> {
+            return s1 + s2;
+        }; // TODO: Fix the return value in BiFunction
 
-        CompletableFuture<String> combined = completableFuture.thenCombineAsync(CompletableFuture.supplyAsync(() -> " World"), func);
+        CompletableFuture<String> combined = completableFuture
+                .thenCombineAsync(CompletableFuture.supplyAsync(() -> " World"), func);
 
         assertEquals("First Task. Hello World", combined.get());
     }
@@ -52,12 +59,13 @@ public class Test2 {
     public void testComposeAsyncSleep() throws ExecutionException, InterruptedException {
 
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> {
-            sleep(500); // TODO: Fix the timeout here
+            sleep(2000); // TODO: Fix the timeout here
             return "First Task. Hello";
         });
         Thread.sleep(1000);
         completableFuture.complete("NEO"); // TODO: Pay attention to this line and its role
-        CompletableFuture<String> combined = completableFuture.thenCompose((s) -> CompletableFuture.supplyAsync(() -> s + " World"));
+        CompletableFuture<String> combined = completableFuture
+                .thenCompose((s) -> CompletableFuture.supplyAsync(() -> s + " World"));
         Thread.sleep(1000);
         assertEquals("NEO World", combined.get());
     }
@@ -74,11 +82,12 @@ public class Test2 {
             return "Two";
         });
         CompletableFuture<String> completableFuture3 = CompletableFuture.supplyAsync(() -> {
-            sleep(ThreadLocalRandom.current().nextInt(1000)); // line 3
+            sleep(ThreadLocalRandom.current().nextInt(100)); // line 3
             return "Three";
         });
 
-        CompletableFuture future = CompletableFuture.anyOf(completableFuture1, completableFuture2, completableFuture3);
+        CompletableFuture future = CompletableFuture
+                .anyOf(completableFuture1, completableFuture2, completableFuture3);
         assertEquals("Three", future.get());
     }
 

@@ -19,10 +19,11 @@ public class ScheduledThreadPool {
     public void testFuture() throws InterruptedException, ExecutionException {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-        ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
+        ScheduledFuture<String> result = executor
+                .schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
         Thread.sleep(100);
-
+        result.cancel(true);
         assertEquals(true, result.isCancelled());
         executor.shutdown();
     }
@@ -31,10 +32,10 @@ public class ScheduledThreadPool {
     public void testFutureCancel() throws InterruptedException, ExecutionException {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-        ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
+        ScheduledFuture<String> result = executor
+                .schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
         Thread.sleep(100);
-        result.cancel(false);
 
         assertEquals("Result", result.get());
         executor.shutdown();

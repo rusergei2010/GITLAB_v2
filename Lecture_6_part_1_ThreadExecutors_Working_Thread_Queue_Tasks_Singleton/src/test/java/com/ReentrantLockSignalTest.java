@@ -15,6 +15,7 @@ public class ReentrantLockSignalTest {
     private static final int OPERS = 10;
 
     public static class BlockingSyncQueue {
+
         private ReentrantLock lock = new ReentrantLock();
         private Condition readCondition = lock.newCondition();
         private Condition writeCondition = lock.newCondition();
@@ -34,8 +35,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 writeCondition.signal();
+                lock.unlock();
             }
             return msg;
         }
@@ -51,13 +52,14 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 readCondition.signal();
+                lock.unlock();
             }
         }
     }
 
     public static class Consumer implements Runnable {
+
         int reads;
         BlockingSyncQueue syncQueue;
 
@@ -73,12 +75,13 @@ public class ReentrantLockSignalTest {
             for (int i = 0; i < reads; i++) {
                 final String s = syncQueue.readMsg();
                 received.add(s);
-                System.out.println("Received:"  +s);
+                System.out.println("Received:" + s);
             }
         }
     }
 
     public static class Producer implements Runnable {
+
         int writes;
         BlockingSyncQueue syncQueue;
 
@@ -98,8 +101,8 @@ public class ReentrantLockSignalTest {
     }
 
     /**
-     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
-     * // TODO: Fix the CounterTest#run method only (look into finally block)
+     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical
+     * section // TODO: Fix the CounterTest#run method only (look into finally block)
      */
     @Test
     public void testQueue() throws InterruptedException {

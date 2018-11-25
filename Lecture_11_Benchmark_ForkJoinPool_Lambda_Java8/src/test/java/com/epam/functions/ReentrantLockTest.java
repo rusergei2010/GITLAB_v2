@@ -9,15 +9,22 @@ import static org.junit.Assert.assertEquals;
 public class ReentrantLockTest {
 
     public static class Counter implements Runnable {
+
         ReentrantLock lock = new ReentrantLock();
         private int count = 0;
 
         @Override
         public void run() {
-            lock.lock();
-            Util.threadSleep(100);
-            count++;
-            validate();
+
+            try {
+                lock.lock();
+                Util.threadSleep(100);
+                count++;
+                validate();
+            } finally {
+                lock.unlock();
+            }
+
         }
 
         private void validate() {
@@ -28,8 +35,8 @@ public class ReentrantLockTest {
     }
 
     /**
-     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
-     * // TODO: Fix the CounterTest#run method only
+     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical
+     * section // TODO: Fix the CounterTest#run method only
      */
     @Test
     public void testLock() throws InterruptedException {

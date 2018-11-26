@@ -12,24 +12,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.junit.Assert.assertEquals;
 
 public class CounterTest {
-    static class Counter {
-        private int counter = 0;
-
-        // External lock
-        Lock lock = new ReentrantLock();
-
-        public void inc() throws InterruptedException {
-            if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
-                try {
-                    Util.sleep(200);
-                    counter++;
-                } finally {
-                    lock.unlock();
-                }
-            }
-        }
-    }
-
     @Test
     public void testCounter() throws InterruptedException {
 
@@ -56,5 +38,22 @@ public class CounterTest {
 
         // TODO: fix the test by changing timings
         assertEquals(2, counter.counter);
+    }
+
+    static class Counter {
+        // External lock
+        Lock lock = new ReentrantLock();
+        private int counter = 0;
+
+        public void inc() throws InterruptedException {
+            if (lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+                try {
+                    Util.sleep(50);
+                    counter++;
+                } finally {
+                    lock.unlock();
+                }
+            }
+        }
     }
 }

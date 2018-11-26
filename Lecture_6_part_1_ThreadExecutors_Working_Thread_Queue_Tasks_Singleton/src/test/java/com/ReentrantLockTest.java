@@ -3,31 +3,11 @@ package com;
 import org.junit.Test;
 import prepare.util.Util;
 
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
 
 public class ReentrantLockTest {
-
-    public static class Counter implements Runnable {
-        ReentrantLock lock = new ReentrantLock();
-        private int count = 0;
-
-        @Override
-        public void run() {
-            lock.lock();
-            Util.sleep(100);
-            count++;
-            validate();
-        }
-
-        private void validate() {
-            if (count == 2) {
-                throw new RuntimeException();
-            }
-        }
-    }
 
     /**
      * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
@@ -53,5 +33,31 @@ public class ReentrantLockTest {
         assertEquals(3, count.count);
 
         System.out.println("Main exit: " + count.count);
+    }
+
+    public static class Counter implements Runnable {
+        ReentrantLock lock = new ReentrantLock();
+        private int count = 0;
+
+        @Override
+        public void run() {
+            try {
+
+                lock.lock();
+                Util.sleep(100);
+                count++;
+                validate();
+
+            } finally {
+
+                lock.unlock();
+            }
+        }
+
+        private void validate() {
+            if (count == 2) {
+                throw new RuntimeException();
+            }
+        }
     }
 }

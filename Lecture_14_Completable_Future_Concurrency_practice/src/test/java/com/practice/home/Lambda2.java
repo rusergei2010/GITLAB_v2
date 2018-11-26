@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -76,12 +77,13 @@ public class Lambda2 {
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+        /*for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter
             if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
                 males.add(p);
             }
-        }
+        }*/
+        list.stream().filter(person -> person.gender == Person.Gender.MALE).forEach(males::add);
         assertArrayEquals(males.toArray(), Arrays.asList(person1, person2).toArray());
 
         // ###############################
@@ -91,13 +93,14 @@ public class Lambda2 {
 
         males.clear();
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+        /*for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter and (p) -> {} statement inside
             if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
                 males.add(p);
             }
-        }
+        }*/
 
+        list.stream().filter(person -> person.gender == Person.Gender.MALE).filter(person -> person.age > 10).forEach(males::add);
         assertArrayEquals(males.toArray(), Arrays.asList(person2).toArray());
 
 
@@ -108,7 +111,7 @@ public class Lambda2 {
         List<Person> peopleWithSalary = new ArrayList<>();
 
 
-        // TODO: make one : Integer result = people.stream()....filter()....map()....sum();
+      /*  // TODO: make one : Integer result = people.stream()....filter()....map()....sum();
         for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter and (p) -> {} statement inside
             if ((p.gender == Person.Gender.MALE && p.age > 10) || (p.gender == Person.Gender.FEMALE)) { // replace with '::' access
@@ -120,7 +123,9 @@ public class Lambda2 {
         int age = 0;
         for (Person p : peopleWithSalary) {
             age = age + p.age;
-        }
+        }*/
+
+      int age = list.stream().filter(person -> (person.gender == Person.Gender.FEMALE)||(person.age > 10)).mapToInt(Person::getAge).sum();
 
         assertEquals(age, 32);
 
@@ -131,13 +136,15 @@ public class Lambda2 {
         // TODO: Apply StringBuilder and access to static method  in a stream expression
 
         StringBuilder sb = new StringBuilder();
-        for (Person p : list) {
+        /*for (Person p : list) {
           // TODO: make the statement
           //  (p) -> {
           //      sb.append(getName); // with ::
           // }
             sb.append(getName(p) + " ");
-        }
+        }*/
+
+        list.forEach(person -> sb.append(person.name).append(" "));
 
         assertEquals("Andrey Evgenii Vala ", sb.toString());
     }

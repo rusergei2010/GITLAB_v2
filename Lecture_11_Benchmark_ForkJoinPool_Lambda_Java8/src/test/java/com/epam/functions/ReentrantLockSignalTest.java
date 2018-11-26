@@ -33,8 +33,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 writeCondition.signal();
+                lock.unlock();
             }
             return msg;
         }
@@ -50,8 +50,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 readCondition.signal();
+                lock.unlock();
             }
         }
     }

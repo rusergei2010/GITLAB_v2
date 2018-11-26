@@ -1,3 +1,4 @@
+/*
 package com.benchmark;
 
 import org.openjdk.jmh.annotations.Benchmark;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+*/
 /*
  * ============================== HOW TO RUN THIS TEST: ====================================
  *
@@ -40,7 +42,8 @@ import java.util.stream.IntStream;
  * b) Via the Java API:
  *    (see the JMH homepage for possible caveats when running from IDE:
  *      http://openjdk.java.net/projects/code-tools/jmh/)
- */
+ *//*
+
 
 @BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 0)
@@ -189,4 +192,4 @@ public class BenchmarkReadCollections {
             });
     }
 
-}
+}*/

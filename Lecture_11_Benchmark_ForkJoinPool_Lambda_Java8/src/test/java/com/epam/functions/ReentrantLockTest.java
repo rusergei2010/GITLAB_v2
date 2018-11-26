@@ -17,6 +17,7 @@ public class ReentrantLockTest {
             lock.lock();
             Util.threadSleep(100);
             count++;
+            lock.unlock();
             validate();
         }
 
@@ -42,9 +43,7 @@ public class ReentrantLockTest {
         thread2.start();
         thread3.start();
 //
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
+
 //
         Thread.sleep(1000);
 

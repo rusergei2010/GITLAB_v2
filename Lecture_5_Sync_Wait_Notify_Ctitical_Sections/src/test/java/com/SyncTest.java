@@ -3,9 +3,11 @@ package com;
 import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
+
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import static org.junit.Assert.assertEquals;
+
+import static junit.framework.TestCase.assertEquals;
 
 // Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
 // Intrinsic lock is associated with the Class instance (static context)
@@ -40,9 +42,8 @@ public class SyncTest {
             change();
         }).start();
 
-        Utils.sleep(2000);
-
         // TODO: fix it with use of 'if(tryLock())' for heavy calculations (~sleep(1000))
-        assertEquals(1, counter);
+        if(lock.tryLock())
+            assertEquals(1, counter);
     }
 }

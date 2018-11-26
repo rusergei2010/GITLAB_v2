@@ -1,8 +1,9 @@
 package com;
 
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 
 public class AppTest {
 
@@ -10,7 +11,7 @@ public class AppTest {
         int counter = 0;
 
         @Override
-        public void run() {
+        public synchronized void run() {
             counter++;
         }
     }
@@ -30,6 +31,8 @@ public class AppTest {
         thread1.start();
         thread2.start();
 
+        thread2.join();
+        thread1.join();
         assertEquals(2, myRunnable.counter);
     }
 

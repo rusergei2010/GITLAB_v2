@@ -16,18 +16,22 @@ public class ATestThreadState {
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+        Thread thread1 = createThread();
+        Thread thread2 = createThread();
 
         assertEquals(thread1.getState(), Thread.State.NEW);
         assertEquals(thread2.getState(), Thread.State.NEW);
 
+        thread1.start();
+        thread2.start();
 
         // TODO: fill the gap
         // TODO: fill the gap
 
         assertEquals(thread1.getState(), Thread.State.RUNNABLE);
         assertEquals(thread2.getState(), Thread.State.RUNNABLE);
+
+
 
         // Add delay if necessary
         // TODO: fill the gap

@@ -9,12 +9,14 @@ import static org.junit.Assert.assertEquals;
 
 public class TestSingleton {
 
-    static TestSingleton instance;
+    static volatile TestSingleton instance;
 
-    public TestSingleton(){}
+    public TestSingleton() {
+    }
 
-    public static TestSingleton getInstance(){
+    public static TestSingleton getInstance() {
         if (instance == null) {
+            instance = new TestSingleton();
             // TODO: complete
         }
         return instance;
@@ -29,14 +31,19 @@ public class TestSingleton {
     public void testThread() throws InterruptedException {
         final AtomicReference<TestSingleton> instance = new AtomicReference<>();
 
+
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null);
+            instance.compareAndSet(null, TestSingleton.getInstance());
         });
 
         thread1.start();
 
-        thread1.join();
+        System.out.println(thread1.getState());
+
+        thread1.join(1000);
+
+
 
         assertEquals(TestSingleton.getInstance(), instance.get());
     }

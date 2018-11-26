@@ -1,12 +1,14 @@
 package com;
 
+
 import org.junit.Test;
 import prepare.util.Util;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
+
 
 public class ReentrantLockTest {
 
@@ -19,6 +21,11 @@ public class ReentrantLockTest {
             lock.lock();
             Util.sleep(100);
             count++;
+            try {
+                lock.newCondition().await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             validate();
         }
 

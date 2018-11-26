@@ -1,10 +1,11 @@
 package com.epam.functions;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,8 +33,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 writeCondition.signal();
+                lock.unlock();
             }
             return msg;
         }
@@ -49,8 +50,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 readCondition.signal();
+                lock.unlock();
             }
         }
     }

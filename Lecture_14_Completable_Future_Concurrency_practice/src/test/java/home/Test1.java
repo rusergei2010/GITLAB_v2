@@ -1,11 +1,8 @@
 package home;
 
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 import org.junit.Test;
+
+import java.util.concurrent.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,7 +38,7 @@ public class Test1 {
 
         new Thread(() -> {
             sleep(1000);
-            completableFuture.complete("XXXX"); // TODO: Fix it in the string
+            completableFuture.complete("Result"); // TODO: Fix it in the string
         }).start();
 
         assertEquals("Result", completableFuture.get());
@@ -62,6 +59,7 @@ public class Test1 {
         sleep(100);
         // TODO: Complete Exceptionally with RuntimeException
         // TODO: Code the exception in this line
+        completableFuture.completeExceptionally(new RuntimeException());
         try {
             System.err.println("Print: " + completableFuture.get());
         } catch (Throwable ex) {

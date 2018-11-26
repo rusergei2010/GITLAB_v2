@@ -1,15 +1,12 @@
 package home.completablefuture;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import org.junit.Test;
+
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
-import org.junit.Test;
 
 public class HomeTask {
 
@@ -25,7 +22,7 @@ public class HomeTask {
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
 //        ForkJoinPool.commonPool().submit(()->{});
 
-        Map<Integer, String> map = new HashMap();
+        Map<Integer, String> map =new ConcurrentHashMap<>();
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
@@ -77,7 +74,7 @@ public class HomeTask {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.put(i, "O"); // Line 2
+                        concurrentHashMap.put(i, "X"); // Line 2
                         sleep(1);
                     }
             );
@@ -104,7 +101,7 @@ public class HomeTask {
     public void immutableCollections() throws Throwable {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
-        List<Integer> immutable = new ArrayList<>(mutableList); // TODO: Fix in this line
+        List<Integer> immutable = Collections.unmodifiableList(mutableList); // TODO: Fix in this line
 
         try {
             CompletableFuture.supplyAsync(() -> {

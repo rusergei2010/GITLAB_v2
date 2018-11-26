@@ -2,8 +2,6 @@ package com.data.lambda.part1.exercise;
 
 import org.junit.Test;
 
-import java.util.StringJoiner;
-
 import static org.junit.Assert.assertEquals;
 
 public class Lambdas03Exercise {
@@ -18,21 +16,27 @@ public class Lambdas03Exercise {
 
     @Test
     public void generic0() {
-        final GenericProduct<Integer> prod = null; // TODO: Use anonymous class
+        final GenericProduct<Integer> prod = new GenericProduct<Integer>() {
+            @Override
+            public Integer prod(Integer a, int i) {
+                return a * i;
+            }
+        };
+        // TODO: Use anonymous class
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic1() {
-        final GenericProduct<Integer> prod = null; // TODO: Use statement com.data.lambda
+        final GenericProduct<Integer> prod = (x,y) -> {return x*y;}; // TODO: Use statement com.data.lambda
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic2() {
-        final GenericProduct<Integer> prod = null; // TODO: Use expression com.data.lambda
+        final GenericProduct<Integer> prod = (x,y) -> x*y; // TODO: Use expression com.data.lambda
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
@@ -47,7 +51,7 @@ public class Lambdas03Exercise {
 
     @Test
     public void strSum() {
-        final GenericProduct<String> prod = null; // TODO: use stringProd;
+        final GenericProduct<String> prod = Lambdas03Exercise::stringProd; // TODO: use stringProd;
 
         assertEquals(prod.prod("a", 2), "aa");
     }

@@ -7,6 +7,27 @@ import static prepare.util.Util.threadSleep;
 
 public class SyncCounterTest {
 
+    /**
+     * TODO: Fix the test and the code to make it Thread-Safe
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void testSync() throws InterruptedException {
+
+        final int total = 200;
+        Counter counter = new Counter(0);
+        Thread thread1 = new Thread(new CounterThread("Thread - 1", counter, total));
+        Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
+
+        thread1.start();
+        thread2.start();
+
+        thread2.join();
+
+        assertEquals(2 * total, counter.getCounter().longValue());
+    }
+
     public static class CounterThread implements Runnable {
 
         private final String name;
@@ -34,7 +55,6 @@ public class SyncCounterTest {
         }
     }
 
-
     public static class Counter {
 
         private Integer counter;
@@ -43,34 +63,12 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        public synchronized void inc() {
             counter++;
         }
 
-        public Integer getCounter(){
+        public synchronized Integer getCounter() {
             return counter;
         }
-    }
-
-
-    /**
-     * TODO: Fix the test and the code to make it Thread-Safe
-     *
-     * @throws InterruptedException
-     */
-    @Test
-    public void testSync() throws InterruptedException {
-
-        final int total = 200;
-        Counter counter = new Counter(0);
-        Thread thread1 = new Thread(new CounterThread("Thread - 1", counter, total));
-        Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
-
-        thread1.start();
-        thread2.start();
-
-//        thread2.join();
-
-        assertEquals(2 * total, counter.getCounter().longValue());
     }
 }

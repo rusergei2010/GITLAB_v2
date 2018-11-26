@@ -11,31 +11,43 @@ public class ATestThreadState {
 
     /**
      * Fill in the gaps and insert instructions to make code executable
+     *
      * @throws InterruptedException
      */
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+        Thread thread1 = createThread(() -> {
 
-        assertEquals(thread1.getState(), Thread.State.NEW);
-        assertEquals(thread2.getState(), Thread.State.NEW);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
 
+        Thread thread2 = createThread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
 
-        // TODO: fill the gap
-        // TODO: fill the gap
+        assertEquals(Thread.State.NEW, thread1.getState());
+        assertEquals(Thread.State.NEW, thread2.getState());
 
-        assertEquals(thread1.getState(), Thread.State.RUNNABLE);
-        assertEquals(thread2.getState(), Thread.State.RUNNABLE);
+        thread1.start();
+        thread2.start();
 
-        // Add delay if necessary
-        // TODO: fill the gap
+        assertEquals(Thread.State.RUNNABLE, thread1.getState());
+        assertEquals(Thread.State.RUNNABLE, thread2.getState());
 
-        // threads should run task to be put on hold
-        assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
-        assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
-        assertEquals(Thread.currentThread().getState(), Thread.State.RUNNABLE);
+        Thread.sleep(100);
+
+        assertEquals(Thread.State.TIMED_WAITING, thread1.getState());
+        assertEquals(Thread.State.TIMED_WAITING, thread2.getState());
+        assertEquals(Thread.State.RUNNABLE, Thread.currentThread().getState());
     }
 
     private Thread createThread() {

@@ -1,10 +1,10 @@
-package com;
+//package com;
+//
+//import org.junit.Test;
+//
+//import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-public class TestThreadStop {
+//public class TestThreadStop {
 
 //    static class Manageable extends Thread {
 //
@@ -43,4 +43,4 @@ public class TestThreadStop {
 //        System.out.println("Received : " + Manageable.str);
 //        assertEquals("aaa", Manageable.str);
 //    }
-}
+//}

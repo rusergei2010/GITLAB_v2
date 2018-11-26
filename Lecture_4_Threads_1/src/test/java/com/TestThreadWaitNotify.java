@@ -19,21 +19,29 @@ public class TestThreadWaitNotify {
     @Test
     public void testThread() throws InterruptedException {
         Thread thread1 = createThread(() -> {
-            try {
-                counter.wait();
-                counter.incrementAndGet();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+                    synchronized (counter) {
+                        counter.incrementAndGet();
+                        try {
+
+                            counter.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
         Thread thread2 = createThread(() -> {
-            try {
-                counter.wait();
-                counter.incrementAndGet();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+                    synchronized (counter) {
+                        counter.incrementAndGet();
+                        try {
+
+                            counter.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
 
         thread1.start();
         thread2.start();
@@ -54,7 +62,8 @@ public class TestThreadWaitNotify {
     }
 
     private Thread createThread() {
-        final Thread thread = new Thread();
+        final Thread thread = new Thread(() ->
+                counter.incrementAndGet());
         return thread;
     }
 

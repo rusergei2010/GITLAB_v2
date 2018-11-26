@@ -9,51 +9,9 @@ import static org.junit.Assert.assertEquals;
 
 public class Lamdas04 {
 
-    static class Person {
-        public String name;
-        public int age;
-        public GENDER gender;
-
-        public Person(String name, int age, GENDER gender) {
-            this.name = name;
-            this.age = age;
-            this.gender = gender;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        enum GENDER {
-            MALE,
-            FEMALE
-        }
-
-        @Override
-        public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    ", gender=" + gender +
-                    '}';
-        }
+    private static boolean isMale(Person p) {
+        return p.gender != Person.GENDER.FEMALE;
     }
-
-    @FunctionalInterface
-    public interface PersonInterface {
-        void accept();
-    }
-
-    @FunctionalInterface
-    public interface PersonInterfacePredicate<Person> {
-        boolean test(Person p);
-    }
-
-    @FunctionalInterface
-    public interface PersonInterfaceCompare<Person> {
-        int compare(Person p1, Person p2);
-    }
-
 
     @Test
     public void testLamda01() {
@@ -82,6 +40,7 @@ public class Lamdas04 {
                 new Person("Artem", 21, Person.GENDER.MALE),
                 new Person("Vera", 2, Person.GENDER.FEMALE))
                 .filter(((Predicate<Person>) Lamdas04::isMale).negate())
+                .filter(this::testAgeGender)
                 .mapToInt(Person::getAge)
                 .sum();
 
@@ -92,7 +51,49 @@ public class Lamdas04 {
         return p.gender == Person.GENDER.FEMALE && p.age < 65 && p.age > 18;
     }
 
-    private static boolean isMale(Person p) {
-        return p.gender != Person.GENDER.FEMALE;
+    @FunctionalInterface
+    public interface PersonInterface {
+        void accept();
+    }
+
+
+    @FunctionalInterface
+    public interface PersonInterfacePredicate<Person> {
+        boolean test(Person p);
+    }
+
+    @FunctionalInterface
+    public interface PersonInterfaceCompare<Person> {
+        int compare(Person p1, Person p2);
+    }
+
+    static class Person {
+        public String name;
+        public int age;
+        public GENDER gender;
+
+        public Person(String name, int age, GENDER gender) {
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    ", gender=" + gender +
+                    '}';
+        }
+
+        enum GENDER {
+            MALE,
+            FEMALE
+        }
     }
 }

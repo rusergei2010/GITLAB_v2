@@ -51,6 +51,7 @@ public class A2_CompletableFutureTest {
             System.out.println(s + "\n" + "Second Task");
         });
 
+        sleep(1000);
         System.out.println(result.get());
     }
 

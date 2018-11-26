@@ -3,12 +3,7 @@ package com.epam.executors;
 import com.epam.threads.util.Util;
 import org.junit.Test;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static com.epam.executors.TestUtil.shutdownWithDelay;
 import static junit.framework.TestCase.assertNotNull;
@@ -59,7 +54,7 @@ public class CachedThreadPoolTest {
         ExecutorService service = Executors.newCachedThreadPool();
 
         Future<?> result1 = service.submit(runnable("Thread 1"));
-        service.shutdown();
+//        service.shutdown();
         Future<?> result2 = service.submit(runnable("Thread 2"));
 
         assertNotNull(result1);

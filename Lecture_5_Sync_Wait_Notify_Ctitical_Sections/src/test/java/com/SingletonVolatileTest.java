@@ -9,39 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 public class SingletonVolatileTest {
 
-    private static class SingletonVolatile {
-        private AtomicInteger counter = new AtomicInteger();
-        private static /*TODO: fix here*/ SingletonVolatile instance = null;
-
-        private SingletonVolatile() {
-        }
-
-        public void inc() {
-            counter.incrementAndGet();
-        }
-
-        public static SingletonVolatile getInstance() {
-            //TODO: Fix it here
-            if (instance == null) {
-                try {
-                    Thread.sleep(100); // keep sleep()
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                instance = new SingletonVolatile();
-            }
-            return instance;
-        }
-
-        public int getCounter() {
-            return counter.get();
-        }
-
-        public void setCounter(int i) {
-            counter.set(i);
-        }
-    }
-
     @Test
     public void testSingleton() throws InterruptedException {
 
@@ -63,6 +30,40 @@ public class SingletonVolatileTest {
             Thread.sleep(500);
 
             assertEquals(2 * 1000, SingletonVolatile.getInstance().getCounter());
+        }
+    }
+
+    private static class SingletonVolatile {
+        private static volatile SingletonVolatile instance = null;
+        private AtomicInteger counter = new AtomicInteger();
+
+        private SingletonVolatile() {
+        }
+
+        public static SingletonVolatile getInstance() {
+            synchronized (SingletonVolatile.class) {
+                if (instance == null) {
+                    try {
+                        Thread.sleep(100); // keep sleep()
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    instance = new SingletonVolatile();
+                }
+                return instance;
+            }
+        }
+
+        public void inc() {
+            counter.incrementAndGet();
+        }
+
+        public int getCounter() {
+            return counter.get();
+        }
+
+        public void setCounter(int i) {
+            counter.set(i);
         }
     }
 }

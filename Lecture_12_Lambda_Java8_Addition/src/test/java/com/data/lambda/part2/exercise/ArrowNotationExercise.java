@@ -1,9 +1,11 @@
 package com.data.lambda.part2.exercise;
 
 import com.data.Person;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import org.junit.Test;
+
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +14,7 @@ public class ArrowNotationExercise {
     @Test
     public void getAge() {
         // Person -> Integer
-        final Function<Person, Integer> getAge = null; // TODO
+        final Function<Person, Integer> getAge = p -> p.getAge(); // TODO
 
         assertEquals(Integer.valueOf(33), getAge.apply(new Person("", "", 33)));
     }
@@ -22,8 +24,10 @@ public class ArrowNotationExercise {
         // TODO use BiPredicate
         // compareAges: (Person, Person) -> boolean
 
-        throw new UnsupportedOperationException("Not implemented");
-        //assertEquals(true, compareAges.test(new Person("a", "b", 22), new Person("c", "d", 22)));
+        final BiPredicate<Person, Person> compareAges = (p1, p2) -> p1.getAge() == p2.getAge();
+        assertEquals(true, compareAges.test(new Person("a", "b", 22),
+                new Person("c", "d", 22)));
+
     }
 
     // TODO
@@ -36,11 +40,13 @@ public class ArrowNotationExercise {
     @Test
     public void getAgeOfPersonWithTheLongestFullName() {
         // Person -> String
-        final Function<Person, String> getFullName = null; // TODO
+        final Function<Person, String> getFullName = p -> p.getFirstName() + p.getLastName(); // TODO
 
         // (Person, Person) -> Integer
         // TODO use ageOfPersonWithTheLongestFullName(getFullName)
-        final BiFunction<Person, Person, Integer> ageOfPersonWithTheLongestFullName = null;
+        final BiFunction<Person, Person, Integer> ageOfPersonWithTheLongestFullName =
+                (p1, p2) -> (getFullName.apply(p1).length() - getFullName.apply(p2).length() >= 0)
+                        ? p1.getAge() : p2.getAge();
 
         assertEquals(
                 Integer.valueOf(1),

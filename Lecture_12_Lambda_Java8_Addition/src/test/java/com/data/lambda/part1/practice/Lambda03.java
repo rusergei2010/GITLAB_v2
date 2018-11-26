@@ -1,15 +1,11 @@
 package com.data.lambda.part1.practice;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class Lambda03 {
 

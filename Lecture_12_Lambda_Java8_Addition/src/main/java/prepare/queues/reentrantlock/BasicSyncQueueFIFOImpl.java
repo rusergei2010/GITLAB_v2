@@ -1,8 +1,6 @@
 package prepare.queues.reentrantlock;
 
 
-import prepare.util.Util;
-
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
@@ -11,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.IntStream;
+import prepare.util.Util;
 
 
 public class BasicSyncQueueFIFOImpl {

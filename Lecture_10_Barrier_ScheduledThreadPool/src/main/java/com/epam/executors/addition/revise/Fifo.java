@@ -2,7 +2,6 @@ package com.epam.executors.addition.revise;
 
 
 import com.epam.executors.addition.prepare.util.Util;
-
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;

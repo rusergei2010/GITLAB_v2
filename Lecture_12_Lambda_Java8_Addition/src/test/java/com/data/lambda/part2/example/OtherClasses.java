@@ -1,10 +1,9 @@
 package com.data.lambda.part2.example;
 
 import com.data.Person;
-import org.junit.Test;
-
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.*;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

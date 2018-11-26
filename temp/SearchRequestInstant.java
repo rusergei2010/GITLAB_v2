@@ -1,8 +1,5 @@
 package com.epam.functions.model;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +7,9 @@ import java.time.format.FormatStyle;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 public class SearchRequestInstant extends Request {
 

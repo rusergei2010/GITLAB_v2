@@ -3,16 +3,14 @@ package com.data.lambda.part3.example;
 import com.data.Employee;
 import com.data.JobHistoryEntry;
 import com.data.Person;
-import junit.framework.TestCase;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import junit.framework.TestCase;
+import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class Filtering {

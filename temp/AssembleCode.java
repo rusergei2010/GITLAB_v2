@@ -1,7 +1,7 @@
 package temp;
 
-import javax.json.JsonObject;
 import java.util.function.Function;
+import javax.json.JsonObject;
 
 public class AssembleCode implements Function<JsonObject, String> {
 

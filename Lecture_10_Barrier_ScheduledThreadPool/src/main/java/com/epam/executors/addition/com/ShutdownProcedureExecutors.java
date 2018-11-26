@@ -2,7 +2,6 @@ package com.epam.executors.addition.com;
 
 
 import com.epam.executors.addition.prepare.util.Util;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;

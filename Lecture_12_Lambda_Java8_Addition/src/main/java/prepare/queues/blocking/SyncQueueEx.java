@@ -1,12 +1,11 @@
 package prepare.queues.blocking;
 
-import prepare.queues.blocking.Cook;
-import prepare.queues.blocking.Waiter;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
+import prepare.queues.blocking.Cook;
+import prepare.queues.blocking.Waiter;
 
 /**
  * http://tutorials.jenkov.com/java-util-concurrent/blockingqueue.html

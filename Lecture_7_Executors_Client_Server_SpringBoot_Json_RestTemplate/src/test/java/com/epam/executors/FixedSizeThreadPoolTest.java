@@ -38,7 +38,6 @@ public class FixedSizeThreadPoolTest {
             e.printStackTrace();
         }
 
-        shutdownWithDelay(service, 1000);
 
         Future<String> res3 = service.submit(callable());
         try {
@@ -51,6 +50,7 @@ public class FixedSizeThreadPoolTest {
 
         System.out.println("Exiting...");
 
+        shutdownWithDelay(service, 1000);
         // wait while all tasks are completed
     }
 
@@ -64,7 +64,6 @@ public class FixedSizeThreadPoolTest {
         Future<String> res2 = service.submit(callable());
         Future<String> res3 = service.submit(callable());
 
-        shutdownWithDelay(service, 1500);
 
         try {
             assertEquals("Result", res1.get());
@@ -78,6 +77,7 @@ public class FixedSizeThreadPoolTest {
 
         System.out.println("Exiting...");
 
+        shutdownWithDelay(service, 1500);
         // wait while all tasks are completed
     }
 }

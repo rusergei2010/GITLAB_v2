@@ -1,10 +1,9 @@
 package com.epam.functions.model;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
+import org.apache.commons.lang3.StringUtils;
 
 
 public abstract class Request {

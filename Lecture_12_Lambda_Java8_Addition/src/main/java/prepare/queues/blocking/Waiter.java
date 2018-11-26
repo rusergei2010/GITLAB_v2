@@ -1,9 +1,8 @@
 package prepare.queues.blocking;
 
-import prepare.util.Util;
-
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
+import prepare.util.Util;
 
 public class Waiter implements Runnable {
 

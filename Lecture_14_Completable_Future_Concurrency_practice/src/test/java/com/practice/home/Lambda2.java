@@ -5,12 +5,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: Convert to Lambda
+ *  Convert to Lambda
  */
 public class Lambda2 {
 
@@ -62,6 +63,7 @@ public class Lambda2 {
     @Test
     public void testLambda() throws InterruptedException {
         // TODO: replace with com.data.lambda all person access points
+        //?????????????? access points ??????
 
         Person person1 = new Person("Andrey", 10, Person.Gender.MALE);
         Person person2 = new Person("Evgenii", 20, Person.Gender.MALE);
@@ -69,19 +71,22 @@ public class Lambda2 {
 
 
         List<Person> list = Arrays.asList(person1, person2, person3);
-        List<Person> males = new ArrayList<>();
 
         // ###############################
         // ########## TASK 1 #############
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter
-            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
-                males.add(p);
-            }
-        }
+//        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+//            //  make Java 8 filter
+//            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
+//                males.add(p);
+//            }
+//        }
+        List<Person> males = list.stream()
+                .filter(p -> p.gender.equals(Person.Gender.MALE))
+                .collect(Collectors.toList());
+
         assertArrayEquals(males.toArray(), Arrays.asList(person1, person2).toArray());
 
         // ###############################

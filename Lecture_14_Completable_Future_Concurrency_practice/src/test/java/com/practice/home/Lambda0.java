@@ -42,8 +42,6 @@ public class Lambda0 {
         return () -> {
             // TODO: add output to console
             runnable.run();
-            System.out.println("Run Before");
-            System.out.println("Run After");
         };
     }
 

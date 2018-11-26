@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -48,12 +49,22 @@ public class Filtering {
                 );
 
         // Johns with dev experience worked in epam more then 1 year
-        final List<Employee> result = new ArrayList<>();
-        for (Employee employee : employees) {
-            // TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
-            // TODO: DEV name should be 'John'
-            // Store all matching output in 'result' collection
-        }
+
+        //variant 1
+        //final List<Employee> result = workedInEpamMoreThenOneYearAsDevNamedJohn(employees); //realization is down there
+
+        //variant2
+        final List<Employee> result = new LazyFilterUtil<>(employees)
+                .filter(e -> e.getPerson().getFirstName().equals("John"))
+                .filter(Filtering::hasDevExperience)
+                .filter(Filtering::workedInEpamMoreThenOneYearLazy)
+                .force();
+
+//        for (Employee employee : employees) {
+//            //  add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
+//            //  DEV name should be 'John'
+//            // Store all matching output in 'result' collection
+//        }
         TestCase.assertEquals(1, result.size());
     }
 
@@ -82,9 +93,17 @@ public class Filtering {
         }
     }
 
+    private static List<Employee> workedInEpamMoreThenOneYearAsDevNamedJohn(List<Employee> employees) {
+        return employees.stream()
+                .filter(Filtering::workedInEpamMoreThenOneYearLazy)
+                .filter(e -> e.getPerson().getFirstName().equalsIgnoreCase("john"))
+                .filter(Filtering::hasDevExperience)
+                .collect(Collectors.toList());
+    }
+
     private static boolean hasDevExperience(Employee e) {
         return new FilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getPosition().equals("QA")) // TODO: fix here
+                .filter(j -> j.getPosition().equals("dev")) // fix here
                 .getList()
                 .size() > 0;
     }
@@ -94,6 +113,14 @@ public class Filtering {
                 .filter(j -> j.getEmployer().equals("epam"))
                 .filter(j -> j.getDuration() > 1)
                 .getList()
+                .size() > 0;
+    }
+
+    private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
+        return new LazyFilterUtil<>(e.getJobHistory())
+                .filter(j -> j.getEmployer().equals("epam"))
+                .filter(j -> j.getDuration() > 1)// fix it in this line (1,2 or more?)
+                .force()
                 .size() > 0;
     }
 
@@ -172,15 +199,6 @@ public class Filtering {
             return c1.and(c2);
         }
     }
-
-    private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
-        return new LazyFilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getEmployer().equals("epam"))
-                .filter(j -> j.getDuration() > 2)// TODO: fix it in this line (1,2 or more?)
-                .force()
-                .size() > 0;
-    }
-
 
     @Test
     public void lazy_filtering() {

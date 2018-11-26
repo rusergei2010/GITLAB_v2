@@ -3,6 +3,7 @@ package com;
 import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import static org.junit.Assert.assertEquals;
@@ -16,28 +17,38 @@ public class SyncTest {
 
     Lock lock = new ReentrantLock();
 
-    public void change() {
+    public void change() throws InterruptedException {
 
-        lock.lock();
-        try {
+        if(lock.tryLock(1, TimeUnit.SECONDS)){
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
+
     }
 
     @Test
     public void testSync() {
         new Thread(() -> {
-            change();
+            try {
+                change();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }).start();
         new Thread(() -> {
-            change();
+            try {
+                change();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }).start();
 
         Utils.sleep(2000);

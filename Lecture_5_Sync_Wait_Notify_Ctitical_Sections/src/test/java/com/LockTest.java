@@ -12,7 +12,7 @@ public class LockTest {
     private static int counter = 0;
 
     public static void change() {
-        synchronized (LockTest.class) {
+        synchronized (object) {
             counter++;
         }
     }
@@ -37,7 +37,6 @@ public class LockTest {
 
         Utils.sleep(1000);
 
-        // TODO: fix it
         assertEquals(2 * 1000, counter);
     }
 }

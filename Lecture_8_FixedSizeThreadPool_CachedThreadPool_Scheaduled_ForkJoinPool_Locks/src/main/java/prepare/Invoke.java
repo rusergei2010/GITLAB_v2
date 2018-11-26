@@ -30,7 +30,7 @@ public class Invoke {
 
         System.out.println("Invoke any ...");
         String result = serviceExecutor.invokeAny(tasks);
-//        System.out.println(result);
+        System.out.println(result);
 
 
         serviceExecutor.shutdown();

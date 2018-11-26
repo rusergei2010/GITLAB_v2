@@ -16,10 +16,16 @@ public class ReentrantLockTest {
 
         @Override
         public void run() {
+
             lock.lock();
-            Util.sleep(100);
-            count++;
-            validate();
+            try {
+                Util.sleep(100);
+                count++;
+                validate();
+            }
+            finally {
+                lock.unlock();
+            }
         }
 
         private void validate() {
@@ -52,6 +58,6 @@ public class ReentrantLockTest {
 
         assertEquals(3, count.count);
 
-        System.out.println("Main exit: " + count.count);
+//        System.out.println("Main exit: " + count.count);
     }
 }

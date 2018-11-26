@@ -14,35 +14,42 @@ public class ArrowNotationExercise {
     @Test
     public void getAge() {
         // Person -> Integer
-        final Function<Person, Integer> getAge = null; // TODO
+        final Function<Person, Integer> getAge = Person::getAge; // done
 
         assertEquals(Integer.valueOf(33), getAge.apply(new Person("", "", 33)));
     }
 
     @Test
     public void compareAges() {
-        // TODO use BiPredicate
+        //
         // compareAges: (Person, Person) -> boolean
+        final BiPredicate<Person, Person> compareAges = (person1, person2) -> person1.getAge() == person2.getAge();
 
-        throw new UnsupportedOperationException("Not implemented");
-        //assertEquals(true, compareAges.test(new Person("a", "b", 22), new Person("c", "d", 22)));
+        assertEquals(true, compareAges.test(new Person("a", "b", 22), new Person("c", "d", 22)));
     }
 
-    // TODO
+    //
     // getFullName: Person -> String
+    final Function<Person, String> getFullName = p -> p.getLastName() + " " + p.getFirstName();
 
-    // TODO
+    //
     // ageOfPersonWithTheLongestFullName: (Person -> String) -> (Person, Person) -> int
     //
 
     @Test
     public void getAgeOfPersonWithTheLongestFullName() {
         // Person -> String
-        final Function<Person, String> getFullName = null; // TODO
+        final Function<Person, String> getFullName = this.getFullName; //
 
         // (Person, Person) -> Integer
-        // TODO use ageOfPersonWithTheLongestFullName(getFullName)
-        final BiFunction<Person, Person, Integer> ageOfPersonWithTheLongestFullName = null;
+        //
+        final BiFunction<Person, Person, Integer> ageOfPersonWithTheLongestFullName = (person1, person2) -> {
+            Integer P1FullNameLength = getFullName.apply(person1).length();
+            Integer P2FullNameLength = getFullName.apply(person2).length();
+
+            return P1FullNameLength >= P2FullNameLength ? person1.getAge() : person2.getAge();
+
+        };
 
         assertEquals(
                 Integer.valueOf(1),

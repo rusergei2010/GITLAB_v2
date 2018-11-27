@@ -78,7 +78,7 @@ public class Lamdas04 {
         PersonInterfacePredicate<Person> testAgeGenderAsMethodRef = this::testAgeGender;
         PersonInterfacePredicate<Person> testAgeGenderAsStaticMethodRef = Lamdas04::isMale;
 
-        Integer sumAge = Stream.of(new Person("Elizaveta", 23, Person.GENDER.FEMALE),
+        Integer sumAge = Stream.of(new Person("Elizaveta", 21, Person.GENDER.FEMALE),
                 new Person("Artem", 21, Person.GENDER.MALE),
                 new Person("Vera", 2, Person.GENDER.FEMALE))
                 .filter(((Predicate<Person>) Lamdas04::isMale).negate())

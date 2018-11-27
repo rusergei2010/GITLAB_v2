@@ -2,6 +2,7 @@ package com;
 
 import org.junit.Test;
 
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
@@ -43,7 +44,7 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        public synchronized void inc() {
             counter++;
         }
 
@@ -69,8 +70,8 @@ public class SyncCounterTest {
         thread1.start();
         thread2.start();
 
-//        thread2.join();
-
+        thread2.join();
+        sleep(50);
         assertEquals(2 * total, counter.getCounter().longValue());
     }
 }

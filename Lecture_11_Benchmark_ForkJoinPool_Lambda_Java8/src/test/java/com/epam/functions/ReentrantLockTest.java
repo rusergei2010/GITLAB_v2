@@ -17,6 +17,7 @@ public class ReentrantLockTest {
             lock.lock();
             Util.threadSleep(100);
             count++;
+            lock.unlock();
             validate();
         }
 

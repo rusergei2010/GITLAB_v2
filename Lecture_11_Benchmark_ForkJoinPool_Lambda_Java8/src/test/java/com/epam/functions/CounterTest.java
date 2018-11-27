@@ -18,7 +18,7 @@ public class CounterTest {
         Lock lock = new ReentrantLock();
 
         public void inc() throws InterruptedException {
-            if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+            if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 try {
                     Util.threadSleep(200);
                     counter++;
@@ -50,7 +50,7 @@ public class CounterTest {
             }
         });
 
-        service.awaitTermination(1000, TimeUnit.MILLISECONDS);
+        service.awaitTermination(2000, TimeUnit.MILLISECONDS);
         service.shutdown();
 
         // TODO: fix the test by changing timings

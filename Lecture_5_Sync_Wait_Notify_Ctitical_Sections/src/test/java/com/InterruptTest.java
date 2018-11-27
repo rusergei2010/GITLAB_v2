@@ -1,18 +1,14 @@
 package com;
 
-import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
-
-import java.lang.ref.Reference;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 
 // TODO: fix the test useing only volatile
 public class InterruptTest {
-    static boolean flag = true;
+    static volatile boolean flag = true;
 
     private boolean exec() {
         while (flag) {
@@ -23,13 +19,11 @@ public class InterruptTest {
     }
 
     @Test
-    public void testSync() {
+    public void testSync() throws InterruptedException {
         AtomicReference<Boolean> ref = new AtomicReference<>();
         ref.set(false);
 
-        new Thread(() -> {
-            ref.set(exec());
-        }).start();
+        new Thread(() -> ref.set(exec())).start();
 
         new Thread(() -> {
             int counter = 0;
@@ -40,7 +34,7 @@ public class InterruptTest {
             }
         }).start();
 
-        Utils.sleep(2000);
+        sleep(2000);
 
         assertEquals(true, ref.get());
     }

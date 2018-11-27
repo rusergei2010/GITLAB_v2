@@ -3,6 +3,7 @@ package com;
 import org.junit.Test;
 import prepare.util.Util;
 
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -26,7 +27,8 @@ public class InterruptTest {
     @Test
     public void testInterrupt() throws InterruptedException {
         final Thread thread = new MyThread();
-        thread.run();
+        thread.start();
+
         thread.interrupt();
 
         thread.join(1000);

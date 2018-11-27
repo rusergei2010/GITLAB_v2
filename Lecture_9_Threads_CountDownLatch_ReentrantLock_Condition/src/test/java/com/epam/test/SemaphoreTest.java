@@ -18,7 +18,7 @@ public class SemaphoreTest {
     private static class Resource {
 
         private Semaphore semaphore;
-        int connections = 0;
+        volatile int connections = 0;
 
         public Resource(Semaphore semaphore) {
             this.semaphore = semaphore;
@@ -30,9 +30,10 @@ public class SemaphoreTest {
                 permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
-
-                    connections++;
+                    Util.threadSleep(10); // Anchor 2
+                    synchronized(this) {
+                        connections++;
+                    }
                 } else {
                     System.out.println("Connection rejected");
                 }

@@ -19,9 +19,9 @@ public class CounterTest {
         Lock lock = new ReentrantLock();
 
         public void inc() throws InterruptedException {
-            if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+            if(lock.tryLock(200, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.sleep(200);
+                    Util.sleep(100);
                     counter++;
                 } finally {
                     lock.unlock();

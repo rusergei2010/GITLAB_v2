@@ -1,23 +1,22 @@
 package com;
 
-import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
 import java.util.stream.IntStream;
 
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 
 public class LockTest {
 
     private static int counter = 0;
+    private static final Object object = new Object();
 
     public static void change() {
-        synchronized (LockTest.class) {
+        synchronized (object) {
             counter++;
         }
     }
-
-    private static final Object object = new Object();
 
     public static void changeX() {
         synchronized (object) {
@@ -26,7 +25,7 @@ public class LockTest {
     }
 
     @Test
-    public void testSync() {
+    public void testSync() throws InterruptedException {
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> change());
         }).start();
@@ -35,7 +34,7 @@ public class LockTest {
         }).start();
 
 
-        Utils.sleep(1000);
+        sleep(1000);
 
         // TODO: fix it
         assertEquals(2 * 1000, counter);

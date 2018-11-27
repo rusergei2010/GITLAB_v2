@@ -32,52 +32,41 @@ public class FixedSizeThreadPoolTest {
         try {
             assertEquals("Result", res1.get());
             assertEquals("Result", res2.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
-        shutdownWithDelay(service, 1000);
 
         Future<String> res3 = service.submit(callable());
         try {
             assertEquals("Result", res3.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
         System.out.println("Exiting...");
 
-        // wait while all tasks are completed
+        shutdownWithDelay(service, 1000);
     }
-
 
     // TODO: Fix - change the size of the ThreadPool
     @Test
     public void testSizedThreadPool2() {
-        ExecutorService service = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newFixedThreadPool(3);
 
         Future<String> res1 = service.submit(callable());
         Future<String> res2 = service.submit(callable());
         Future<String> res3 = service.submit(callable());
 
-        shutdownWithDelay(service, 1500);
-
         try {
             assertEquals("Result", res1.get());
             assertEquals("Result", res2.get());
             assertEquals("Result", res3.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
         System.out.println("Exiting...");
 
-        // wait while all tasks are completed
+        shutdownWithDelay(service, 1500);
     }
 }

@@ -2,11 +2,7 @@ package home.completablefuture;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -16,8 +12,8 @@ public class HomeTask {
 
 
     /**
-     * TODO: Fix the issue by replacing the HashMap with ConcurrentHashMap
-     * TODO: Consider the commonpool instead of CompletableFuture: "ForkJoinPool.commonPool().submit(()->{})"
+     * : Fix the issue by replacing the HashMap with ConcurrentHashMap
+     * : Consider the common pool instead of CompletableFuture: "ForkJoinPool.commonPool().submit(()->{})"
      *
      * @throws ExecutionException
      * @throws InterruptedException
@@ -26,7 +22,7 @@ public class HomeTask {
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
 //        ForkJoinPool.commonPool().submit(()->{});
 
-        Map<Integer, String> map = new HashMap();
+        Map<Integer, String> map = new ConcurrentHashMap<>();
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
@@ -54,7 +50,7 @@ public class HomeTask {
 
 
     /**
-     * TODO: Read in between lines
+     * : Read in between lines
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -65,7 +61,7 @@ public class HomeTask {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.putIfAbsent(i, "X"); // Line 1
+                        concurrentHashMap.putIfAbsent(i, "O"); // Line 1
                         sleep(1);
                     }
             );
@@ -73,12 +69,12 @@ public class HomeTask {
         });
 
 
-        sleep(10); // TODO: Use ConcurrentHashMap to avoid "ConcurrentModificationException"
+        sleep(10); // : Use ConcurrentHashMap to avoid "ConcurrentModificationException"
 
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.put(i, "O"); // Line 2
+                        concurrentHashMap.put(i, "X"); // Line 2
                         sleep(1);
                     }
             );
@@ -93,19 +89,19 @@ public class HomeTask {
         CompletableFuture.allOf(futureA, futureB).get();
 
         if (concurrentHashMap.entrySet().stream().map(Map.Entry::getValue).anyMatch((String value) -> value.equals("O"))) {
-            throw new RuntimeException("Found wrong symbol"); // TODO: Fix this exception in Line 1,2. Symbol should be "X"
+            throw new RuntimeException("Found wrong symbol"); // : Fix this exception in Line 1,2. Symbol should be "X"
         }
 
         concurrentHashMap.clear();
     }
 
 
-    // TODO: Fix with Unmodifiable collection
+    // : Fix with Unmodifiable collection
     @Test(expected = UnsupportedOperationException.class)
     public void immutableCollections() throws Throwable {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
-        List<Integer> immutable = new ArrayList<>(mutableList); // TODO: Fix in this line
+        List<Integer> immutable = Collections.unmodifiableList(mutableList); // : Fix in this line
 
         try {
             CompletableFuture.supplyAsync(() -> {

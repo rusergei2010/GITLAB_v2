@@ -40,7 +40,7 @@ public class Lambda0 {
 
     public Runnable runLater(Runnable runnable) {
         return () -> {
-            // TODO: add output to console
+            // : add output to console
             runnable.run();
             System.out.println("Run Before");
             System.out.println("Run After");

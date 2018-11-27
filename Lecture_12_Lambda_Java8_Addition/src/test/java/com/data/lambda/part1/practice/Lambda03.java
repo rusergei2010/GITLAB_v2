@@ -77,24 +77,10 @@ public class Lambda03 {
                 personsAged[i++] = new Person("");
             }
         }
-
-
-        List<Person> list = new ArrayList();
-
-
-        // TODO: Uncomment this first
-//        Arrays.sort(personsAged, myComparator); // reference
-
-        // TODO: Uncomment another expression then (replace with this one)
-//        Arrays.sort(personsAged,
-//                (person1_, person2_) -> {
-//                    person.setName("Lambda Expression");
-//                    list.add(person1_);
-//                    return person1_.name.compareTo(person2_.name); // statement
-//                });
+        Arrays.sort(personsAged, myComparator); // reference
 
         assertEquals("Sergey", personsAged[2].name);
-        assertEquals(2, list.size());
+
     }
 
     public static int compare(Person o1, Person o2) {

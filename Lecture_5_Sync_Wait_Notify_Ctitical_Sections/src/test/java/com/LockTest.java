@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class LockTest {
 
-    private static int counter = 0;
+    private static volatile int counter = 0;
 
     public static void change() {
         synchronized (LockTest.class) {
@@ -20,7 +20,7 @@ public class LockTest {
     private static final Object object = new Object();
 
     public static void changeX() {
-        synchronized (object) {
+        synchronized (LockTest.class) {
             counter++;
         }
     }

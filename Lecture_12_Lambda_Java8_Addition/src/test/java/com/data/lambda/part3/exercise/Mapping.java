@@ -13,6 +13,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +34,8 @@ public class Mapping {
         // [T1, T2, T3] -> (T -> R) -> [R1, R2, R3]
         public <R> MapHelper<R> map(Function<T, R> f) {
             // TODO
-            throw new UnsupportedOperationException();
+            return new MapHelper<R>(list.stream().map(f).collect(Collectors.toList()));
+//            throw new UnsupportedOperationException();
         }
 
         // [T] -> (T -> [R]) -> [R]
@@ -48,6 +50,20 @@ public class Mapping {
 
             return new MapHelper<R>(result);
         }
+    }
+
+    public List<JobHistoryEntry> addOneYear(List<JobHistoryEntry> list) {
+        List newList = list.stream().map(e -> e.withDuration(e.getDuration() + 1)).collect(Collectors.toList());
+        return newList;
+    }
+
+    public List<JobHistoryEntry> qaToQA(List<JobHistoryEntry> list) {
+        List newList = list.stream().map(e -> {
+            if (e.getPosition().equals("qa"))
+                e  = e.withPosition("QA");
+            return e;
+        }).collect(Collectors.toList());
+        return newList;
     }
 
     @Test
@@ -75,13 +91,15 @@ public class Mapping {
                 );
 
         final List<Employee> mappedEmployees =
-                new MapHelper<>(employees)
-                /*
-                .map(TODO) // change name to John .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
-                .map(TODO) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))
-                .map(TODO) // replace qa with QA
-                * */
-                .getList();
+                new MapHelper<>(employees).map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                        .map(e -> e.withJobHistory(this.addOneYear(e.getJobHistory())))
+                        .map(e -> e.withJobHistory(this.qaToQA(e.getJobHistory())))
+                        /*
+                        .map(TODO) // change name to John .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                        .map(TODO) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))
+                        .map(TODO) // replace qa with QA
+                        * */
+                        .getList();
 
         final List<Employee> expectedResult =
                 Arrays.asList(
@@ -110,12 +128,16 @@ public class Mapping {
 
 
     private static class LazyMapHelper<T, R> {
+        public final List<T> list;
+        public final Function<T, R> function;
 
         public LazyMapHelper(List<T> list, Function<T, R> function) {
+            this.list = list;
+            this.function = function;
         }
 
         public static <T> LazyMapHelper<T, T> from(List<T> list) {
-            return new LazyMapHelper<>(list, Function.identity());
+            return new LazyMapHelper<>(list, null);
         }
 
         public List<R> force() {
@@ -124,8 +146,9 @@ public class Mapping {
         }
 
         public <R2> LazyMapHelper<T, R2> map(Function<R, R2> f) {
-            // TODO
-            throw new UnsupportedOperationException();
+            list.forEach(this.function::apply);
+            Function<T, R2> function = t -> f.apply(this.function.apply(t));
+            return new LazyMapHelper<>(list, function);
         }
 
     }
@@ -166,7 +189,6 @@ public class Mapping {
     }
 
 
-
     @Test
     public void lazy_mapping() {
         final List<Employee> employees =
@@ -193,12 +215,10 @@ public class Mapping {
 
         final List<Employee> mappedEmployees =
                 LazyMapHelper.from(employees)
-                /*
-                .map(TODO) // change name to John
-                .map(TODO) // add 1 year to experience duration
-                .map(TODO) // replace qa with QA
-                * */
-                .force();
+                        .map(t -> t.withPerson(t.getPerson().withFirstName("John")))
+                        .map(t -> t.withJobHistory(addOneYear(t.getJobHistory())))
+                        .map(t -> t.withJobHistory(qaToQA(t.getJobHistory())))
+                        .force();
 
         final List<Employee> expectedResult =
                 Arrays.asList(

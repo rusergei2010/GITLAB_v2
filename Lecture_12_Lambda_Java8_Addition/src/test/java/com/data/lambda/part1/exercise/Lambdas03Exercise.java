@@ -18,21 +18,37 @@ public class Lambdas03Exercise {
 
     @Test
     public void generic0() {
-        final GenericProduct<Integer> prod = null; // TODO: Use anonymous class
+        final GenericProduct<Integer> prod = new GenericProduct<Integer>() {
+            @Override
+            public Integer prod(Integer a, int i) {
+                return a*i;
+            }
+        };
+        // TODO: Use anonymous class
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic1() {
+<<<<<<< HEAD:Lecture_12_Lambda_Java8_Addition/src/test/java/lambda/part1/exercise/Lambdas03Exercise.java
+        final GenericProduct<Integer> prod = (Integer a, int i) -> {return a*i;};
+        // TODO: Use statement lambda
+=======
         final GenericProduct<Integer> prod = null; // TODO: Use statement com.data.lambda
+>>>>>>> pr/2:Lecture_12_Lambda_Java8_Addition/src/test/java/com/data/lambda/part1/exercise/Lambdas03Exercise.java
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic2() {
+<<<<<<< HEAD:Lecture_12_Lambda_Java8_Addition/src/test/java/lambda/part1/exercise/Lambdas03Exercise.java
+        final GenericProduct<Integer> prod = (a, i) -> a*i;
+        // TODO: Use expression lambda
+=======
         final GenericProduct<Integer> prod = null; // TODO: Use expression com.data.lambda
+>>>>>>> pr/2:Lecture_12_Lambda_Java8_Addition/src/test/java/com/data/lambda/part1/exercise/Lambdas03Exercise.java
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
@@ -47,7 +63,7 @@ public class Lambdas03Exercise {
 
     @Test
     public void strSum() {
-        final GenericProduct<String> prod = null; // TODO: use stringProd;
+        final GenericProduct<String> prod = (Lambdas03Exercise::stringProd); // TODO: use stringProd;
 
         assertEquals(prod.prod("a", 2), "aa");
     }

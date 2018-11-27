@@ -76,12 +76,16 @@ public class Lambda2 {
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter
-            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
-                males.add(p);
-            }
-        }
+        list.stream()
+        .filter(p -> p.gender == Person.Gender.MALE)
+        .forEach(p -> males.add(p));
+
+//        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+//            // TODO: make Java 8 filter
+//            if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
+//                males.add(p);
+//            }
+//        }
         assertArrayEquals(males.toArray(), Arrays.asList(person1, person2).toArray());
 
         // ###############################
@@ -91,12 +95,16 @@ public class Lambda2 {
 
         males.clear();
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
-            // TODO: make Java 8 filter and (p) -> {} statement inside
-            if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
-                males.add(p);
-            }
-        }
+        list.stream()
+        .filter(p -> p.gender == Person.Gender.MALE && p.age > 10)
+        .forEach(p -> males.add(p));
+
+//        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+//            // TODO: make Java 8 filter and (p) -> {} statement inside
+//            if (p.gender == Person.Gender.MALE && p.age > 10) { // replace with '::' access
+//                males.add(p);
+//            }
+//        }
 
         assertArrayEquals(males.toArray(), Arrays.asList(person2).toArray());
 

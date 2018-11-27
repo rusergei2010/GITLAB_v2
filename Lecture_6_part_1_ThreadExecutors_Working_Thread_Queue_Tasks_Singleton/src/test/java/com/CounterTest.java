@@ -21,7 +21,7 @@ public class CounterTest {
         public void inc() throws InterruptedException {
             if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.sleep(200);
+                    Util.sleep(20);
                     counter++;
                 } finally {
                     lock.unlock();

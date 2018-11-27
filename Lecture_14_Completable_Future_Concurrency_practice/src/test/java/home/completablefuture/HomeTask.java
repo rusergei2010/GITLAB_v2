@@ -1,5 +1,7 @@
 package home.completablefuture;
 
+import java.util.Collections;
+import java.util.concurrent.ForkJoinPool;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,8 +28,10 @@ public class HomeTask {
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
 //        ForkJoinPool.commonPool().submit(()->{});
 
-        Map<Integer, String> map = new HashMap();
-        CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
+       // Map<Integer, String> map = new HashMap();
+        Map<Integer, String> map = new ConcurrentHashMap<>();
+        ForkJoinPool.commonPool().submit(() -> {
+//        CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
                         map.put(i, "Andrey");
@@ -35,10 +39,10 @@ public class HomeTask {
                     }
             );
             return null;
-        });
+        }).join();
 
         // second traversal
-        CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
+        ForkJoinPool.commonPool().submit(() -> {
             sleep(50); // the size is changing
             map.forEach((key, value) -> {
                 if (key % 10 == 0)
@@ -46,8 +50,8 @@ public class HomeTask {
                 sleep(1);
             });
             return null;
-        });
-        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
+        }).join();
+//        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
         map.clear();
     }
@@ -65,7 +69,7 @@ public class HomeTask {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.putIfAbsent(i, "X"); // Line 1
+                        concurrentHashMap.put(i, "X"); // Line 1
                         sleep(1);
                     }
             );
@@ -78,7 +82,7 @@ public class HomeTask {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.put(i, "O"); // Line 2
+                        concurrentHashMap.putIfAbsent(i, "O"); // Line 2
                         sleep(1);
                     }
             );
@@ -105,7 +109,7 @@ public class HomeTask {
     public void immutableCollections() throws Throwable {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
-        List<Integer> immutable = new ArrayList<>(mutableList); // TODO: Fix in this line
+        List<Integer> immutable = Collections.unmodifiableList(mutableList); // TODO: Fix in this line
 
         try {
             CompletableFuture.supplyAsync(() -> {

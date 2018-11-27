@@ -82,6 +82,7 @@ public class Lamdas04 {
                 new Person("Artem", 21, Person.GENDER.MALE),
                 new Person("Vera", 2, Person.GENDER.FEMALE))
                 .filter(((Predicate<Person>) Lamdas04::isMale).negate())
+                .filter(this::testAgeGender)
                 .mapToInt(Person::getAge)
                 .sum();
 

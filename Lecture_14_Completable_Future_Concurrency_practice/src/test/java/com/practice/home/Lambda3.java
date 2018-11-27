@@ -25,13 +25,14 @@ public class Lambda3 {
         AtomicInteger counter = new AtomicInteger(0);
 
         Consumer<AtomicInteger> consumer = (AtomicInteger count) -> {
+            print();
             System.out.println(count.incrementAndGet());
         };
 
         Consumer<AtomicInteger> result = wrap(wrap(wrap(wrap(wrap(consumer)))));
 
         // TODO: fix it
-        //result.accept();
+        result.accept(counter);
 
         assertEquals(1, counter.get());
     }
@@ -43,6 +44,7 @@ public class Lambda3 {
 
     Consumer<AtomicInteger> wrap(Consumer<AtomicInteger> consumer){
         return (AtomicInteger count) -> {
+            consumer.accept(count);
             // TODO: fix it
             // consumer.accept();
         };

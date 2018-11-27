@@ -42,7 +42,7 @@ public class Test1 {
 
         new Thread(() -> {
             sleep(1000);
-            completableFuture.complete("XXXX"); // TODO: Fix it in the string
+            completableFuture.complete("Result"); // TODO: Fix it in the string
         }).start();
 
         assertEquals("Result", completableFuture.get());
@@ -61,6 +61,7 @@ public class Test1 {
             }
         }).start();
         sleep(100);
+        completableFuture.completeExceptionally(new RuntimeException());
         // TODO: Complete Exceptionally with RuntimeException
         // TODO: Code the exception in this line
         try {

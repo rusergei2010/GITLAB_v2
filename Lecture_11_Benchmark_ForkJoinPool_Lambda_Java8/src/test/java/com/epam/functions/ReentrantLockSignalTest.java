@@ -29,12 +29,12 @@ public class ReentrantLockSignalTest {
                 }
                 String copy = new String(msg);
                 msg = null;
+                writeCondition.signal();
                 return copy;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
                 lock.unlock();
-                writeCondition.signal();
             }
             return msg;
         }
@@ -47,11 +47,11 @@ public class ReentrantLockSignalTest {
                     writeCondition.await();
                 }
                 this.msg = str;
+                readCondition.signal();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
                 lock.unlock();
-                readCondition.signal();
             }
         }
     }
@@ -109,13 +109,9 @@ public class ReentrantLockSignalTest {
 
         threadC.start();
         threadP.start();
-//
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
-//
+
         Thread.sleep(1000);
         assertEquals(10, con.received.size());
-//        System.out.println("Main exit: " + count.count);
+
     }
 }

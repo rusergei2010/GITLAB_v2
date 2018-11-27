@@ -14,10 +14,17 @@ public class ReentrantLockTest {
 
         @Override
         public void run() {
-            lock.lock();
-            Util.threadSleep(100);
-            count++;
-            validate();
+            try {
+                lock.lock();
+                Util.threadSleep(100);
+                count++;
+                validate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                lock.unlock();
+            }
         }
 
         private void validate() {
@@ -41,11 +48,7 @@ public class ReentrantLockTest {
         thread1.start();
         thread2.start();
         thread3.start();
-//
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
-//
+
         Thread.sleep(1000);
 
         assertEquals(3, count.count);

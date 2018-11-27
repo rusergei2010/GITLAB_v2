@@ -1,7 +1,6 @@
 package com.epam.test;// Benchmark Шипилев: @link{https://www.youtube.com/watch?v=8pMfUopQ9Es}
 
 
-import com.epam.test.util.Util;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -30,7 +29,7 @@ public class SemaphoreTest {
                 permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
+//                    Util.threadSleep(100); // Anchor 2
 
                     connections++;
                 } else {

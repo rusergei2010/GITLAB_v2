@@ -58,6 +58,9 @@ public class CountDownLatchTest {
         Thread.sleep(100);
 
         latchStart.countDown();
+        latchStop.countDown();
+        latchStop.countDown();
+        latchStop.countDown();
         latchStop.await(1000, TimeUnit.MILLISECONDS);
 
         assertEquals(0, latchStop.getCount());

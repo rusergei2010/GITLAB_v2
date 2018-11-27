@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ZInfiniteAppRun {
 
-    private static boolean running = true;
+    private volatile static boolean running = true;
 
     public static class MyThread extends Thread {
         public void run() {

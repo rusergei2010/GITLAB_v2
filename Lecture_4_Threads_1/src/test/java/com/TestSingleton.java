@@ -15,6 +15,7 @@ public class TestSingleton {
 
     public static TestSingleton getInstance(){
         if (instance == null) {
+            instance = new TestSingleton();
             // TODO: complete
         }
         return instance;
@@ -31,7 +32,7 @@ public class TestSingleton {
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null);
+            instance.compareAndSet(null, getInstance());
         });
 
         thread1.start();

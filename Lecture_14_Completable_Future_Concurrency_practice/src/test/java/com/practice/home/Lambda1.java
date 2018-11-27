@@ -23,7 +23,8 @@ public class Lambda1 {
         list.add("Berlin");
         list.add("Work");
         list.add("speed");
-        List<String> result =  list.stream()
+        List<String> result = list.stream()
+                .map(String::toUpperCase)
                 .map(str -> str) // TODO: replace with other com.data.lambda '::' expression
                 .collect(Collectors.toList());
 
@@ -42,8 +43,8 @@ public class Lambda1 {
         list.add("Work Two Thres");
         list.add("speed man man");
 
-        long sum1 = list.stream().mapToInt(str->{
-            return 1; // TODO: replace '1' with com.data.lambda expression
+        long sum1 = list.stream().mapToInt(str -> {
+            return str.split(" ").length; // TODO: replace '1' with com.data.lambda expression
         }).sum();
 
         Long sum = sum1;

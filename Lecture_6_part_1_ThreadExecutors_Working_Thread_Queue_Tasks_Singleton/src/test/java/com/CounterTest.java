@@ -51,7 +51,7 @@ public class CounterTest {
             }
         });
 
-        service.awaitTermination(1000, TimeUnit.MILLISECONDS);
+        service.awaitTermination(200, TimeUnit.MILLISECONDS);
         service.shutdown();
 
         // TODO: fix the test by changing timings

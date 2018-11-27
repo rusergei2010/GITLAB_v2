@@ -2,14 +2,12 @@ package com.completablefuture;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
 public class HomeTask {
@@ -24,31 +22,30 @@ public class HomeTask {
      */
     @Test
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
-//        ForkJoinPool.commonPool().submit(()->{});
+        Map<Integer, String> map = new ConcurrentHashMap<>();
 
-        Map<Integer, String> map = new HashMap();
-        CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
-            IntStream.range(0, 100).forEach(
-                    (i) -> {
-                        map.put(i, "Andrey");
-                        sleep(1);
-                    }
-            );
-            return null;
-        });
+        ForkJoinPool.commonPool().submit(()->{IntStream.range(0, 100).forEach(
+                (i) -> {
+                    map.put(i, "Andrey");
+                    sleep(1);
+                }
+        );});
 
+        AtomicReference<String> reference = new AtomicReference<>();
         // second traversal
-        CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
-            sleep(50); // the size is changing
+        ForkJoinPool.commonPool().submit(() -> {
+            sleep(60); // the size is changing
             map.forEach((key, value) -> {
                 if (key % 10 == 0)
                     System.out.println(key + ":" + value);
                 sleep(1);
             });
-            return null;
+            reference.set("Done");
         });
-        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
+        String str;
+        while (((str = reference.get()) == null)){
+        }
         map.clear();
     }
 
@@ -65,7 +62,7 @@ public class HomeTask {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.putIfAbsent(i, "X"); // Line 1
+                        concurrentHashMap.put(i, "X"); // Line 1
                         sleep(1);
                     }
             );
@@ -78,7 +75,7 @@ public class HomeTask {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.put(i, "O"); // Line 2
+                        concurrentHashMap.putIfAbsent(i, "O"); // Line 2
                         sleep(1);
                     }
             );
@@ -105,7 +102,7 @@ public class HomeTask {
     public void immutableCollections() throws Throwable {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
-        List<Integer> immutable = new ArrayList<>(mutableList); // TODO: Fix in this line
+        List<Integer> immutable = Collections.unmodifiableList(mutableList); // TODO: Fix in this line
 
         try {
             CompletableFuture.supplyAsync(() -> {

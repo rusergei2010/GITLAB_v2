@@ -5,7 +5,7 @@
     <artifactId>my-app</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>my-app</name>
+    <name>my-app-7</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -112,6 +112,7 @@
     </profiles>
 
     <dependencies>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

@@ -1,4 +1,4 @@
-package com.epam.functions.model;
+package com.epam.optional.model;
 
 import javax.json.Json;
 import javax.json.JsonObject;

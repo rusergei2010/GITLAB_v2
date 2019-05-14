@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates.benchmark.queues.blocking;
+package com.epam.optional.apps.predicates.benchmark.queues.blocking;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;

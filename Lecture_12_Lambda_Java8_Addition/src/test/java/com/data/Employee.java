@@ -35,7 +35,7 @@ public class Employee {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("person", person)
+                .append("domain", person)
                 .append("jobHistory", jobHistory)
                 .toString();
     }

@@ -1,6 +1,6 @@
 package temp;
 
-import com.epam.functions.model.SearchRequestInstant;
+import com.epam.optional.model.SearchRequestInstant;
 import org.springframework.boot.SpringApplication;
 
 import javax.json.Json;

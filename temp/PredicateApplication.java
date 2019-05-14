@@ -1,6 +1,6 @@
 package temp;
 
-import com.epam.functions.model.SearchRequest;
+import com.epam.optional.model.SearchRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.epam.functions.util.Preconditions.ArgumentChecks.required;
+import static com.epam.optional.util.Preconditions.ArgumentChecks.required;
 
 //@SpringBootApplication
 public class PredicateApplication {

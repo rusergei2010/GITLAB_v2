@@ -1,4 +1,4 @@
-package com.epam.functions.model;
+package com.epam.optional.model;
 
 import java.util.Arrays;
 import java.util.Optional;

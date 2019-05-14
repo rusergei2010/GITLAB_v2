@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates.benchmark.queues.legacy;
+package com.epam.optional.apps.predicates.benchmark.queues.legacy;
 
 import java.util.Stack;
 

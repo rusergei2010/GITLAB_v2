@@ -1,4 +1,4 @@
-package com.epam.functions.util;
+package com.epam.optional.util;
 
 import com.google.common.collect.Lists;
 

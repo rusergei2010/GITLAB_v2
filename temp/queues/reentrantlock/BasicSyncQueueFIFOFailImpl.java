@@ -1,4 +1,4 @@
-package com.epam.functions.apps.predicates.benchmark.queues.reentrantlock;
+package com.epam.optional.apps.predicates.benchmark.queues.reentrantlock;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

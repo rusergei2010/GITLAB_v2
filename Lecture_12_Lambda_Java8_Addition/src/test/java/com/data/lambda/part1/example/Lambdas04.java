@@ -20,7 +20,7 @@ public class Lambdas04 {
             }
         });
 
-        //person = new Person("a", "a", 44);
+        //domain = new Person("a", "a", 44);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class Lambdas04 {
     public void closure_this_lambda2() {
         _person = new Person("John", "Galt", 33);
 
-        //final Person person = _person;
+        //final Person domain = _person;
         final Runnable r1 = runLater(() -> _person.print());
         final Runnable r2 = runLater(get_person()::print);
 

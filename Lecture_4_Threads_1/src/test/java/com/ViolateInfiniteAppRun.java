@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ZInfiniteAppRun {
+public class ViolateInfiniteAppRun {
 
     private static boolean running = true;
 

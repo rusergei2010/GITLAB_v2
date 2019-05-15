@@ -6,7 +6,7 @@ import sun.misc.IOUtils;
 import java.io.*;
 
 /**
- * Hello world!
+ *
  */
 public class Deadlock {
 

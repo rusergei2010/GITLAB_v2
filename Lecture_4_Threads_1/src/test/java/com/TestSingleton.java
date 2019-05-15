@@ -6,7 +6,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * Quest: fill in missing gaps (TODO or commented lines)
+ */
 public class TestSingleton {
 
     static TestSingleton instance;
@@ -31,12 +33,12 @@ public class TestSingleton {
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null);
+            instance.compareAndSet(null, null); // TODO
         });
 
         thread1.start();
 
-        thread1.join();
+//        thread1.join(); // TODO
 
         assertEquals(TestSingleton.getInstance(), instance.get());
     }

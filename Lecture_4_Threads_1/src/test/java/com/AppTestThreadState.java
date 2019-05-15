@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Admin on 8/6/2018.
  */
-public class ATestThreadState {
+public class AppTestThreadState {
 
     /**
      * Fill in the gaps and insert instructions to make code executable

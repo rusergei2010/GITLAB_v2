@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * TODO: Fix the test case
+ * Read the code and corect it a better way
  */
 public class InterruptTest {
 

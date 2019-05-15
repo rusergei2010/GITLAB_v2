@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestVolatileTest extends Thread {
 
-    private static int MY_INT = 0;
+    private /*volatile*/ static int MY_INT = 0; // TODO: volatile? What is its function?
     public static final int WAIT = 5;
 
     static class ChangeListener extends Thread {
@@ -53,7 +53,7 @@ public class TestVolatileTest extends Thread {
         listener.start();
         maker.start();
 
-        listener.join(1000 * WAIT);
+        listener.join(1000 * WAIT); // wait till listener thread is finished
 
         assertEquals(5, MY_INT);
         assertEquals(listener.getState(), State.TERMINATED );

@@ -4,6 +4,10 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 
+/**
+ * Problem: "How to signal server app without REST api"
+ * Use Mission Control to connect to JMX API
+ */
 public class AppSimpleJMXAgent {
    private MBeanServer mbs = null;
 

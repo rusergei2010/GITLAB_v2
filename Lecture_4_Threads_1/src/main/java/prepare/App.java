@@ -7,18 +7,20 @@ import java.util.stream.IntStream;
  * <p>
  * Thread name
  * Thread Group
- * Start a new thread
+ * Start a new thread. Double start!
  * run() method, direct call
  * Sequence of Exec
  * join
  * yield
  * sleep
  * wait
- * Visual VM or Mission Control (ManagedOperations)
+ * Visual VM or Mission Control
+ * Additional Topic: Managed Bean {@link prepare.AppSimpleJMXAgent}
  * <p>
- * Topics:
+ * Deadlock
  * Thread Stack, Heap
  * Daemon thread
+ * InterruptThread (isInterrupted or volatile flag)
  *
  * @link {#AppSimpleJMXAgent} - managed operations
  *
@@ -32,7 +34,7 @@ public class App {
         app.testOne();
         app.testTwo();
         app.testThree();
-        app.holdOn(1000);
+        app.holdOn(4);
     }
 
     private static class Counter {
@@ -205,7 +207,7 @@ public class App {
         daemon.setDaemon(true); // daemon threads are completing automatically gracefully after all other non-daemon threads completed
         daemon.start();
 
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         System.out.println("Main thread exited");
     }
 
@@ -221,6 +223,4 @@ public class App {
             }
         });
     }
-
-
 }

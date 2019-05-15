@@ -5,6 +5,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
+/**
+ * Cover Thread-Sage approach
+ */
 public class SyncCounterTest {
 
     public static class CounterThread implements Runnable {

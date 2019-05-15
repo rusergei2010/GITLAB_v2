@@ -6,7 +6,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * Explorer wait/notify mechanism for threads
+ */
 public class TestThreadWaitNotify {
 
     AtomicInteger counter = new AtomicInteger(0);

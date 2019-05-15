@@ -2,7 +2,7 @@ package prepare;
 
 // Create custom Manageable Thread to handle interface (reference)
 // Shared resource between threads
-// Before execute ask what is expected output and total sum
+// Before executing ask what is expected output and total sum
 
 import prepare.util.Util;
 

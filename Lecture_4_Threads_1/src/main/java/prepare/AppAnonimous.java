@@ -4,8 +4,7 @@ package prepare;
  * Pass Interface to start a new thread
  * extends Thread
  * thread.run()
- * When Deadlock is completed (all threads are finished) (mention busy ports in Daemon threads)
- *
+ * Daemon threads targets logging or some optional info reports or heatbeating
  */
 public class AppAnonimous
 {
@@ -16,7 +15,6 @@ public class AppAnonimous
             System.out.println("MyThread :" + Thread.currentThread().getName());
         }
     }
-
 
     static class MyRunnable implements Runnable {
         @Override
@@ -30,7 +28,6 @@ public class AppAnonimous
         thread.start();
         //thread.start()
 
-
         final Thread thread2 = new Thread(new MyRunnable());
         thread2.start();
 
@@ -43,9 +40,5 @@ public class AppAnonimous
         // extends Thread
         new MyThread().run();// !!!? output main
         new MyThread().start();
-
-
     }
-
-
 }

@@ -4,7 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * Good example of real value/usage of volatile
+ * See console log to observe reaction
+ */
 public class TestVolatileTest extends Thread {
 
     private /*volatile*/ static int SIGNAL = 0; // TODO: volatile? What is its function?
@@ -53,9 +56,9 @@ public class TestVolatileTest extends Thread {
         listener.start();
         maker.start();
 
-        listener.join(1000 * WAIT); // wait till listener thread is finished
+        listener.join(1000 * (WAIT + 1)); // wait till listener thread is finished or 5 secs
 
         assertEquals(5, SIGNAL);
-        assertEquals(listener.getState(), State.TERMINATED );
+        assertEquals(State.TERMINATED, listener.getState());
     }
 }

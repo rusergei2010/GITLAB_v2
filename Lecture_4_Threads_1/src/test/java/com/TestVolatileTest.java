@@ -7,17 +7,17 @@ import static org.junit.Assert.assertEquals;
 
 public class TestVolatileTest extends Thread {
 
-    private /*volatile*/ static int MY_INT = 0; // TODO: volatile? What is its function?
+    private /*volatile*/ static int SIGNAL = 0; // TODO: volatile? What is its function?
     public static final int WAIT = 5;
 
     static class ChangeListener extends Thread {
         @Override
         public void run() {
-            int local_value = MY_INT;
+            int local_value = SIGNAL;
             while (local_value < WAIT) {
-                if (local_value != MY_INT) {
-                    System.out.println("Got Change for MY_INT : " + MY_INT);
-                    local_value = MY_INT;
+                if (local_value != SIGNAL) {
+                    System.out.println("Got Change for SIGNAL : " + SIGNAL);
+                    local_value = SIGNAL;
                 }
             }
         }
@@ -27,10 +27,10 @@ public class TestVolatileTest extends Thread {
         @Override
         public void run() {
 
-            int local_value = MY_INT;
-            while (MY_INT < WAIT) {
-                System.out.println(String.format("Incrementing MY_INT to : %d", local_value + 1));
-                MY_INT = ++local_value;
+            int local_value = SIGNAL;
+            while (SIGNAL < WAIT) {
+                System.out.println(String.format("Incrementing SIGNAL to : %d", local_value + 1));
+                SIGNAL = ++local_value;
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -55,7 +55,7 @@ public class TestVolatileTest extends Thread {
 
         listener.join(1000 * WAIT); // wait till listener thread is finished
 
-        assertEquals(5, MY_INT);
+        assertEquals(5, SIGNAL);
         assertEquals(listener.getState(), State.TERMINATED );
     }
 }

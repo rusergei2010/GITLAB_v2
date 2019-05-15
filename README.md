@@ -1,32 +1,33 @@
-# GITLAB_v2
+
 Gitlab in EPAM on Java and boarding techs
-## Source Control
-- Git 
 
-## Build tools 
-- Maven, Gradle
-  
-## Concurrency	
+#Course Agenda
+
+###Concurrency
 - Threads
-- Executors
-- Synchronizers
+- ReentrantLock
+- Executors, Queues 
+- RestController
+
+###Synchronizers, Locks
+- Atomics
 - Thread-safe Collections
-- Parallel Streams
-- CompletableFuture
- 
-## Java 8
-- Lambda, Functional Interface & Optional 
+- Benchmark of Locking
+
+###CompletableFuture
+
+###Java 8
+- Optional
+- Lambda
+- Functional Interface
+
+###Parallel Streams 
 - Streams API 
-- Collectors & Spliterators
+- Benchmark of Streams
+###Collectors & Spliterators
 
-## Spring
-- IOC, Annotations, SpringBoot
-- Configuration
-- SpringMVC
+###References:
+######    1. https://refactoring.guru/refactoring
+######    2. Lecture_4_Threads_1\src\main\resources\Java-Concurrency-In-Practice.pdf
 
-## AWS 
-- Console
-- Balancer, Deployment Apps
-- Docker, Lambda
 
-.

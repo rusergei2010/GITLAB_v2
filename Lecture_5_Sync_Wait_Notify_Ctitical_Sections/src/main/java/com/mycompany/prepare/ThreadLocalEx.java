@@ -20,7 +20,7 @@ public class ThreadLocalEx {
         };
 
         public static ThreadLocalEx.CountContext getCounter() {
-            return local.get();
+            return local.get(); // will return map.get(Current.Thread) value (per thread requesting value)
         }
     }
 

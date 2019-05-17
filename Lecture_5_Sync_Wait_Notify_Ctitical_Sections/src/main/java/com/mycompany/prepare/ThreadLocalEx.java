@@ -14,6 +14,7 @@ public class ThreadLocalEx {
         private static ThreadLocal<ThreadLocalEx.CountContext> local = new ThreadLocal<ThreadLocalEx.CountContext>() {
             @Override
             protected ThreadLocalEx.CountContext initialValue() {
+                System.out.println("Thread " + Thread.currentThread().getName() + " initialized");
                 return new ThreadLocalEx.CountContext();
             }
         };
@@ -25,7 +26,6 @@ public class ThreadLocalEx {
 
     public static void main(String[] args) throws InterruptedException {
         new ThreadLocalEx();
-
 
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> {

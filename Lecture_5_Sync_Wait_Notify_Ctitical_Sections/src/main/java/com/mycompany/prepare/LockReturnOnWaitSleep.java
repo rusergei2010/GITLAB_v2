@@ -3,7 +3,7 @@ package com.mycompany.prepare;
 
 import com.mycompany.prepare.utils.Utils;
 
-// Mutex, ctitical section in the static method
+// Mutex, ctitical section in the static method, wait vs sleep
 public class LockReturnOnWaitSleep {
 
     // how to make it thread safe - thread independent
@@ -13,29 +13,32 @@ public class LockReturnOnWaitSleep {
 
         public synchronized void inc() throws InterruptedException { // try to acquire lock on the 'counter' object
             System.out.println(Thread.currentThread().getName() + " executed. Lock Acquired. Thread waiting...Release lock...");
-            wait(1000);
+            wait(500); // wait releases lock on the sync object when it is being awaiting and attempt to acquire again when it is elapsed
+            // if lock is till acquired by another thread then continue awaiting it
             counter++;
+            Thread.sleep(5000);
             System.out.println(Thread.currentThread().getName() + " executed. Counter = " + counter);
             wait(1000);
         }
 
         public synchronized void dec() throws InterruptedException { // try to acquire lock on the 'counter' object
-            System.out.println(Thread.currentThread().getName() + " executed. Thread waiting...Release lock...");
+            System.out.println(Thread.currentThread().getName() + " executed. Lock Acquired. Thread waiting...Release lock...");
             wait(1000);
+            System.out.println(Thread.currentThread().getName() + " Now it is continued");
             counter--;
             System.out.println(Thread.currentThread().getName() + " executed. Counter = " + counter);
             wait(1000); // when Thread
         }
 
 
-        public void incSleep() throws InterruptedException {
+        public synchronized void incSleep() throws InterruptedException {
             System.out.println(Thread.currentThread().getName() + " executed");
             Thread.sleep(1000);
             counter++;
             System.out.println(Thread.currentThread().getName() + " executed");
         }
 
-        public void decSleep() throws InterruptedException {
+        public synchronized void decSleep() throws InterruptedException {
             System.out.println(Thread.currentThread().getName() + " executed");
             Thread.sleep(1000);
             counter--;
@@ -47,7 +50,6 @@ public class LockReturnOnWaitSleep {
     public static void main(String... args) {
 
         Counter counter = new Counter();
-        System.out.println("Wait - lock is not released!!!");
 
         new Thread(() -> {
             try {
@@ -65,9 +67,9 @@ public class LockReturnOnWaitSleep {
             }
         }).start();
 
-        Utils.sleep(2500);
+        Utils.sleep(5500);
 
-        System.out.println("Sleep - lock is not released!!!");
+        System.out.println("Sleep example!");
 
         new Thread(() -> {
             try {
@@ -79,7 +81,7 @@ public class LockReturnOnWaitSleep {
 
         new Thread(() -> {
             try {
-                counter.incSleep();
+                counter.decSleep();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

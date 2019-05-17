@@ -11,18 +11,20 @@ public class LockReturnOnWaitSleep {
         // isolated Object
         private int counter = 0;
 
-        public synchronized void inc() throws InterruptedException {
-            System.out.println(Thread.currentThread().getName() + " executed. Lock Acquired.");
+        public synchronized void inc() throws InterruptedException { // try to acquire lock on the 'counter' object
+            System.out.println(Thread.currentThread().getName() + " executed. Lock Acquired. Thread waiting...Release lock...");
             wait(1000);
             counter++;
-            System.out.println(Thread.currentThread().getName() + " executed. Lock Released.");
+            System.out.println(Thread.currentThread().getName() + " executed. Counter = " + counter);
+            wait(1000);
         }
 
-        public synchronized void dec() throws InterruptedException {
-            System.out.println(Thread.currentThread().getName() + " executed. Lock Acquired.");
+        public synchronized void dec() throws InterruptedException { // try to acquire lock on the 'counter' object
+            System.out.println(Thread.currentThread().getName() + " executed. Thread waiting...Release lock...");
             wait(1000);
             counter--;
-            System.out.println(Thread.currentThread().getName() + " executed. Lock Released.");
+            System.out.println(Thread.currentThread().getName() + " executed. Counter = " + counter);
+            wait(1000); // when Thread
         }
 
 

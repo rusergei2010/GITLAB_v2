@@ -22,16 +22,20 @@ public class TestThreadWaitNotify {
     public void testThread() throws InterruptedException {
         Thread thread1 = createThread(() -> {
             try {
-                counter.wait();
-                counter.incrementAndGet();
+                synchronized (counter) {
+                    counter.wait();
+                    counter.incrementAndGet();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         Thread thread2 = createThread(() -> {
             try {
-                counter.wait();
-                counter.incrementAndGet();
+                synchronized (counter) {
+                    counter.wait();
+                    counter.incrementAndGet();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -42,15 +46,13 @@ public class TestThreadWaitNotify {
 
         Thread.sleep(100);
 
-        // ensure WAITING
-        // ensure WAITING
         assertEquals(thread1.getState(), Thread.State.WAITING);
         assertEquals(thread2.getState(), Thread.State.WAITING);
 
-        // TODO: notify thread
-        // TODO: notify thread
+        synchronized (counter) {
+            counter.notifyAll();
+        }
 
-        // delay
         Thread.sleep(1000);
         assertEquals(counter.get(), 2);
     }

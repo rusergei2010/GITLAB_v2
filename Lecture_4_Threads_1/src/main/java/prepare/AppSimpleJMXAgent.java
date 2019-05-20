@@ -21,7 +21,7 @@ public class AppSimpleJMXAgent {
 
       try {
          //  
-         helloName = new ObjectName("AppSimpleJMXAgent:name=hellothere");
+         helloName = new ObjectName("AppSimpleJMXAgentSomeNewObject:name=hellothere");
          mbs.registerMBean(helloBean, helloName);
       } catch(Exception e) {
          e.printStackTrace();

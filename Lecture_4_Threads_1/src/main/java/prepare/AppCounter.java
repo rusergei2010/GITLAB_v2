@@ -1,11 +1,16 @@
 package prepare;
-
-// Create custom Manageable Thread to handle interface (reference)
-// Shared resource between threads
-// Before executing ask what is expected output and total sum
-
 import prepare.util.Util;
 
+
+/**
+ Create custom Manageable Thread to handle interface (reference)
+ Shared resource between threads
+ Before executing ask what is expected output and total sum
+ Race Condition - when two threads access the shared object in the memory at the same time competing for changing/reading it
+ <p><b>
+    synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
+ </b></p>
+*/
 public class AppCounter {
 
     public static class CounterThread implements Runnable {

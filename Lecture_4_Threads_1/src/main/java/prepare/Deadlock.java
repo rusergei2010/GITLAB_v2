@@ -4,7 +4,10 @@ package prepare;
 import java.io.*;
 
 /**
+ * Add VM params to th launch params:
+ * -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false  -Djava.rmi.server.hostname=localhost
  *
+ * Check with mission control tab: "Threads" Blocking (Deadlock)
  */
 public class Deadlock {
 
@@ -27,6 +30,7 @@ public class Deadlock {
                     object2.wait(100);
                 }
             }
+            System.out.println("Exited inc()");
         }
 
         public void dec() throws InterruptedException {
@@ -37,6 +41,7 @@ public class Deadlock {
                     object1.wait(100);
                 }
             }
+            System.out.println("Exited dec()");
         }
 
         public Integer getCounter() {

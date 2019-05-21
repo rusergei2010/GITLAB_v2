@@ -53,11 +53,11 @@ public class ReentrantLock1 {
         int counter = 0;
 
         public void inc() {
-            lock.lock();
+            lock.lock(); //  = synchronized starts
             try {
                 counter++;
             } finally {
-                lock.unlock();
+                lock.unlock();// = synchronized ends
             }
         }
 

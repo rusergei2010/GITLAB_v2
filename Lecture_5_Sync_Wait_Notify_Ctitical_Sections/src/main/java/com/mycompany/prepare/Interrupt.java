@@ -2,7 +2,7 @@ package com.mycompany.prepare;
 
 
 /**
- * How to Stop Thread (add boolean flag), interrupt
+ * How to Stop Thread (add boolean flag), interrupt itself
  * Priority
  */
 public class Interrupt {

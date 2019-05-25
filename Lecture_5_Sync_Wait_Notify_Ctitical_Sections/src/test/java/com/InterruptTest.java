@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
 
-// TODO: fix the test useing only volatile
+// TODO: fix the test using only volatile
 public class InterruptTest {
     static boolean flag = true;
 

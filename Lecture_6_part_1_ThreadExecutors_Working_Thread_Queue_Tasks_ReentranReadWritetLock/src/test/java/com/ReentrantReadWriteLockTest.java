@@ -1,6 +1,7 @@
-package com.epam.test;
+package com;
 
-import com.epam.test.util.Util;
+import com.util.Util;
+
 import org.junit.Test;
 
 import java.util.Optional;
@@ -70,6 +71,8 @@ public class ReentrantReadWriteLockTest {
                     Util.threadSleep(1000);
                     this.name = name;
 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             } finally {
                 if (locked) {
                     writeLock.unlock();

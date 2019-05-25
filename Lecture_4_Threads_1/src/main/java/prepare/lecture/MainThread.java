@@ -1,50 +1,86 @@
 package prepare.lecture;
 
+import java.util.stream.IntStream;
+
 public class MainThread {
 
-    private static class MyThread extends Thread {
+    private static class Singleton {
 
-        @Override public void run() {
-            System.out.println("Thread Id:" + Thread.currentThread().getId());
+        private volatile static Singleton instance;
+
+        public static Singleton getInstance() {
+            if (instance == null) {
+                synchronized (Singleton.class) {
+                    if (instance == null) {
+                        instance = new Singleton();
+                    }
+                }
+            }
+            return instance;
+        }
+
+        private Singleton() {
+        }
+
+    }
+
+
+    private static class Counter {
+
+        private Object list = null;
+
+        // writer
+        public synchronized void add(Object o) throws InterruptedException {
+
+            while(list != null) {
+                this.wait();
+            }
+            list = o;
+            this.notify();
+        }
+
+        // reader
+        public synchronized Object pop() throws InterruptedException {
+            while(list == null) {
+                this.wait();
+            }
+
+            final Object o = list;
+            list = null;
+            notify();
+            return o;
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Thread th = Thread.currentThread();
-//        System.out.println(th.getName());
-//        System.out.println(th.getThreadGroup());
 
-        Thread thread = new Thread("Sergey Thread");
-        print(thread);
-        thread.start();
-        print(thread);
-        new Thread(() -> {
-            try {
-                synchronized (thread) {
-                    thread.wait();
+        Counter counter = new Counter();
+
+        Thread write = new Thread(() -> {
+            IntStream.range(0, 10).forEach(i -> {
+                try {
+                    counter.add(Integer.valueOf(i));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-        print(thread);
-//        Thread.currentThread().sleep(2000);
-        print(thread);
+            });
+        });
+        write.start();
 
-        MyThread myThread = new MyThread();
 
-        System.out.println("Exiting start");
-        myThread.sleep(10000);
-        myThread.wait(10000);
+        Thread read = new Thread(() -> {
+            IntStream.range(0, 10).forEach(i -> {
+                try {
+                    System.out.println(counter.pop());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
+        read.start();
+
         System.out.println("Exiting");
-
-
-
-
-        System.out.println("Andrey");
     }
-
-
 
     private static void print(final Thread thread) {
         System.out.println("State: " + thread.getState());

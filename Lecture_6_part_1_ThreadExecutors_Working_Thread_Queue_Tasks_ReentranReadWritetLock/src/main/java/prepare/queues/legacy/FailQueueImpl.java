@@ -2,6 +2,9 @@ package prepare.queues.legacy;
 
 import java.util.stream.IntStream;
 
+/**
+ * Disadvantage - cannot read/write simultaneously into the queue (one lock)
+ */
 public class FailQueueImpl {
 
     public FailQueueImpl() {
@@ -44,7 +47,6 @@ public class FailQueueImpl {
             }
         }
     }
-
 
     public static void main(String[] args) throws InterruptedException {
         new FailQueueImpl();

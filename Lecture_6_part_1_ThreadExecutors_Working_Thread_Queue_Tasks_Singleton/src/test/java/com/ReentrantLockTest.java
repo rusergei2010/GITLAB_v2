@@ -17,9 +17,14 @@ public class ReentrantLockTest {
         @Override
         public void run() {
             lock.lock();
-            Util.sleep(100);
-            count++;
-            validate();
+            try {
+                Util.sleep(100);
+                count++;
+                validate();
+            } catch (RuntimeException e){
+            } finally {
+                lock.unlock();
+            }
         }
 
         private void validate() {

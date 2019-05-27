@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * TODO: Fix tests
  */
-public class InvokeTest {
+public class InvokeAllBasicTest {
 
     private static class CallableTask implements Callable<String> {
 

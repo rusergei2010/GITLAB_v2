@@ -10,8 +10,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-public class InvokeAllThreadPool {
-    InvokeAllThreadPool() {
+/**
+ * submit one task (runnable/callable) vs submit collection (invokeAll)
+ */
+public class InvokeAllBasicThreadPool {
+    InvokeAllBasicThreadPool() {
     }
 
 

@@ -17,8 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: Gather Task 1 and Task 2 in collection and execute with ThreadPool - ivolkeAll
- * Gather results and print it.
+ * TODO: Fix tests
  */
 public class InvokeTest {
 

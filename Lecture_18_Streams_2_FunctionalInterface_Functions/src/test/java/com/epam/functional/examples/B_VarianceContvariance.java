@@ -1,4 +1,4 @@
-package com.epam.functional;
+package com.epam.functional.examples;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

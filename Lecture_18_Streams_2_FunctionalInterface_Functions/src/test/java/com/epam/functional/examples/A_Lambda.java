@@ -1,4 +1,4 @@
-package com.epam.functional;
+package com.epam.functional.examples;
 
 import java.util.stream.Stream;
 
@@ -63,7 +63,10 @@ public class A_Lambda {
 
     public static void main(String[] args) {
         MyLambda lambda = () -> System.out.println("Print Me");
-        Runnable runnable = () -> System.out.println("Hello");
+        // Lambdas can refer to each other if they they have the same parameters in the method (name can deffer)
+        // Example:
+        Runnable runnable = () -> System.out.println("Hello"); // resolved, since Runnable - functional interface
+
 
         lambda.run();
 
@@ -73,11 +76,11 @@ public class A_Lambda {
             System.out.println("Print Me");
         };
 
+        // reference to static method is also Lambda
         lambda = System.out::println;
 
 
         // Example
-
         MyPredicator<Person> predicator = (p) -> p.age > 17 && p.gender == Person.Gender.MALE;
 
         Stream.of(

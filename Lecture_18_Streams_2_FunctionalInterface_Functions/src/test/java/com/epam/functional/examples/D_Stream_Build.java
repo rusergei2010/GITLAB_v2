@@ -1,4 +1,4 @@
-package com.epam.functional;
+package com.epam.functional.examples;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -117,6 +117,11 @@ public class D_Stream_Build {
 
         // Empty
         System.out.println("Empty: " + Stream.<String>empty().collect(Collectors.joining(", ")));
+
+
+        // concatenate streams
+        Stream.concat(Stream.<String>of("Concatenated: "), Stream.<Integer>concat(Stream.of(1,2), Stream.of(3,4)))
+                .map(x -> x).forEach(System.out::println);
     }
 }
 

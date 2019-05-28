@@ -1,4 +1,4 @@
-package com.epam.functional;
+package com.epam.functional.examples;
 
 public class C_FunctionalInterface {
 }

@@ -66,6 +66,8 @@ public class B_VarianceContvariance {
         listInts.add(1);
         listInts.add(2);
 
+//        listNumbers = listInts; // covariance is broken for Collections !!! Important!
+
         // Therefore, since covariant types are read-only
         // and contravariant types are write-only (loosely speaking),
         // we can derive the following rule of thumb: “Producer extends, consumer super”.
@@ -76,8 +78,6 @@ public class B_VarianceContvariance {
                 list.forEach(System.out::println);
             }
         };
-
-
 
         printer.accept(listNumbers);
 //        printer.accept(listInts); // gives compile error since List<Number> != List<Integer> - it is a rule of CONTRvariance VS COvariance for arrays

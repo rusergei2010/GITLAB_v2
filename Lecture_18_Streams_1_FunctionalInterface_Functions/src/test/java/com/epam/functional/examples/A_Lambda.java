@@ -2,6 +2,8 @@ package com.epam.functional.examples;
 
 import java.util.stream.Stream;
 
+import org.junit.Test;
+
 public class A_Lambda {
 
     @FunctionalInterface
@@ -61,7 +63,8 @@ public class A_Lambda {
         boolean test(Person p);
     }
 
-    public static void main(String[] args) {
+    @Test
+    public void main() {
         MyLambda lambda = () -> System.out.println("Print Me");
         // Lambdas can refer to each other if they they have the same parameters in the method (name can deffer)
         // Example:

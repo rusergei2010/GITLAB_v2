@@ -155,7 +155,7 @@ public class B_VarianceContvariance {
     public void testConsumerExtends(){
 
         // map int to String
-        Collection<Integer> ints = new ArrayList<>();
+        List<Integer> ints = new ArrayList<>();
         List<? extends String> str = function.apply(ints); // except Integer, Double, Float
 
         String s = str.get(0); // Consumer - extends - OK
@@ -164,9 +164,9 @@ public class B_VarianceContvariance {
 
     // P extends
     // C super
-    final Function<Collection<? extends Number>, List<? extends String>> function = new Function<Collection<? extends Number>, List<? extends String>>() {
+    final Function<List<? extends Number>, List<? extends String>> function = new Function<List<? extends Number>, List<? extends String>>() {
 
-        public List<? extends String> apply(final Collection<? extends Number> nums) {
+        public List<? extends String> apply(final List<? extends Number> nums) {
             List<String> s = new ArrayList<>();
             for (final Number num : nums) {
                 s.add(String.valueOf(num));

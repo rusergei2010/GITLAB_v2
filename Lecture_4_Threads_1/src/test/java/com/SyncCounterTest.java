@@ -9,9 +9,9 @@ import static prepare.util.Util.threadSleep;
  * Cover Thread-Sage approach
  * Race Condition - when two threads access the shared object in the memory at the same time competing for changing/reading it
  * IMPORTANT!!!
- *  <p><b>
- *     synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
- *  </b></p>
+ * <p><b>
+ * synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
+ * </b></p>
  */
 public class SyncCounterTest {
 
@@ -31,13 +31,15 @@ public class SyncCounterTest {
         public void run() {
             Thread.currentThread().setName(name);
             int i = 0;
+
             while (i < total) {
                 i++;
+                synchronized (counter) {
+                    counter.inc();
+                    System.out.println(name + "; counter = " + counter.getCounter());
 
-                counter.inc();
-                System.out.println(name + "; counter = " + counter.getCounter());
-
-                threadSleep(5);
+                    threadSleep(5);
+                }
             }
         }
     }
@@ -55,7 +57,7 @@ public class SyncCounterTest {
             counter++;
         }
 
-        public Integer getCounter(){
+        public Integer getCounter() {
             return counter;
         }
     }
@@ -77,7 +79,8 @@ public class SyncCounterTest {
         thread1.start();
         thread2.start();
 
-//        thread2.join(); // TODO?
+        thread1.join(); // TODO?
+        thread2.join(); // TODO?
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

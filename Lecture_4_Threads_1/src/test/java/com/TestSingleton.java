@@ -18,6 +18,11 @@ public class TestSingleton {
     public static TestSingleton getInstance(){
         if (instance == null) {
             // TODO: complete
+            //synchronized (instance) {
+                //if(instance == null) {
+                    instance = new TestSingleton();
+                //}
+            //}
         }
         return instance;
     }
@@ -33,13 +38,16 @@ public class TestSingleton {
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null); // TODO
+            //instance.set(TestSingleton.getInstance());
+            instance.compareAndSet(null, TestSingleton.getInstance()); // TODO
         });
 
         thread1.start();
 
-//        thread1.join(); // TODO
+        thread1.join(); // TODO
 
+        //System.out.println(TestSingleton.getInstance());
+       // System.out.println(instance.get());
         assertEquals(TestSingleton.getInstance(), instance.get());
     }
 

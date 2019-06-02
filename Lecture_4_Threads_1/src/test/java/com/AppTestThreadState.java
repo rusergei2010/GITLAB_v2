@@ -16,22 +16,38 @@ public class AppTestThreadState {
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+        Thread thread1 = new Thread(()-> {
+            try {
+                Thread.sleep(100000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        Thread thread2 = new Thread();
 
         assertEquals(thread1.getState(), Thread.State.NEW);
         assertEquals(thread2.getState(), Thread.State.NEW);
 
-
+        thread1.start();
+        thread2.start();
         // TODO: fill the gap
         // TODO: fill the gap
 
         assertEquals(thread1.getState(), Thread.State.RUNNABLE);
         assertEquals(thread2.getState(), Thread.State.RUNNABLE);
 
-        // Add delay if necessary
-        // TODO: fill the gap
 
+        thread1.sleep(1000);
+        thread2 = new Thread(()-> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread2.start();
+        thread1.sleep(100);
+        System.out.println(thread1.getState());
         // threads should run task to be put on hold
         assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
         assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);

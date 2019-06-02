@@ -3,6 +3,7 @@ package com;
 import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import static org.junit.Assert.assertEquals;
@@ -18,7 +19,7 @@ public class SyncTest {
 
     public void change() {
 
-        lock.lock();
+        lock.tryLock();
         try {
             try {
                 Thread.sleep(1000);
@@ -35,14 +36,31 @@ public class SyncTest {
     public void testSync() {
         new Thread(() -> {
             change();
+            System.out.println(Thread.currentThread().getName());
         }).start();
+        try {
+            // пытаемся взять лок в течении 10 секунд
+            if(lock.tryLock(10, TimeUnit.SECONDS)){
+                Utils.sleep(1000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally{
+
+            lock.unlock();
+        }
         new Thread(() -> {
-            change();
+            change();System.out.println(Thread.currentThread().getName());
         }).start();
 
-        Utils.sleep(2000);
+
 
         // TODO: fix it with use of 'if(tryLock())' for heavy calculations (~sleep(1000))
+
+
+
+
+        Utils.sleep(2000);
         assertEquals(1, counter);
     }
 }

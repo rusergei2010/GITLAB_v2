@@ -21,7 +21,6 @@ public class CounterTest {
         public void inc() throws InterruptedException {
             if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 try {
-                    System.out.println(Thread.currentThread().getName()+ " inc");
                     Util.sleep(200);
                     counter++;
                 } finally {
@@ -55,7 +54,6 @@ public class CounterTest {
         });
 
         service.awaitTermination(5000, TimeUnit.MILLISECONDS);
-        System.out.println("AFTER");
         service.shutdown();
 
         // TODO: fix the test by changing timings

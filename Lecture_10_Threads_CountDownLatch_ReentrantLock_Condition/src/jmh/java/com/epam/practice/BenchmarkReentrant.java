@@ -41,14 +41,14 @@ public class BenchmarkReentrant {
     public void testSyncInc() throws InterruptedException {
         counter.count = 0;
         while (counter.count < COUNTS)
-            counter.inc();
+            counter.syncInc();
     }
 
     @Benchmark
     public void testNonSyncInc() throws InterruptedException {
         counter.count = 0;
         while (counter.count < COUNTS)
-            counter.syncInc();
+            counter.inc();
     }
 
     @Benchmark

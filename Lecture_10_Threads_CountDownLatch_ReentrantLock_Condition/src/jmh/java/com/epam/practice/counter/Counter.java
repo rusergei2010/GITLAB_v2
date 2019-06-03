@@ -7,7 +7,7 @@ public class Counter {
     public int count = 0;
     public AtomicInteger casCount = new AtomicInteger(0);
     ReentrantLock lock = new ReentrantLock();
-    public static volatile int volCount = 0;
+    public static volatile int volCount = 0; // ++ and -- operations are not atomic for volatile. Only READ.
 
     public void inc() {
         count++;

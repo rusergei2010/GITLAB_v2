@@ -1,5 +1,6 @@
 package com;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,13 +10,12 @@ public class TestThreadStop {
     static class Manageable extends Thread {
 
         // TODO: think of volatile, interrupt() or Atomic
-        public static boolean running = true;
+        public static AtomicBoolean running = new AtomicBoolean(true);
         public static String str = "";
 
         @Override
         public void run() {
-
-            while (running) {
+            while (running.get()) {
                 try {
                     str = str + "a";
                     synchronized (this) {
@@ -37,8 +37,17 @@ public class TestThreadStop {
         assertEquals(thread.getState(), Thread.State.RUNNABLE);
 
         //TODO: Employ TestThreadStop.Manageable.running = false inside of loop and stop thread when "aaa" is built
-        //for (int i = 0; i < 100; i ++) {
-        //}
+        for (int i = 0; i < 100; i ++) {
+            synchronized (thread){
+                if(Manageable.str.length() >= 3){
+                    thread.running.set(false);
+                    break;
+                }
+                else{
+                    Thread.sleep(10);
+                }
+            }
+        }
 
         System.out.println("Received : " + Manageable.str);
         assertEquals("aaa", Manageable.str);

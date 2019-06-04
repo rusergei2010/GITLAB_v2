@@ -33,9 +33,10 @@ public class SyncCounterTest {
             int i = 0;
             while (i < total) {
                 i++;
-
-                counter.inc();
-                System.out.println(name + "; counter = " + counter.getCounter());
+                synchronized (counter){
+                    counter.inc();
+                    System.out.println(name + "; counter = " + counter.getCounter());
+                }
 
                 threadSleep(5);
             }
@@ -71,13 +72,14 @@ public class SyncCounterTest {
 
         final int total = 200;
         Counter counter = new Counter(0);
+
         Thread thread1 = new Thread(new CounterThread("Thread - 1", counter, total));
         Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
 
         thread1.start();
         thread2.start();
 
-//        thread2.join(); // TODO?
+        thread2.join(); // TODO?
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

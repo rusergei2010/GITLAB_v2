@@ -5,6 +5,9 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.IntStream;
 
+/**
+ * CyclicBarrier can be reused with reset function
+ */
 public class BarrierApp {
 
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {

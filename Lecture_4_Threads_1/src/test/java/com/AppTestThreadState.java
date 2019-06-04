@@ -16,8 +16,22 @@ public class AppTestThreadState {
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+
+        Thread thread1 = createThread( () -> {
+            try {
+                Thread.sleep (5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+        });
+
+        Thread thread2 = createThread( () -> {
+            try {
+                Thread.sleep (5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+        });
 
         assertEquals(thread1.getState(), Thread.State.NEW);
         assertEquals(thread2.getState(), Thread.State.NEW);
@@ -25,10 +39,13 @@ public class AppTestThreadState {
 
         // TODO: fill the gap
         // TODO: fill the gap
-
+        thread1.start ();
         assertEquals(thread1.getState(), Thread.State.RUNNABLE);
+
+        thread2.start ();
         assertEquals(thread2.getState(), Thread.State.RUNNABLE);
 
+        Thread.sleep (1000);
         // Add delay if necessary
         // TODO: fill the gap
 

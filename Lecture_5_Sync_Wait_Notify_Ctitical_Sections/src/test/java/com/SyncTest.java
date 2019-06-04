@@ -20,18 +20,15 @@ public class SyncTest {
 
     public void change() {
 
-        try {
-            if(lock.tryLock(2000, TimeUnit.MILLISECONDS)) {
-                try {
-                    Thread.sleep(1000);
-                    counter++;
-                } finally {
-                    lock.unlock();
-                }
+        if (lock.tryLock())
+            try {
+                Thread.sleep(1000);
+                counter++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.epam.executors.addition.revise;
+package prepare.queues.blocking.revise;
 
 
 import com.epam.executors.addition.prepare.util.Util;

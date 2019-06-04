@@ -1,7 +1,6 @@
 package prepare.queues.blocking.revise;
 
 
-import com.epam.executors.addition.prepare.util.Util;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -79,7 +78,7 @@ public class Fifo {
             );
         });
 
-        Util.sleep(2000);
+        Thread.sleep(2000);
         putDown(executorService);
     }
 

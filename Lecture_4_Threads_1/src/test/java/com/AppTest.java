@@ -31,6 +31,7 @@ public class AppTest {
         thread1.join();
         thread2.start();
         thread2.join();
+        System.out.println("CTR="+myRunnable.counter);
         assertEquals(2, myRunnable.counter);
     }
 

@@ -11,7 +11,7 @@ public class SingletonVolatileTest {
 
     private static class SingletonVolatile {
         private AtomicInteger counter = new AtomicInteger();
-        private static /*TODO: fix here*/ SingletonVolatile instance = null;
+        private static volatile SingletonVolatile instance = null;
 
         private SingletonVolatile() {
         }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class JavaForkJoinPoolZExtended {
             );
     private static Predicate<? super Integer> notNull = (x) -> x != null;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
 
         new Thread(() -> {
@@ -62,6 +63,9 @@ public class JavaForkJoinPoolZExtended {
             e.printStackTrace();
         } finally {
             forkJoinPool.shutdown(); //always remember to shutdown the pool
+            if (!forkJoinPool.awaitTermination(5, TimeUnit.SECONDS))
+                forkJoinPool.shutdownNow();
+            System.exit(0);
         }
     }
 

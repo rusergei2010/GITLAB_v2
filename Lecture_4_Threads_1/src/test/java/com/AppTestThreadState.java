@@ -1,7 +1,5 @@
 
 package com;
-
-import com.sun.javaws.ui.ApplicationIconGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

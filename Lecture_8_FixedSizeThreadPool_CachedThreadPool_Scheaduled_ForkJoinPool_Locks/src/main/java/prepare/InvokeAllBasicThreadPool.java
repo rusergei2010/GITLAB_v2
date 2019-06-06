@@ -21,7 +21,7 @@ public class InvokeAllBasicThreadPool {
     public static Callable<String> callable(String name) throws ExecutionException {
         return () -> {
             try {
-//                Util.threadSleep(1000);
+//                Utils.threadSleep(1000);
                 System.out.println("Callable is executed");
                 Thread.sleep(1000);
                 return "Result: " + name;

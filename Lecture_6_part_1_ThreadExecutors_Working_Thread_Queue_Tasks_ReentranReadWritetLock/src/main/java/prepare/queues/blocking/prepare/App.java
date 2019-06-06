@@ -1,13 +1,10 @@
 package prepare.queues.blocking.prepare;
 
-import prepare.util.Util;
+import prepare.util.Utils;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -29,7 +26,7 @@ public class App {
             IntStream.range(0, 100).forEach((x) -> {
                 final String str = "Send Message: " + x;
                 try {
-                    Util.sleep(10);
+                    Utils.sleep(10);
                     queue.put(str);
                     System.out.println(str);
                 } catch (InterruptedException e) {
@@ -52,7 +49,7 @@ public class App {
             IntStream.range(0, 100).forEach((x) -> {
                 String str = null;
                 try {
-                    Util.sleep(10);
+                    Utils.sleep(10);
                     str = queue.take();
                     System.out.println("Read : " + str);
                 } catch (InterruptedException e) {

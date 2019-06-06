@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
-public class Immutability {
+public class CopyOnWriteArrayListImmutability {
 
 
     /**
@@ -30,6 +30,10 @@ public class Immutability {
         System.out.println(car);
     }
 
+    /**
+     * The same concept as for the iteration over the Map (ExecutionException will be thrown there)
+     * @throws InterruptedException
+     */
     @Test(expected = ConcurrentModificationException.class)
     public void mutableCollections() throws InterruptedException {
         ArrayList<Integer> mutable = new ArrayList<>();
@@ -82,15 +86,14 @@ public class Immutability {
     // Solution 2 - convert to CopyOnWriteArrayList
     @Test
     public void syncCollections() throws InterruptedException {
-        List<Integer> mutable = new CopyOnWriteArrayList<>();
+        List<Integer> cowArrayList = new CopyOnWriteArrayList<>();
 
-        IntStream.range(0, 10).forEach(mutable::add);
-
+        IntStream.range(0, 10).forEach(cowArrayList::add);
 
         Thread thread = new Thread(() -> {
             IntStream.range(0, 10).forEach((i) -> {
-                mutable.add(-1);
-                System.out.println(Thread.currentThread().getName() + ": Added value to array: " + (-1) + "; Size = " + mutable.size());
+                cowArrayList.add(-1);
+                System.out.println(Thread.currentThread().getName() + ": Modify: Add value to array: " + (-1) + "; Size = " + cowArrayList.size());
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -98,24 +101,27 @@ public class Immutability {
                 }
             });
             System.out.println("########################################\n" +
-                    "Complete Adding new Values to mutable array. Size = " + mutable.size() + "\n" +
+                    "Complete Adding new Values to mutable array. Size = " + cowArrayList.size() + "\n" +
                     "########################################");
 
         });
 
         thread.start();
 
-        Thread.sleep(100);
+        Thread.sleep(100); // added at least 10 + 2 elements (-1) by that moment
 
-        // concurrent modification in the list
-        final Iterator<Integer> iterator = mutable.iterator();
+        // ########################################################
+        // Concurrent modification in the list
+        // Make a snapshot of the Iterator at this concrete moment while it is being modified in the Thread
+        // ########################################################
+        final Iterator<Integer> cowIterator = cowArrayList.iterator(); // COWIterator is used
         System.out.println("########################################");
-        System.out.println(Thread.currentThread().getName() + " - current thread; Size = " + mutable.size()); // size is not defined for 100%
+        System.out.println(Thread.currentThread().getName() + " - current thread; Size = " + cowArrayList.size()); // size is not defined for 100%
         System.out.println("########################################");
 
-        while (iterator.hasNext()) {
+        while (cowIterator.hasNext()) {
 
-            System.out.println(Thread.currentThread().getName() + " - Print: " + iterator.next() + "; Size = " + mutable.size());
+            System.out.println(Thread.currentThread().getName() + "      COW Iterator element : " + cowIterator.next() + "; Size = " + cowArrayList.size());
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -127,7 +133,7 @@ public class Immutability {
         Thread.sleep(100);
         System.out.println("After modification");
         // add the list to the end after the Iterator is released
-        mutable.forEach(System.out::print);
+        cowArrayList.forEach(System.out::print);
     }
 
     private void sleep(int i) {

@@ -1,6 +1,6 @@
 package prepare.util;
 
-public class Util {
+public class Utils {
 
     public static void sleep(final int mil){
         try {

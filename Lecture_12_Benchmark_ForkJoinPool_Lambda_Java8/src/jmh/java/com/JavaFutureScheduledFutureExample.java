@@ -14,10 +14,10 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.*;
 
-public class JavaFutureExample {
+public class JavaFutureScheduledFutureExample {
 
     private static class Counter {
-        volatile int counter = 0;
+        int counter = 0;
 
         public int inc() {
             counter++;
@@ -59,7 +59,9 @@ public class JavaFutureExample {
 
     private static void putDown(ExecutorService executorService) throws InterruptedException {
         executorService.shutdown();
-        executorService.awaitTermination(1, TimeUnit.SECONDS);
+        if (!executorService.awaitTermination(5, TimeUnit.SECONDS)){
+            executorService.shutdownNow();
+        }
     }
 
 

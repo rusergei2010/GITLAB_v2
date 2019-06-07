@@ -11,7 +11,11 @@ import java.util.concurrent.FutureTask;
 
 public class A1_FutureVSCompletableFutureTest {
 
-
+    /**
+     * FutureTask is a simplest Future that a single Thread inside and Stages to manage it like a basic Future
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Test
     public void testFuture() throws ExecutionException, InterruptedException {
         Future<String> future = new FutureTask<String>(() -> {
@@ -34,6 +38,12 @@ public class A1_FutureVSCompletableFutureTest {
         System.out.println(future.get());
     }
 
+    /**
+     * Completable Future start here
+     * CompletableFuture means that it can be explicitly completed
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Test
     public void deferredCompleteResult() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();

@@ -2,6 +2,7 @@ package com.practice.clazz;
 
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.CancellationException;
@@ -11,6 +12,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.junit.Assert.assertEquals;
 
 public class A2_CompletableFutureTest {
 
@@ -46,12 +48,15 @@ public class A2_CompletableFutureTest {
 
     @Test
     public void testAccept() throws ExecutionException, InterruptedException {
+
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task");
         CompletableFuture<Void> result = completableFuture.thenAccept(s -> {
-            System.out.println(s + "\n" + "Second Task");
+            System.out.println("Completable Time: " + new Date(System.currentTimeMillis()).toString());
+            System.out.println(s + "\n" + "Second Task"); // executed Asynchronously right away
         });
-
-        System.out.println(result.get());
+        Thread.sleep(2000);
+        System.out.println("Main Time: " + new Date(System.currentTimeMillis()).toString());
+        System.out.println(result.get()); // task is being already started execution
     }
 
 
@@ -59,11 +64,16 @@ public class A2_CompletableFutureTest {
     public void testCombine() throws ExecutionException, InterruptedException {
 
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task. Hello");
-        CompletableFuture<String> combined = completableFuture.thenCombineAsync(CompletableFuture.supplyAsync(() -> " World"), (s1, s2) -> s1 + s2);
+        CompletableFuture<String> combined = completableFuture.thenCombine(CompletableFuture.supplyAsync(() -> " World"), (s1, s2) -> s1 + s2);
 
         System.out.println(combined.get());
     }
 
+    /**
+     * Timings...
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Test
     public void testCombineAsync() throws ExecutionException, InterruptedException {
 
@@ -126,13 +136,15 @@ public class A2_CompletableFutureTest {
         });
 
         CompletableFuture future = CompletableFuture.allOf(completableFuture1, completableFuture2, completableFuture3);
-        System.out.println(future.isDone());
+        System.out.println("Future is Done: " + future.isDone());
         System.out.println(future.join());
 
         System.out.println("Result: ");
         System.out.println(completableFuture1.get());
         System.out.println(completableFuture2.get());
         System.out.println(completableFuture3.get());
+
+        System.out.println("Final Result: " + future.get());
     }
 
     @Test
@@ -162,6 +174,8 @@ public class A2_CompletableFutureTest {
         System.out.println(completableFuture1.get());
         System.out.println(completableFuture2.get());
         System.out.println(completableFuture3.get());
+
+        System.out.println("Final Result: " + future.get());
     }
 
     private static void sleep(int delay) {

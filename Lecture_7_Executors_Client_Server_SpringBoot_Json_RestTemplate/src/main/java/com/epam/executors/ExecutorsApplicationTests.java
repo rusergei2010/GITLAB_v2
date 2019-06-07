@@ -14,7 +14,7 @@
 //import java.util.Collections;
 //
 //// ######################################
-//// ### This is not a home task!!! Ignore it
+//// ### This is not a lamda2 task!!! Ignore it
 //// ######################################
 //@RunWith(SpringRunner.class)
 //@SpringBootTest

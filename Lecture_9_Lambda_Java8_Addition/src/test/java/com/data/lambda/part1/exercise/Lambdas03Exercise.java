@@ -25,14 +25,14 @@ public class Lambdas03Exercise {
 
     @Test
     public void generic1() {
-        final GenericProduct<Integer> prod = null; // TODO: Use statement com.data.lambda
+        final GenericProduct<Integer> prod = null; // TODO: Use statement lambda
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic2() {
-        final GenericProduct<Integer> prod = null; // TODO: Use expression com.data.lambda
+        final GenericProduct<Integer> prod = null; // TODO: Use expression lambda
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
@@ -47,7 +47,7 @@ public class Lambdas03Exercise {
 
     @Test
     public void strSum() {
-        final GenericProduct<String> prod = null; // TODO: use stringProd;
+        final GenericProduct<String> prod = null; // TODO: use convertion to str
 
         assertEquals(prod.prod("a", 2), "aa");
     }

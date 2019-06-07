@@ -43,7 +43,7 @@ public class ConcurrentOperators {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key);
+                        map.put(key, value);
                         if (!value.equals(map.get(key))){
                             System.out.println("Error match");
                         }
@@ -105,7 +105,6 @@ public class ConcurrentOperators {
 
         futureA.get();
         futureB.get();
-
         System.out.println("Map size = " + map.size());
 
         map.entrySet().stream().filter(e -> !e.getKey().toString().equals(String.valueOf(e.getValue()))).forEach((entry) -> {

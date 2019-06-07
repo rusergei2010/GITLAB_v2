@@ -21,7 +21,7 @@ public class A3_CompletableFutureExceptionTest {
                 throw new RuntimeException();
             }
             return "Sergey";
-        }).handle((result, ex) -> result != null ? result : "Hey : " + ex.getCause().toString());
+        }).handle((result, ex) -> result != null ? result : "Cause : " + ex.getCause().toString());
 
         System.out.println("Result: " + handle.get());
     }
@@ -35,7 +35,7 @@ public class A3_CompletableFutureExceptionTest {
                 throw new RuntimeException();
             }
             return "Sergey";
-        }, Executors.newSingleThreadExecutor()).handle((result, ex) -> result != null ? result : "Hey : " + ex.getCause().toString());
+        }, Executors.newSingleThreadExecutor()).handle((result, ex) -> result != null ? result : "Cause : " + ex.getCause().toString());
 
         System.out.println("Result: " + handle.get());
     }

@@ -10,6 +10,8 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.IntStream;
 
 public class CopyOnWriteArrayListImmutability {
@@ -39,7 +41,6 @@ public class CopyOnWriteArrayListImmutability {
         ArrayList<Integer> mutable = new ArrayList<>();
 
         IntStream.range(0, 10).forEach(mutable::add);
-
         new Thread(() -> {
             IntStream.range(0, 10).forEach((i) -> {
                 mutable.add(-1);
@@ -114,14 +115,14 @@ public class CopyOnWriteArrayListImmutability {
         // Concurrent modification in the list
         // Make a snapshot of the Iterator at this concrete moment while it is being modified in the Thread
         // ########################################################
-        final Iterator<Integer> cowIterator = cowArrayList.iterator(); // COWIterator is used
         System.out.println("########################################");
         System.out.println(Thread.currentThread().getName() + " - current thread; Size = " + cowArrayList.size()); // size is not defined for 100%
         System.out.println("########################################");
 
+        final Iterator<Integer> cowIterator = cowArrayList.iterator(); // COWIterator is used
         while (cowIterator.hasNext()) {
-
-            System.out.println(Thread.currentThread().getName() + "      COW Iterator element : " + cowIterator.next() + "; Size = " + cowArrayList.size());
+            System.out.println(Thread.currentThread().getName() +
+                    "      COW Iterator element : " + cowIterator.next() + "; Size = " + cowArrayList.size());
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

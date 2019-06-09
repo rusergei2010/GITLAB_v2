@@ -4,10 +4,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * TODO: fix it
+ */
 public class AtomicReferenceTest {
 
     @Test
@@ -52,6 +56,6 @@ public class AtomicReferenceTest {
         }).start();
 
         latchTwo.await(1, TimeUnit.SECONDS); // await '0' or proceed
-        assertEquals("OneTwo", reference.get());
+        Assert.assertEquals("OneTwo", reference.get());
     }
 }

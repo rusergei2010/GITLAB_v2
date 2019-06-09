@@ -17,3 +17,5 @@ cd $TRAVIS_BUILD_DIR/Lecture_10_Threads_CountDownLatch_Semaphore
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_11_Barrier_CAS
 mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_14_Completable_Future_Concurrency_practice
+mvn test

@@ -1,5 +1,6 @@
 package com.practice.clazz;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class A2_CompletableFutureTest {
 
 
@@ -42,6 +44,7 @@ public class A2_CompletableFutureTest {
     public void testSupply() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task");
         CompletableFuture<String> result = completableFuture.thenApply(s -> s + "\n" + "Second Task");
+
 
         System.out.println(result.get());
     }

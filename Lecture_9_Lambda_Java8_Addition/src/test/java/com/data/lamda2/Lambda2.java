@@ -61,7 +61,7 @@ public class Lambda2 {
      */
     @Test
     public void testLambda() throws InterruptedException {
-        // TODO: replace with com.data.lambda all domain access points
+        // TODO: replace with com.data.lambda all model access points
 
         Person person1 = new Person("Andrey", 10, Person.Gender.MALE);
         Person person2 = new Person("Evgenii", 20, Person.Gender.MALE);

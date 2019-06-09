@@ -19,3 +19,7 @@ cd $TRAVIS_BUILD_DIR/Lecture_11_Barrier_CAS
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_14_Completable_Future_Concurrency_practice
 mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_15_Concurrent_Collection
+mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_19_Streams_BasicOperations
+mvn test

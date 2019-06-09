@@ -88,7 +88,7 @@ public class Lambda03 {
         // TODO: Uncomment another expression then (replace with this one)
 //        Arrays.sort(personsAged,
 //                (person1_, person2_) -> {
-//                    domain.setName("Lambda Expression");
+//                    model.setName("Lambda Expression");
 //                    list.add(person1_);
 //                    return person1_.name.compareTo(person2_.name); // statement
 //                });

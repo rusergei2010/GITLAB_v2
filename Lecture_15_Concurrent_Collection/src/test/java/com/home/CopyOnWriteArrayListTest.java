@@ -1,7 +1,4 @@
-package com.practice;
-
-import com.model.Car;
-import com.model.Owner;
+package com.home;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,32 +6,17 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
-public class CopyOnWriteArrayListImmutability {
 
+import static org.junit.Assert.assertEquals;
 
-    /**
-     * Use the Builder pattern to code the immutable objects
-     */
-    @Test
-    public void testImmutability() {
-        Car.CarBuilder builder = Car.CarBuilder.builder();
-        builder
-                .withName("Vovlva")
-                .withOwner(new Owner("Vova", "Vladimirov"));
-
-        Car car = builder.build();
-
-        System.out.println(car);
-    }
+public class CopyOnWriteArrayListTest {
 
     /**
-     * The same concept as for the iteration over the Map (ExecutionException will be thrown there)
      * @throws InterruptedException
      */
     @Test(expected = ConcurrentModificationException.class)
@@ -50,31 +32,40 @@ public class CopyOnWriteArrayListImmutability {
 
         }).start();
 
+        // TODO: remove this delay if necessary
+        sleep(3000);
 
         // concurrent modification in the list
-        // prevent from returning list from Immutable Class in multi-threaded apps
         final Iterator<Integer> iterator = mutable.iterator();
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            System.out.println(iterator.next()); // Why does iterator.next cause the exception?
             sleep(100);
         }
     }
 
-    // Solution 1 - convert to Immutable Collection
+    // Immutable collection
     @Test
     public void immutableCollections() throws InterruptedException {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
         List<Integer> immutable = Collections.unmodifiableList(mutableList);
 
-        new Thread(() -> {
+        AtomicReference<Throwable> exception = new AtomicReference<>(); // Use of reference from lambda and thread
+
+        Thread thread = new Thread(() -> {
             IntStream.range(0, 10).forEach((i) -> {
-                immutable.add(-1);
+                try {
+                    immutable.add(-1);
+                } catch (Throwable t) {
+                    // TODO: uncomment this if necessary
+                    // exception.set(t);
+                    throw new RuntimeException(t);
+                }
                 sleep(100);
             });
 
-        }).start();
-
+        });
+        thread.start();
 
         // concurrent modification in the list
         // prevent from returning list from Immutable Class in multi-threaded apps
@@ -83,57 +74,40 @@ public class CopyOnWriteArrayListImmutability {
             System.out.println(iterator.next());
             sleep(100);
         }
+
+        thread.join();
+        org.junit.Assert.assertNotNull(exception.get());
     }
 
     // Solution 2 - convert to CopyOnWriteArrayList
+    // TODO: Fix the timeout. Adjust 'TIMEOUT' to let more element to be added to the CopyOnWriteArrayList before thread-safe Iteration is started
     @Test
     public void syncCollections() throws InterruptedException {
+        final long TIMEOUT = 150;
         List<Integer> cowArrayList = new CopyOnWriteArrayList<>();
-
-        IntStream.range(0, 10).forEach(cowArrayList::add);
 
         Thread thread = new Thread(() -> {
             IntStream.range(0, 10).forEach((i) -> {
                 cowArrayList.add(-1);
-                System.out.println(Thread.currentThread().getName() + ": Modify: Add value to array: " + (-1) + "; Size = " + cowArrayList.size());
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                sleep(100);
             });
-            System.out.println("########################################\n" +
-                    "Complete Adding new Values to mutable array. Size = " + cowArrayList.size() + "\n" +
-                    "########################################");
-
         });
-
         thread.start();
 
-        Thread.sleep(100); // added at least 10 + 2 elements (-1) by that moment
-
-        // ########################################################
-        // Concurrent modification in the list
-        // Make a snapshot of the Iterator at this concrete moment while it is being modified in the Thread
-        // ########################################################
-        System.out.println("########################################");
-        System.out.println(Thread.currentThread().getName() + " - current thread; Size = " + cowArrayList.size()); // size is not defined for 100%
-        System.out.println("########################################");
+        Thread.sleep(TIMEOUT); // wait till two elements are added
 
         final Iterator<Integer> cowIterator = cowArrayList.iterator(); // COWIterator is used
+        int coutner = 0;
         while (cowIterator.hasNext()) {
             System.out.println(Thread.currentThread().getName() +
                     "      COW Iterator element : " + cowIterator.next() + "; Size = " + cowArrayList.size());
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            coutner++;
         }
+
+        assertEquals(3, coutner);
 
         thread.join();
         Thread.sleep(100);
-        System.out.println("After modification");
         // add the list to the end after the Iterator is released
         cowArrayList.forEach(System.out::print);
     }
@@ -145,5 +119,4 @@ public class CopyOnWriteArrayListImmutability {
             e.printStackTrace();
         }
     }
-
 }

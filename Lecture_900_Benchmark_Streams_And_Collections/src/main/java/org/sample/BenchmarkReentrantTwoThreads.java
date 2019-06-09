@@ -1,4 +1,4 @@
-//package com.epam.practice;
+//package org.sample;
 //
 //import com.epam.practice.counter.Counter;
 //import org.openjdk.jmh.annotations.Benchmark;

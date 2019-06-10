@@ -1,7 +1,7 @@
-package com.epam.executors.addition.com;
+//package com.epam.executors.addition.com;
 
 
-import com.epam.executors.addition.prepare.util.Util;
+//import com.epam.executors.addition.prepare.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
+import prepare.util.Util;
 
 public class ShutdownProcedureExecutors {
 

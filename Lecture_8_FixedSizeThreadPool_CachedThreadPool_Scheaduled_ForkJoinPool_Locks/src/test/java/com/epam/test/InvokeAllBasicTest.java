@@ -45,6 +45,7 @@ public class InvokeAllBasicTest {
         }
 
         @Override public void run() {
+
             try {
                 Thread.sleep(1000); // Let it ibe delayed (REST call as an example then)
             } catch (InterruptedException e) {
@@ -60,29 +61,29 @@ public class InvokeAllBasicTest {
         final ExecutorService service = Executors.newFixedThreadPool(2);
 
         final Collection<CallableTask> callableTaskCollection = Arrays.asList(
-                new CallableTask(10), // 10 * 10
-                new CallableTask(100) // 100 * 100
+            new CallableTask(10), // 10 * 10
+            new CallableTask(100) // 100 * 100
         );
 
         // expected 100 + 10000 = ...
 
         final List<Future<String>> futures = service.invokeAll(callableTaskCollection);
         int sum = futures.stream().map(x -> {
-                    try {
-                        return x.get(); // will not return value till it is ready
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
+                try {
+                    return x.get(); // will not return value till it is ready
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
                 }
+                return null;
+            }
         ).filter(Objects::nonNull)
-                .map(Integer::valueOf)
-                .mapToInt(Integer::intValue)
-                .sum();
+                         .map(Integer::valueOf)
+                         .mapToInt(Integer::intValue)
+                         .sum();
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
         putDown(service, 2);
     }
 
@@ -100,7 +101,7 @@ public class InvokeAllBasicTest {
         ExecutorService service = Executors.newFixedThreadPool(2);
 
         Collection<RunnableTask> callableTaskCollection = Arrays.asList(
-                new RunnableTask(10) // 10 * 10
+            new RunnableTask(10) // 10 * 10
         );
 
         AtomicReference<Integer> referenceResult = new AtomicReference<>();
@@ -111,19 +112,20 @@ public class InvokeAllBasicTest {
         // We have to imply atomic reference class to solve this issue (really weired solution)
         // Use Future and submit() instead!
         callableTaskCollection.forEach(
-                task -> {
-                    // find square
-                    service.execute(task); // put task into the executor and execute. See the timeout inside of the task
-                    try {
-                        Thread.sleep(500); // TODO: increment this
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    referenceResult.set(task.value);
+            task -> {
+                // find square
+                service.execute(task); // put task into the executor and execute. See the timeout inside of the task
+
+                try {
+                    Thread.sleep(1500); // TODO: increment this
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                referenceResult.set(task.value);
+            }
         );
 
-        Thread.sleep(500);// TODO: increment this
+        Thread.sleep(2000);// TODO: increment this
 
 
         // ### IMPOTRANT ###

@@ -10,4 +10,7 @@ public class Util {
             throw e;
         }
     }
+
+  public static void sleep(int i) {
+  }
 }

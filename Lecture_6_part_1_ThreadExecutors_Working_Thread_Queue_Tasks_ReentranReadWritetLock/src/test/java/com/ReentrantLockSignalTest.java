@@ -1,7 +1,7 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,7 @@ public class ReentrantLockSignalTest {
         public String readMsg() {
             lock.lock();
             try {
-                Util.sleep(10);
+                Thread.sleep(10);
                 while (msg == null) {
                     readCondition.await();
                 }
@@ -44,7 +44,7 @@ public class ReentrantLockSignalTest {
         public void writeMsg(String str) {
             lock.lock();
             try {
-                Util.sleep(10);
+                Thread.sleep(10);
                 while (msg != null) {
                     writeCondition.await();
                 }

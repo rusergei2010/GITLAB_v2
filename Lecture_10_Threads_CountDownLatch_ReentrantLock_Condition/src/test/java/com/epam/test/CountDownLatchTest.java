@@ -54,6 +54,7 @@ public class CountDownLatchTest {
 
         IntStream.range(0,3).forEach((x) -> {
             service.submit(new Task(latchStop, latchStart));
+            latchStop.countDown ();
         });
         Thread.sleep(100);
 

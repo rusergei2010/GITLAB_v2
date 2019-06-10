@@ -1,7 +1,7 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,7 @@ public class ReentrantLockSignalTest {
         public String readMsg() {
             lock.lock();
             try {
-                Util.sleep(10);
+                Thread.sleep(10);
                 while (msg == null) {
                     readCondition.await();
                 }
@@ -34,8 +34,9 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 writeCondition.signal();
+                lock.unlock();
+
             }
             return msg;
         }
@@ -43,7 +44,7 @@ public class ReentrantLockSignalTest {
         public void writeMsg(String str) {
             lock.lock();
             try {
-                Util.sleep(10);
+                Thread.sleep(10);
                 while (msg != null) {
                     writeCondition.await();
                 }
@@ -51,8 +52,9 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 readCondition.signal();
+                lock.unlock();
+
             }
         }
     }
@@ -110,13 +112,13 @@ public class ReentrantLockSignalTest {
 
         threadC.start();
         threadP.start();
-//
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
-//
+        //
+        //        thread1.join();
+        //        thread2.join();
+        //        thread3.join();
+        //
         Thread.sleep(1000);
         assertEquals(10, con.received.size());
-//        System.out.println("Main exit: " + count.count);
+        //        System.out.println("Main exit: " + count.count);
     }
 }

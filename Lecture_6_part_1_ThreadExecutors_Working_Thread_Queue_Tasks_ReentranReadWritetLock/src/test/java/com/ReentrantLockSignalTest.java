@@ -1,7 +1,7 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+import com.util.Util;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -38,9 +38,10 @@ public class FixedSizeThreadPoolTest {
             e.printStackTrace();
         }
 
-        shutdownWithDelay(service, 1000);
+
 
         Future<String> res3 = service.submit(callable());
+        shutdownWithDelay(service, 1000);
         try {
             assertEquals("Result", res3.get());
         } catch (InterruptedException e) {

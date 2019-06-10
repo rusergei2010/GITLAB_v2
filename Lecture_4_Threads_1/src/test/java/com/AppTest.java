@@ -29,7 +29,8 @@ public class AppTest {
         Thread thread2 = createThread(myRunnable);
         thread1.start();
         thread2.start();
-        thread1.join();
+
+        Thread.sleep(1000);
 
         assertEquals(2, myRunnable.counter);
     }

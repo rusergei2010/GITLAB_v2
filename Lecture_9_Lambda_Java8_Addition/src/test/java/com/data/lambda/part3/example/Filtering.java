@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -53,6 +55,19 @@ public class Filtering {
             // TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
             // TODO: DEV name should be 'John'
             // Store all matching output in 'result' collection
+
+            final List<JobHistoryEntry> jobHistoryEntries = employee
+                    .getJobHistory ()
+                    .stream ()
+                    .filter (e -> e.getEmployer ().equals ("epam"))
+                    .filter (r -> r.getPosition ().equals ("dev"))
+                    .filter (t -> t.getDuration () > 1)
+                    .collect (Collectors.toList ());
+
+                 if (jobHistoryEntries.size () > 0 &&
+                         employee.withJobHistory (jobHistoryEntries).getPerson ().getFirstName ().equals ("John")) {
+                     result.add (employee.withJobHistory (jobHistoryEntries));
+                 }
         }
         TestCase.assertEquals(1, result.size());
     }
@@ -84,7 +99,7 @@ public class Filtering {
 
     private static boolean hasDevExperience(Employee e) {
         return new FilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getPosition().equals("QA")) // TODO: fix here
+                .filter(j -> j.getPosition().equals("dev")) // TODO: fix here
                 .getList()
                 .size() > 0;
     }
@@ -176,7 +191,7 @@ public class Filtering {
     private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
         return new LazyFilterUtil<>(e.getJobHistory())
                 .filter(j -> j.getEmployer().equals("epam"))
-                .filter(j -> j.getDuration() > 2)// TODO: fix it in this line (1,2 or more?)
+                .filter(j -> j.getDuration() > 1)// TODO: fix it in this line (1,2 or more?)
                 .force()
                 .size() > 0;
     }

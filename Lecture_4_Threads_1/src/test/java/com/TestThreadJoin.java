@@ -50,9 +50,11 @@ public class TestThreadJoin {
         assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
         assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
 
-        synchronized (this){
-            notifyAll();
-        }
+//        synchronized (this){
+//            notifyAll();
+//        }
+        thread1.join();
+        thread2.join();
 
         sleep(1000);
         // threads should run task to be put on hold

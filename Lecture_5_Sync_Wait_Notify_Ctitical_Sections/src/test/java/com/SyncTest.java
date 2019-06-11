@@ -19,16 +19,17 @@ public class SyncTest {
     public void change() {
 
         //lock.lock();
-        if(lock.tryLock())
-        try {
+        if(lock.tryLock()){
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 

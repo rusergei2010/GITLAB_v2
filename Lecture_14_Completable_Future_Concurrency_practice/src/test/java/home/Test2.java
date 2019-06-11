@@ -16,7 +16,7 @@ public class Test2 {
     @Test
     public void testSupply() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task");
-        // TODO: Use com.data.lambda: (s -> s + " Second Task") with thenApply() termination operation for the CompletableFuture
+        // TODO: Use lambda: (s -> s + " Second Task") with thenApply() termination operation for the CompletableFuture
         CompletableFuture<String> result = completableFuture.thenApply(s -> s + " / Second Task"); //thenApply(s -> s + " / Second Task");
 
         assertEquals("First Task / Second Task", result.get());
@@ -31,6 +31,7 @@ public class Test2 {
         });
 
         // TODO: Put the blocking operation here to wait for the CompletableFuture's result being received
+        result.get();
         assertEquals(reference.get(), "Hey!");
     }
 

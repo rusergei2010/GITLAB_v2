@@ -1,11 +1,9 @@
 package com.data;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Employee {
     private final Person person;
@@ -34,31 +32,25 @@ public class Employee {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("domain", person)
-                .append("jobHistory", jobHistory)
+        return new StringBuilder()
+                .append("model" + person)
+                .append("jobHistory" + jobHistory)
                 .toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employee employee = (Employee) o;
-
-        return new EqualsBuilder()
-                .append(person, employee.person)
-                .append(jobHistory, employee.jobHistory)
-                .isEquals();
+    @Override public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Employee employee = (Employee) o;
+        return Objects.equals(person, employee.person) &&
+                Objects.equals(jobHistory, employee.jobHistory);
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(person)
-                .append(jobHistory)
-                .toHashCode();
+    @Override public int hashCode() {
+        return Objects.hash(person, jobHistory);
     }
 }

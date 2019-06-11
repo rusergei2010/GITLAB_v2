@@ -1,5 +1,6 @@
 package com.epam.barrier;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.BrokenBarrierException;
@@ -8,8 +9,9 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertEquals;
-
+/**
+ * TODO: fix it
+ */
 public class Barrier {
 
     @Test
@@ -29,7 +31,7 @@ public class Barrier {
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
 
-        assertEquals(9, counter.counter.get());
+        Assert.assertEquals(9, counter.counter.get());
     }
 
     static class Counter {

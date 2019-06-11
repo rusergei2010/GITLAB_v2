@@ -32,9 +32,8 @@ public class ReentrantReadWriteLockTest {
                     return name;
                 }
             } finally {
-                readLock.unlock();
                 if (locked) {
-//
+//                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }
@@ -54,9 +53,8 @@ public class ReentrantReadWriteLockTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                writeLock.unlock();
                 if (locked) {
-
+                    writeLock.unlock();
                     System.out.println("Write is unlocked");
                 }
             }

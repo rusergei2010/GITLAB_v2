@@ -1,8 +1,6 @@
-package com.epam.executors.addition.com;
+package com;
 
 
-//mport com.epam.executors.addition.prepare.util.Util;
-import prepare.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
+
 
 public class ShutdownProcedureExecutors {
 
@@ -28,7 +27,7 @@ public class ShutdownProcedureExecutors {
 
         IntStream.range(0, 10).forEach(i -> promise.add(i, () -> {
             try {
-                Thread.sleep(1000);
+                Util.sleep(1000);
                 System.out.println(i);
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -40,7 +39,7 @@ public class ShutdownProcedureExecutors {
 
         new Thread(() -> {
             try {
-                Thread.sleep(2000);
+                Util.sleep(2000);
                 ShutdownProcedureExecutors.shutdown(executorService);
             } catch (InterruptedException e) {
                 e.printStackTrace();

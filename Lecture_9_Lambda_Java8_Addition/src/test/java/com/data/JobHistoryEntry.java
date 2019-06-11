@@ -1,8 +1,7 @@
 package com.data;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.util.Objects;
+
 
 public class JobHistoryEntry {
     private final int duration;
@@ -39,36 +38,29 @@ public class JobHistoryEntry {
         return new JobHistoryEntry(duration, position, employer);
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("duration", duration)
-                .append("position", position)
-                .append("employer", employer)
-                .toString();
+    @Override public String
+    toString() {
+        return "JobHistoryEntry{" +
+                "duration=" + duration +
+                ", position='" + position + '\'' +
+                ", employer='" + employer + '\'' +
+                '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        JobHistoryEntry that = (JobHistoryEntry) o;
-
-        return new EqualsBuilder()
-                .append(duration, that.duration)
-                .append(position, that.position)
-                .append(employer, that.employer)
-                .isEquals();
+    @Override public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final JobHistoryEntry that = (JobHistoryEntry) o;
+        return duration == that.duration &&
+                Objects.equals(position, that.position) &&
+                Objects.equals(employer, that.employer);
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(duration)
-                .append(position)
-                .append(employer)
-                .toHashCode();
+    @Override public int hashCode() {
+        return Objects.hash(duration, position, employer);
     }
 }

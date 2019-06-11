@@ -21,7 +21,6 @@ public class TestThreadStop {
                     synchronized (this) {
                         wait(100);
                     }
-                    if (str.equals("aaa")) running = false;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -40,7 +39,7 @@ public class TestThreadStop {
         //TODO: Employ TestThreadStop.Manageable.running = false inside of loop and stop thread when "aaa" is built
         //for (int i = 0; i < 100; i ++) {
         //}
-        thread.join();
+
         System.out.println("Received : " + Manageable.str);
         assertEquals("aaa", Manageable.str);
     }

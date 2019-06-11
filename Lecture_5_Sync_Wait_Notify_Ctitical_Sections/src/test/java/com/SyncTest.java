@@ -3,7 +3,6 @@ package com;
 import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import static org.junit.Assert.assertEquals;
@@ -11,7 +10,6 @@ import static org.junit.Assert.assertEquals;
 // Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
 // Intrinsic lock is associated with the Class instance (static context)
 // Extrinsic lock is associated with a particular dynamic object (not the Class instance)
-
 public class SyncTest {
 
     private static int counter = 0;
@@ -20,26 +18,26 @@ public class SyncTest {
 
     public void change() {
 
-        if (lock.tryLock())
+        lock.lock();
+        try {
             try {
                 Thread.sleep(1000);
-                counter++;
-            } catch (InterruptedException e) {
+            } catch (Exception e){
                 e.printStackTrace();
-            } finally {
-                lock.unlock();
             }
+            counter++;
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Test
     public void testSync() {
         new Thread(() -> {
             change();
-            System.out.println(Thread.currentThread().getName()+"finish");
         }).start();
         new Thread(() -> {
             change();
-            System.out.println(Thread.currentThread().getName()+"finish");
         }).start();
 
         Utils.sleep(2000);

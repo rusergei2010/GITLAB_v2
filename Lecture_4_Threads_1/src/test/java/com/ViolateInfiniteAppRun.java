@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ViolateInfiniteAppRun {
 
-    private volatile static boolean running = true;
+    private static boolean running = true;
 
     public static class MyThread extends Thread {
         public void run() {
@@ -30,13 +30,10 @@ public class ViolateInfiniteAppRun {
         Thread.sleep(100);
 
         // TODO: Has no effect???
-
-
-       // Thread.sleep(500);
         running = false;
+
+        Thread.sleep(500);
         System.out.println(Thread.currentThread().getName() + " exited");
-        myThread.join();
-        System.out.println(myThread.getState());
         // TODO: App is running and cannot exit. Fix it.
         assertEquals(Thread.State.TERMINATED, myThread.getState());
     }

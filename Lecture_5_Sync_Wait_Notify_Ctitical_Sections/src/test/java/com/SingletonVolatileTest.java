@@ -11,7 +11,7 @@ public class SingletonVolatileTest {
 
     private static class SingletonVolatile {
         private AtomicInteger counter = new AtomicInteger();
-        private static volatile SingletonVolatile instance = null;
+        private static /*TODO: fix here*/ SingletonVolatile instance = null;
 
         private SingletonVolatile() {
         }
@@ -25,11 +25,10 @@ public class SingletonVolatileTest {
             if (instance == null) {
                 try {
                     Thread.sleep(100); // keep sleep()
-                    instance = new SingletonVolatile();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                instance = new SingletonVolatile();
             }
             return instance;
         }

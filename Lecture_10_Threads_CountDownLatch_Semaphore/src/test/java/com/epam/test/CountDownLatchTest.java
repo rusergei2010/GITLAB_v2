@@ -32,7 +32,6 @@ public class CountDownLatchTest {
                 e.printStackTrace();
             }
             executeJob();
-            latchStop.countDown();
             System.out.println("Job is Executed");
         }
 

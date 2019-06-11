@@ -4,10 +4,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * TODO: fix it
+ */
 public class AtomicReferenceTest {
 
     @Test
@@ -18,7 +22,7 @@ public class AtomicReferenceTest {
         final String strBefore = "Before changes";
         final String afterChanges = "After Changes";
 
-        //reference.compareAndSet(null, "Not a bug");
+        reference.compareAndSet(null, "Not a bug");
         reference.compareAndSet(null, "This is a bug");
 
         reference.compareAndSet("This is a bug", "Not a Bug");
@@ -36,7 +40,6 @@ public class AtomicReferenceTest {
 
         new Thread(() -> {
             reference.set("One");
-            latchOne.countDown();
             // TODO: fix by using .countDown() for the first Latcher to hit the second Thread
         }).start();
 
@@ -47,13 +50,12 @@ public class AtomicReferenceTest {
                 e.printStackTrace();
             }
             String str = reference.get() + "Two";
-            reference.set(str);
             // TODO: fix here - Use reference.set()
 
             latchTwo.countDown();
         }).start();
 
         latchTwo.await(1, TimeUnit.SECONDS); // await '0' or proceed
-        assertEquals("OneTwo", reference.get());
+        Assert.assertEquals("OneTwo", reference.get());
     }
 }

@@ -21,8 +21,8 @@ public class AtomicReferenceTest {
         reference.compareAndSet(null, "Not a bug");
         reference.compareAndSet(null, "This is a bug");
 
-        reference.compareAndSet("This is a bug", "Not a Bug");
         reference.compareAndSet("Not a bug", "This is a bug");
+        reference.compareAndSet("This is a bug", "Not a Bug");
 
         assertEquals(reference.get(), "Not a Bug");
     }
@@ -36,7 +36,7 @@ public class AtomicReferenceTest {
 
         new Thread(() -> {
             reference.set("One");
-            // TODO: fix by using .countDown() for the first Latcher to hit the second Thread
+            latchOne.countDown ();
         }).start();
 
         new Thread(() -> {
@@ -45,8 +45,7 @@ public class AtomicReferenceTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String str = reference.get() + "Two";
-            // TODO: fix here - Use reference.set()
+            reference.set(reference.get() + "Two");
 
             latchTwo.countDown();
         }).start();

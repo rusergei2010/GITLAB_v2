@@ -17,7 +17,11 @@ public class TestSingleton {
 
     public static TestSingleton getInstance(){
         if (instance == null) {
-            // TODO: complete
+            synchronized (TestSingleton.class) {
+                if (instance == null) {
+                    instance = new TestSingleton();
+                }
+            }
         }
         return instance;
     }
@@ -32,13 +36,12 @@ public class TestSingleton {
         final AtomicReference<TestSingleton> instance = new AtomicReference<>();
 
         Thread thread1 = createThread(() -> {
-            // TODO: replace with working code
-            instance.compareAndSet(null, null); // TODO
+            instance.compareAndSet(null, TestSingleton.getInstance());
         });
 
         thread1.start();
 
-//        thread1.join(); // TODO
+       thread1.join();
 
         assertEquals(TestSingleton.getInstance(), instance.get());
     }

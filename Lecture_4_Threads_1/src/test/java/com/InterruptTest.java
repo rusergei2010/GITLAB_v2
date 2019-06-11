@@ -16,8 +16,13 @@ public class InterruptTest {
         public void run() {
             System.out.println("MyThread: " + Thread.currentThread().getName() + " started");
 
-            while(isInterrupted())
-                Util.threadSleep(100);
+            while(isInterrupted()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
             System.out.println("MyThread: " + Thread.currentThread().getName() + " completed");
         }
@@ -27,7 +32,7 @@ public class InterruptTest {
     @Test
     public void testInterrupt() throws InterruptedException {
         final Thread thread = new MyThread();
-        thread.run();
+        thread.start();
         thread.interrupt();
 
         thread.join(1000);

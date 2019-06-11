@@ -23,7 +23,7 @@ public class ScheduledThreadPool {
 
         Thread.sleep(100);
 
-        assertEquals(true, result.isCancelled());
+        assertEquals(true, result.cancel(true));
         executor.shutdown();
     }
 

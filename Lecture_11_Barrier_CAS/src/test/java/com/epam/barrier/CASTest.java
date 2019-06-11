@@ -5,10 +5,12 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
+/**
+ * TODO: fix it
+ */
 public class CASTest {
 
     static class Counter {
@@ -40,7 +42,7 @@ public class CASTest {
 
         latch.await(); // await '0'
 
-        assertEquals(100000, counter.get());
+        Assert.assertEquals(100000, counter.get());
     }
 
     private void increment(final Counter counter, final CountDownLatch latch) {

@@ -1,4 +1,4 @@
-package com.epam.executors.addition.com;
+package com;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

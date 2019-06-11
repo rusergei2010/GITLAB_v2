@@ -2,49 +2,64 @@ package prepare;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+
 import java.lang.management.ManagementFactory;
 
 /**
  * Problem: "How to signal server app without REST api"
  * Use Mission Control to connect to JMX API
+ *
+ * Add VM params to th launch params:
+ * -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false  -Djava.rmi.server.hostname=localhost
+ *
+ * Then use Mission Control to connect via port
  */
 public class AppSimpleJMXAgent {
-   private MBeanServer mbs = null;
 
-   public AppSimpleJMXAgent() {
+    private MBeanServer mbs = null;
 
-       mbs = ManagementFactory.getPlatformMBeanServer();
+    public AppSimpleJMXAgent() {
 
-      //  
-      Hello helloBean = new Hello();
-      ObjectName helloName = null;
+        if (System.getProperty("com.sun.management.jmxremote") == null) {
+            System.out.println("JMX remote is disabled");
+        } else {
+            String portString = System.getProperty("com.sun.management.jmxremote.port");
+            if (portString != null) {
+                System.out.println("JMX running on port "
+                        + Integer.parseInt(portString));
+            }
+        }
 
-      try {
-         //  
-         helloName = new ObjectName("AppSimpleJMXAgent:name=hellothere");
-         mbs.registerMBean(helloBean, helloName);
-      } catch(Exception e) {
-         e.printStackTrace();
-      }
-   }
+        mbs = ManagementFactory.getPlatformMBeanServer();
 
-   //  
-   private static void waitForEnterPressed() {
-      try {
-         System.out.println("Press <enter> to continue...");
-         System.in.read();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
+        //
+        Hello helloBean = new Hello();
+        ObjectName helloName = null;
+
+        try {
+            //
+            helloName = new ObjectName("AppSimpleJMXAgentSomeNewObject:name=hellothere");
+            mbs.registerMBean(helloBean, helloName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-   public static void main(String argv[]) {
-      AppSimpleJMXAgent agent = new AppSimpleJMXAgent();
-      System.out.println("AppSimpleJMXAgent is running...");
-      AppSimpleJMXAgent.waitForEnterPressed();
-   }
+    //
+    private static void waitForEnterPressed() {
+        try {
+            System.out.println("Press <enter> to continue...");
+            System.in.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-
+    public static void main(String argv[]) {
+        AppSimpleJMXAgent agent = new AppSimpleJMXAgent();
+        System.out.println("AppSimpleJMXAgent is running...");
+        AppSimpleJMXAgent.waitForEnterPressed();
+    }
 
     public interface HelloMBean {
 
@@ -56,6 +71,7 @@ public class AppSimpleJMXAgent {
     }
 
     public class Hello implements HelloMBean {
+
         private String message = null;
 
         public Hello() {

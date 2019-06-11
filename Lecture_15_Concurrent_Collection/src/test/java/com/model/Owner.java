@@ -1,6 +1,6 @@
 package com.model;
 
-// Immutability simplifies Concurrent apps
+// CopyOnWriteArrayListImmutability simplifies Concurrent apps
 public class Owner {
     private final String name;
     private final String lastName;

@@ -1,12 +1,12 @@
 package com.epam.barrier;
 
+import org.junit.Test;
+
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +21,10 @@ public class Barrier {
         });
 
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
@@ -31,10 +34,12 @@ public class Barrier {
 
     static class Counter {
         public AtomicInteger counter = new AtomicInteger(0);
+
         public void inc() {
             counter.getAndIncrement();
         }
     }
+
     static class Task implements Runnable {
 
         private final CyclicBarrier cyclicBarrier;
@@ -45,7 +50,8 @@ public class Barrier {
             this.counter = counter;
         }
 
-        @Override public void run() {
+        @Override
+        public void run() {
             try {
                 System.out.println("Task has started");
                 System.out.println("Task is being executed.");

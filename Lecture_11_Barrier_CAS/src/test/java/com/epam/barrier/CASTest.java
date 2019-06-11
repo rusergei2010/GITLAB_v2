@@ -1,11 +1,11 @@
 package com.epam.barrier;
 
+import org.junit.Test;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,8 +19,7 @@ public class CASTest {
             long newValue = addValue + initValue;
             while (!counter.compareAndSet(initValue, newValue)) {
                 initValue = counter.get();
-                // TODO: fix it to comply with CAS approach
-//                newValue = <...> + <...>;
+                newValue = addValue + initValue;
             }
         }
 

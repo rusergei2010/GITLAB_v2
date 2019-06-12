@@ -1,7 +1,7 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+import com.util.Util;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,9 +19,9 @@ public class CounterTest {
         Lock lock = new ReentrantLock();
 
         public void inc() throws InterruptedException {
-            if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+            if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.sleep(200);
+                    Util.threadSleep(50);
                     counter++;
                 } finally {
                     lock.unlock();
@@ -51,7 +51,7 @@ public class CounterTest {
             }
         });
 
-        service.awaitTermination(1000, TimeUnit.MILLISECONDS);
+        service.awaitTermination(2000, TimeUnit.MILLISECONDS);
         service.shutdown();
 
         // TODO: fix the test by changing timings

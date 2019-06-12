@@ -51,7 +51,7 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        synchronized public void inc() {
             counter++;
         }
 
@@ -76,6 +76,9 @@ public class SyncCounterTest {
 
         thread1.start();
         thread2.start();
+
+        thread2.join();
+        thread1.join();
 
 //        thread2.join(); // TODO?
 

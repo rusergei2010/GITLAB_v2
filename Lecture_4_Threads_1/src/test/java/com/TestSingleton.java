@@ -32,8 +32,8 @@ public class TestSingleton {
         final AtomicReference<TestSingleton> instance = new AtomicReference<>();
 
         Thread thread1 = createThread(() -> {
-            // TODO: replace with working code
-            instance.compareAndSet(null, null); // TODO
+            instance.set(TestSingleton.instance);
+            instance.compareAndSet(instance.get(), TestSingleton.getInstance()); // TODO
         });
 
         thread1.start();

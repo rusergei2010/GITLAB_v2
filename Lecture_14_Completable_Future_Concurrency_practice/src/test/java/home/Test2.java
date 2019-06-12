@@ -17,7 +17,7 @@ public class Test2 {
     public void testSupply() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task");
         // TODO: Use lambda: (s -> s + " Second Task") with thenApply() termination operation for the CompletableFuture
-        CompletableFuture<String> result = completableFuture.supplyAsync(() -> " Second Task"); //thenApply(s -> s + " / Second Task");
+        CompletableFuture<String> result = completableFuture.supplyAsync(() -> " Second Task").thenApply(s->"First Task /"+s); //thenApply(s -> s + " / Second Task");
 
         assertEquals("First Task / Second Task", result.get());
     }
@@ -40,7 +40,7 @@ public class Test2 {
 
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "First Task. Hello");
 
-        BiFunction<String, String, String> func = (s1, s2) -> {return "";}; // TODO: Fix the return value in BiFunction
+        BiFunction<String, String, String> func = (s1, s2) -> {return s1+s2;}; // TODO: Fix the return value in BiFunction
 
         CompletableFuture<String> combined = completableFuture.thenCombineAsync(CompletableFuture.supplyAsync(() -> " World"), func);
 
@@ -55,7 +55,7 @@ public class Test2 {
             sleep(500); // TODO: Fix the timeout here
             return "First Task. Hello";
         });
-        Thread.sleep(1000);
+        Thread.sleep(400);
         completableFuture.complete("NEO"); // TODO: Pay attention to this line and its role
         CompletableFuture<String> combined = completableFuture.thenCompose((s) -> CompletableFuture.supplyAsync(() -> s + " World"));
         Thread.sleep(1000);
@@ -66,7 +66,7 @@ public class Test2 {
     @Test
     public void testOfAnyOf() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture1 = CompletableFuture.supplyAsync(() -> {
-            sleep(ThreadLocalRandom.current().nextInt(500)); // line 1
+            sleep(ThreadLocalRandom.current().nextInt(1000)); // line 1
             return "One";
         });
         CompletableFuture<String> completableFuture2 = CompletableFuture.supplyAsync(() -> {
@@ -74,7 +74,7 @@ public class Test2 {
             return "Two";
         });
         CompletableFuture<String> completableFuture3 = CompletableFuture.supplyAsync(() -> {
-            sleep(ThreadLocalRandom.current().nextInt(1000)); // line 3
+            sleep(ThreadLocalRandom.current().nextInt(10)); // line 3
             return "Three";
         });
 

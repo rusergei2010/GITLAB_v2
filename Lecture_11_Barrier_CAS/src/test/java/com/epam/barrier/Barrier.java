@@ -23,7 +23,9 @@ public class Barrier {
         });
 
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        calculate(counter, cyclicBarrier);
+         cyclicBarrier.reset();
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed

@@ -1,7 +1,9 @@
 package com;
 
+import java.lang.Thread.State;
 import org.junit.Test;
 
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +19,7 @@ public class TestThreadJoin {
         Thread thread1 = createThread(() -> {
             try {
                 // TODO: design wait right way
-                wait(1000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -25,7 +27,7 @@ public class TestThreadJoin {
         Thread thread2 = createThread(() -> {
             try {
                 // TODO: design wait right way
-                wait(1000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -34,7 +36,7 @@ public class TestThreadJoin {
         thread1.start();
         thread2.start();
 
-        Thread.sleep(100);
+        sleep(100);
 
         // TODO: make TIMED_WAITING
         // TODO: make TIMED_WAITING
@@ -43,6 +45,10 @@ public class TestThreadJoin {
         assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
 
         // TODO: Wait till both threads are completed or terminated
+        if (thread1.getState() == State.TIMED_WAITING){
+            thread1.run();
+        }
+
 
         // threads should run task to be put on hold
         assertEquals(thread1.getState(), Thread.State.TERMINATED);
@@ -50,6 +56,7 @@ public class TestThreadJoin {
 
         // TODO: fill in action with Thread to exit loop
         while (!Thread.currentThread().isInterrupted()) {
+            Thread.currentThread().interrupt();
         }
 
         assertTrue(Thread.currentThread().isInterrupted());

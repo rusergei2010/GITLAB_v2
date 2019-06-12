@@ -22,16 +22,20 @@ public class TestThreadWaitNotify {
     public void testThread() throws InterruptedException {
         Thread thread1 = createThread(() -> {
             try {
-                counter.wait();
-                counter.incrementAndGet();
+                synchronized (counter){
+                    counter.incrementAndGet();
+                    counter.wait();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         Thread thread2 = createThread(() -> {
             try {
-                counter.wait();
-                counter.incrementAndGet();
+                synchronized (counter){
+                    counter.incrementAndGet();
+                    counter.wait();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

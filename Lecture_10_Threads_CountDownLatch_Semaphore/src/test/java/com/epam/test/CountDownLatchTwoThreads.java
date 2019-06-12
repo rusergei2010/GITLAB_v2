@@ -1,13 +1,11 @@
 package com.epam.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class CountDownLatchTwoThreads {
     @Test
@@ -17,7 +15,9 @@ public class CountDownLatchTwoThreads {
         CountDownLatch latchTwo = new CountDownLatch(1);
 
         new Thread(() -> {
+
             atomic.getAndIncrement();
+            latchOne.countDown();
             // TODO: fix by using .countDown() for the first Latcher to hit the second Thread
         }).start();
 

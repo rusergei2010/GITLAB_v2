@@ -6,12 +6,10 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * TODO: fix it
- */
+import static org.junit.Assert.assertEquals;
+
 public class Barrier {
 
     @Test
@@ -23,12 +21,14 @@ public class Barrier {
         });
 
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
 
-        Assert.assertEquals(9, counter.counter.get());
+        assertEquals(9, counter.counter.get());
     }
 
     static class Counter {
@@ -67,6 +67,7 @@ public class Barrier {
             ForkJoinPool.commonPool().submit(() -> {
                 new Task(cyclicBarrier, counter).run();
             });
+
         });
 
         Thread.currentThread().sleep(2000);

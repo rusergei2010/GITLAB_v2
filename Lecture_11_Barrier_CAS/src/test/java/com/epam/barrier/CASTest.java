@@ -5,12 +5,10 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * TODO: fix it
- */
+import static org.junit.Assert.assertEquals;
+
 public class CASTest {
 
     static class Counter {
@@ -21,6 +19,7 @@ public class CASTest {
             long newValue = addValue + initValue;
             while (!counter.compareAndSet(initValue, newValue)) {
                 initValue = counter.get();
+                newValue=initValue+addValue;
                 // TODO: fix it to comply with CAS approach
 //                newValue = <...> + <...>;
             }
@@ -42,12 +41,13 @@ public class CASTest {
 
         latch.await(); // await '0'
 
-        Assert.assertEquals(100000, counter.get());
+        assertEquals(100000, counter.get());
     }
 
     private void increment(final Counter counter, final CountDownLatch latch) {
-        latch.countDown();
+
         counter.inc(1);
+        latch.countDown();
     }
 
 }

@@ -18,21 +18,29 @@ public class Lambdas03Exercise {
 
     @Test
     public void generic0() {
-        final GenericProduct<Integer> prod = null; // TODO: Use anonymous class
+        // TODO: Use anonymous class
+        final GenericProduct<Integer> prod = new GenericProduct<Integer>() {
+            @Override
+            public Integer prod(Integer a, int i) {
+                return a * i;
+            }
+        };
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic1() {
-        final GenericProduct<Integer> prod = null; // TODO: Use statement lambda
-
+        // TODO: Use statement lambda
+        final GenericProduct<Integer> prod = (Integer a, int i) -> {
+            return a * i;
+        };
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
 
     @Test
     public void generic2() {
-        final GenericProduct<Integer> prod = null; // TODO: Use expression lambda
+        final GenericProduct<Integer> prod = (a, i) -> a * i;// TODO: Use expression lambda
 
         assertEquals(prod.prod(3, 2), Integer.valueOf(6));
     }
@@ -47,7 +55,7 @@ public class Lambdas03Exercise {
 
     @Test
     public void strSum() {
-        final GenericProduct<String> prod = null; // TODO: use convertion to str
+        final GenericProduct<String> prod = Lambdas03Exercise::stringProd; // TODO: use convertion to str
 
         assertEquals(prod.prod("a", 2), "aa");
     }

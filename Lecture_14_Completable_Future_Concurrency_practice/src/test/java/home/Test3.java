@@ -2,11 +2,7 @@ package home;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -17,7 +13,7 @@ public class Test3 {
 
     /**
      * TODO: Fix the issue by replacing the HashMap with ConcurrentHashMap
-     * TODO: Consider the commonpool instead of CompletableFuture: "ForkJoinPool.commonPool().submit(()->{})"
+     * TODO: Consider the common pool instead of CompletableFuture: "ForkJoinPool.commonPool().submit(()->{})"
      *
      * @throws ExecutionException
      * @throws InterruptedException
@@ -26,7 +22,7 @@ public class Test3 {
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
 //        ForkJoinPool.commonPool().submit(()->{});
 
-        Map<Integer, String> map = new HashMap();
+        Map<Integer, String> map = new ConcurrentHashMap<>();
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
@@ -47,7 +43,7 @@ public class Test3 {
             });
             return null;
         });
-        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
+        CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completable future are finished and return result
 
         map.clear();
     }
@@ -78,7 +74,7 @@ public class Test3 {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.put(i, "O"); // Line 2
+                        concurrentHashMap.put(i, "X"); // Line 2
                         sleep(1);
                     }
             );
@@ -105,7 +101,7 @@ public class Test3 {
     public void immutableCollections() throws Throwable {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
-        List<Integer> immutable = new ArrayList<>(mutableList); // TODO: Fix in this line
+        List<Integer> immutable = Collections.unmodifiableList(mutableList); // TODO: Fix in this line
 
         try {
             CompletableFuture.supplyAsync(() -> {

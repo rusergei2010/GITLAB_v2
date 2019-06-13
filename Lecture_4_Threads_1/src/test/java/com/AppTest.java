@@ -16,7 +16,7 @@ public class AppTest {
     }
 
     /**
-     * TODO: Fix the test. Employ join()
+     * TODO: Fix the test. Employ join() and possible introduce Thread.sleep()
      * @throws InterruptedException
      */
     @Test

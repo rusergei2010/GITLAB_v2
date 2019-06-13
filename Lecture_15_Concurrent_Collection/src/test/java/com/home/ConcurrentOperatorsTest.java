@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class ConcurrentOperatorsTest {
 
-    private static Map<Integer, String> map = new HashMap();
+    private static Map<Integer, String> map = new ConcurrentHashMap();
     private static Map<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
     private static Map<Integer, String> syncMap = Collections.synchronizedMap(map);
 
@@ -44,8 +44,8 @@ public class ConcurrentOperatorsTest {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key); // use putIfAbsent for performance enhancement
-                        String returnValue = map.get(key);
+                        concurrentHashMap.put(key, "A" + key); // use putIfAbsent for performance enhancement
+                        String returnValue = concurrentHashMap.get(key);
                         if (!value.equals(returnValue)){
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
                         }
@@ -58,8 +58,8 @@ public class ConcurrentOperatorsTest {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key);
-                        String returnValue = map.get(key);
+                        concurrentHashMap.put(key, "A" + key);
+                        String returnValue = concurrentHashMap.get(key);
                         if (!value.equals(returnValue)){
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
                         }
@@ -75,7 +75,7 @@ public class ConcurrentOperatorsTest {
 
         Assert.assertNull(ref.get());
         concurrentHashMap.clear();
-        map.clear();
+        concurrentHashMap.clear();
     }
 
 
@@ -90,7 +90,7 @@ public class ConcurrentOperatorsTest {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        map.put(i, "O");
+                        concurrentHashMap.put(i, "O");
                         sleep(1);
                     }
             );
@@ -101,7 +101,7 @@ public class ConcurrentOperatorsTest {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
         CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
-        map.clear();
+        concurrentHashMap.clear();
         concurrentHashMap.clear();
     }
     /**
@@ -114,7 +114,7 @@ public class ConcurrentOperatorsTest {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        map.put(i, "O");
+                        syncMap.put(i, "O");
                         sleep(1);
                     }
             );
@@ -124,8 +124,8 @@ public class ConcurrentOperatorsTest {
         // iteration over the Map
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
         CompletableFuture.allOf(futureA, futureB).get();
-        map.clear();
-        concurrentHashMap.clear();
+        syncMap.clear();
+        syncMap.clear();
     }
 
     private Supplier<Void> read(Map<Integer, String> map) {

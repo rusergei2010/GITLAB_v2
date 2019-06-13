@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * TODO: Fix the test case
- * Read the code and corect it a better way
+ * Read the code and correct it a better way
  */
 public class InterruptTest {
 
@@ -27,7 +27,7 @@ public class InterruptTest {
     @Test
     public void testInterrupt() throws InterruptedException {
         final Thread thread = new MyThread();
-        thread.run();
+        thread.start();
         thread.interrupt();
 
         thread.join(1000);

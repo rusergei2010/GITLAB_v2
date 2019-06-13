@@ -17,7 +17,9 @@ public class TestThreadJoin {
         Thread thread1 = createThread(() -> {
             try {
                 // TODO: design wait right way
-                wait(1000);
+                synchronized (this) {
+                    wait(1000);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -25,7 +27,9 @@ public class TestThreadJoin {
         Thread thread2 = createThread(() -> {
             try {
                 // TODO: design wait right way
-                wait(1000);
+                synchronized (this) {
+                    wait(1000);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -44,12 +48,15 @@ public class TestThreadJoin {
 
         // TODO: Wait till both threads are completed or terminated
 
+        Thread.sleep(1000);
+
         // threads should run task to be put on hold
         assertEquals(thread1.getState(), Thread.State.TERMINATED);
         assertEquals(thread2.getState(), Thread.State.TERMINATED);
 
         // TODO: fill in action with Thread to exit loop
         while (!Thread.currentThread().isInterrupted()) {
+            Thread.currentThread ().interrupt ();
         }
 
         assertTrue(Thread.currentThread().isInterrupted());

@@ -3,7 +3,6 @@ package com;
 import org.junit.Test;
 import prepare.util.Util;
 
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
@@ -16,10 +15,14 @@ public class ReentrantLockTest {
 
         @Override
         public void run() {
-            lock.lock();
-            Util.sleep(100);
-            count++;
-            validate();
+            try {
+                lock.lock();
+                Util.sleep(100);
+                count++;
+                validate();
+            } finally {
+                lock.unlock();
+            }
         }
 
         private void validate() {
@@ -29,10 +32,6 @@ public class ReentrantLockTest {
         }
     }
 
-    /**
-     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
-     * // TODO: Fix the CounterTest#run method only
-     */
     @Test
     public void testLock() throws InterruptedException {
         Counter count = new Counter();
@@ -43,11 +42,7 @@ public class ReentrantLockTest {
         thread1.start();
         thread2.start();
         thread3.start();
-//
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
-//
+
         Thread.sleep(1000);
 
         assertEquals(3, count.count);

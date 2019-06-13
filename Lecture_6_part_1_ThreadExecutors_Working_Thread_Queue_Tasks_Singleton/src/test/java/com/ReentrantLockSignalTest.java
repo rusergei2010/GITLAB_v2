@@ -34,8 +34,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 writeCondition.signal();
+                lock.unlock();
             }
             return msg;
         }
@@ -51,8 +51,10 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
                 readCondition.signal();
+                //sending signal
+                lock.unlock();
+
             }
         }
     }
@@ -97,10 +99,6 @@ public class ReentrantLockSignalTest {
         }
     }
 
-    /**
-     * Test on the ReentrantLock usage with await() operation instead of object.wait() in critical section
-     * // TODO: Fix the CounterTest#run method only (look into finally block)
-     */
     @Test
     public void testQueue() throws InterruptedException {
         BlockingSyncQueue queue = new BlockingSyncQueue();

@@ -21,7 +21,7 @@ public class CounterTest {
         public void inc() throws InterruptedException {
             if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.sleep(200);
+                    Util.sleep(20);
                     counter++;
                 } finally {
                     lock.unlock();
@@ -54,7 +54,6 @@ public class CounterTest {
         service.awaitTermination(1000, TimeUnit.MILLISECONDS);
         service.shutdown();
 
-        // TODO: fix the test by changing timings
         assertEquals(2, counter.counter);
     }
 }

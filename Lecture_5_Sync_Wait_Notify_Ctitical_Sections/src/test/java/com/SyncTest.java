@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import static org.junit.Assert.assertEquals;
 
-// Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
+// Mutex, critical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
 // Intrinsic lock is associated with the Class instance (static context)
 // Extrinsic lock is associated with a particular dynamic object (not the Class instance)
 public class SyncTest {
@@ -18,16 +18,17 @@ public class SyncTest {
 
     public void change() {
 
-        lock.lock();
-        try {
+        if(lock.tryLock()) {
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 

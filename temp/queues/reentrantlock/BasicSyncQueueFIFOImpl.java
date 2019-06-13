@@ -57,7 +57,7 @@ public class BasicSyncQueueFIFOImpl {
         executorService.submit(() -> {
             IntStream.range(0, 1000).forEach((i) -> {
                         try {
-//                            Util.threadSleep(1);
+//                            Utils.threadSleep(1);
                             fifo.offer(String.valueOf(i));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -69,7 +69,7 @@ public class BasicSyncQueueFIFOImpl {
         executorService.submit(() -> {
             IntStream.range(0, 1000).forEach((i) -> {
                         try {
-//                            Util.threadSleep(1);
+//                            Utils.threadSleep(1);
                             System.out.println(fifo.pool());
                         } catch (InterruptedException e) {
                             e.printStackTrace();

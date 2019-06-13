@@ -14,18 +14,18 @@ public class ThreadLocalEx {
         private static ThreadLocal<ThreadLocalEx.CountContext> local = new ThreadLocal<ThreadLocalEx.CountContext>() {
             @Override
             protected ThreadLocalEx.CountContext initialValue() {
+                System.out.println("Thread " + Thread.currentThread().getName() + " initialized");
                 return new ThreadLocalEx.CountContext();
             }
         };
 
         public static ThreadLocalEx.CountContext getCounter() {
-            return local.get();
+            return local.get(); // will return map.get(Current.Thread) value (per thread requesting value)
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
         new ThreadLocalEx();
-
 
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> {

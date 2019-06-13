@@ -6,11 +6,16 @@ import com.mycompany.prepare.utils.Utils;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-// Visual VM Thread Dead Lock, Thread Dump
+/**
+ * Visual VM Thread Dead Lock, Thread Dump
+ * notify - awake one waiting thread on the LOCK object (object of synchronization or monitor lock)
+ *
+ */
 public class ConcurrentLinkedQueuePollNotify {
 
     static class Counter {
-        static Object object = new Object();
+        // monitor lock
+        static Object object = new Object(); // LOCK OBJECT
 
         Queue queue = new ConcurrentLinkedQueue();
 

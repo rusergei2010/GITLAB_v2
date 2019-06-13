@@ -5,7 +5,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
-
+/**
+ * Cover Thread-Sage approach
+ * Race Condition - when two threads access the shared object in the memory at the same time competing for changing/reading it
+ * IMPORTANT!!!
+ *  <p><b>
+ *     synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
+ *  </b></p>
+ */
 public class SyncCounterTest {
 
     public static class CounterThread implements Runnable {

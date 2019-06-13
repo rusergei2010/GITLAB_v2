@@ -1,5 +1,6 @@
 package com.practice.clazz;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.CancellationException;
@@ -8,10 +9,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
-
+@Ignore
 public class A1_FutureVSCompletableFutureTest {
 
-
+    /**
+     * FutureTask is a simplest Future that a single Thread inside and Stages to manage it like a basic Future
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Test
     public void testFuture() throws ExecutionException, InterruptedException {
         Future<String> future = new FutureTask<String>(() -> {
@@ -34,6 +39,12 @@ public class A1_FutureVSCompletableFutureTest {
         System.out.println(future.get());
     }
 
+    /**
+     * Completable Future start here
+     * CompletableFuture means that it can be explicitly completed
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Test
     public void deferredCompleteResult() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
@@ -59,15 +70,19 @@ public class A1_FutureVSCompletableFutureTest {
             }
         }).start();
         sleep(100);
-        completableFuture.completeExceptionally(new RuntimeException("Complete with exception"));
-        try {
-            System.err.println("Print: " + completableFuture.get());
-        } catch (Throwable ex) {
-            System.out.println("Cause: " + ex.getCause());
-            System.out.println("Exception: " + ex.getCause().getClass());
-            System.out.println("Top class Exception: " + ex.getClass());
-            ex.printStackTrace();
-        }
+        CompletableFuture<String> completableFutureEx = new CompletableFuture<>();
+        completableFutureEx.completeExceptionally(new RuntimeException("Complete with exception"));
+//        try {
+//            System.err.println("Print: " + completableFuture.get());
+//        } catch (Throwable ex) {
+//            System.out.println("Cause: " + ex.getCause());
+//            System.out.println("Exception: " + ex.getCause().getClass());
+//            System.out.println("Top class Exception: " + ex.getClass());
+//            ex.printStackTrace();
+//        }
+
+        System.out.println("RESULT: " + completableFuture.get());
+        System.out.println("RESULT: " + completableFutureEx.get());
     }
 
     private static void sleep(int delay) {

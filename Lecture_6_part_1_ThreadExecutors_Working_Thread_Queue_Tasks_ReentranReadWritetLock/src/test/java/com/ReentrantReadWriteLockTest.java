@@ -28,12 +28,12 @@ public class ReentrantReadWriteLockTest {
                 if (readLock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                     locked = true;
                     System.out.println("Read is locked");
-                    Util.threadSleep(1000);
+                    Util.sleep(1000);
                     return name;
                 }
             } finally {
                 if (locked) {
-//                    readLock.unlock();
+                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }
@@ -48,7 +48,7 @@ public class ReentrantReadWriteLockTest {
                     locked = true;
                     this.name = name;
                     System.out.println("Write is locked");
-                    Util.threadSleep(1000);
+                    Util.sleep(1000);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -68,7 +68,7 @@ public class ReentrantReadWriteLockTest {
                 writeLock.lock();
                     locked = true;
                     System.out.println("Write is locked");
-                    Util.threadSleep(1000);
+                    Util.sleep(1000);
                     this.name = name;
 
             } catch (InterruptedException e) {
@@ -89,19 +89,19 @@ public class ReentrantReadWriteLockTest {
         Cache cache = new Cache();
 
         cache.getName().ifPresent(IllegalArgumentException::new);
-        Util.threadSleep(100);
+        Util.sleep(100);
 
         service.submit(() -> {
             cache.setName(Optional.of("Agent 007"));
         });
 
-        Util.threadSleep(100);
+        Util.sleep(100);
 
         // parallel access
         assertEquals("Agent 007", cache.getName().get());
         assertEquals("Agent 007", cache.getName().get());
 
-        Util.threadSleep(100);
+        Util.sleep(100);
         service.submit(() -> {
             cache.setNameImmediately(Optional.of("Agent 008"));
         });

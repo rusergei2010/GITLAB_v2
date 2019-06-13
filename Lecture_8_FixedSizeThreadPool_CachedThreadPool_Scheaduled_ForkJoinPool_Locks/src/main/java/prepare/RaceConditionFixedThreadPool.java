@@ -1,8 +1,7 @@
 package prepare;
 
-import prepare.util.Util;
+import com.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -42,7 +41,7 @@ public class RaceConditionFixedThreadPool {
 
         @Override
         public java.lang.Integer call() throws InterruptedException {
-            Util.threadSleep(new Random().nextInt(10));
+            Util.sleep(new Random().nextInt(10));
 
             // race condition
             counter.inc();

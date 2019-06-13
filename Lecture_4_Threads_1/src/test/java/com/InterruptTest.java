@@ -15,10 +15,8 @@ public class InterruptTest {
         @Override
         public void run() {
             System.out.println("MyThread: " + Thread.currentThread().getName() + " started");
-
-            while(isInterrupted())
+            while (isInterrupted())
                 Util.threadSleep(100);
-
             System.out.println("MyThread: " + Thread.currentThread().getName() + " completed");
         }
     }
@@ -29,12 +27,14 @@ public class InterruptTest {
         final Thread thread = new MyThread();
         thread.run();
         thread.interrupt();
+        thread.start();
 
         thread.join(1000);
 
+
         assertEquals(thread.getState(), Thread.State.TERMINATED);
         // outdated version
-//        thread.suspend();
-//        thread.resume();
+        //thread.suspend();
+        //thread.resume();
     }
 }

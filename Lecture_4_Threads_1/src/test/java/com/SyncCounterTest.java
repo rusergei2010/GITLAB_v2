@@ -5,9 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
-/**
- * Cover Thread-Sage approach
- */
+
 public class SyncCounterTest {
 
     public static class CounterThread implements Runnable {
@@ -37,7 +35,6 @@ public class SyncCounterTest {
         }
     }
 
-
     public static class Counter {
 
         private Integer counter;
@@ -46,21 +43,15 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        public synchronized void inc() {
             counter++;
         }
 
-        public Integer getCounter(){
+        public Integer getCounter() {
             return counter;
         }
     }
 
-
-    /**
-     * TODO: Fix the test and the code to make it Thread-Safe
-     *
-     * @throws InterruptedException
-     */
     @Test
     public void testSync() throws InterruptedException {
 
@@ -68,12 +59,10 @@ public class SyncCounterTest {
         Counter counter = new Counter(0);
         Thread thread1 = new Thread(new CounterThread("Thread - 1", counter, total));
         Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
-
         thread1.start();
         thread2.start();
-
-//        thread2.join(); // TODO?
-
+        thread1.join();
+        thread2.join();
         assertEquals(2 * total, counter.getCounter().longValue());
     }
 }

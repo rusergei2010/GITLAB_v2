@@ -5,10 +5,6 @@ import prepare.util.Util;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * TODO: Fix the test case
- * Read the code and corect it a better way
- */
 public class InterruptTest {
 
     static class MyThread extends Thread {
@@ -23,18 +19,13 @@ public class InterruptTest {
         }
     }
 
-
     @Test
     public void testInterrupt() throws InterruptedException {
-        final Thread thread = new MyThread();
-        thread.run();
-        thread.interrupt();
+         Thread thread = new MyThread();
+        thread.start();
 
         thread.join(1000);
-
+        thread.interrupt();
         assertEquals(thread.getState(), Thread.State.TERMINATED);
-        // outdated version
-//        thread.suspend();
-//        thread.resume();
     }
 }

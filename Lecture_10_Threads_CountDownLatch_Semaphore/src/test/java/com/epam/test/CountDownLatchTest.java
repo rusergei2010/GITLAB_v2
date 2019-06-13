@@ -10,9 +10,6 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * TODO: fix the test (hint - countDown() is missing)
- */
 public class CountDownLatchTest {
 
     public static class Task implements Runnable{
@@ -54,6 +51,7 @@ public class CountDownLatchTest {
 
         IntStream.range(0,3).forEach((x) -> {
             service.submit(new Task(latchStop, latchStart));
+            latchStop.countDown();
         });
         Thread.sleep(100);
 

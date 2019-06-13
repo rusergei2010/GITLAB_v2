@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class CountDownLatchTwoThreads {
+public class    CountDownLatchTwoThreads {
     @Test
     public void testAtomicReferenceThread() throws InterruptedException {
         AtomicInteger atomic = new AtomicInteger();
@@ -18,7 +18,7 @@ public class CountDownLatchTwoThreads {
 
         new Thread(() -> {
             atomic.getAndIncrement();
-            // TODO: fix by using .countDown() for the first Latcher to hit the second Thread
+            latchOne.countDown();
         }).start();
 
         new Thread(() -> {

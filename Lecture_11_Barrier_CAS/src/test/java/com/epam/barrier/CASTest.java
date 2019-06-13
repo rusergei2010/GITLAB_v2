@@ -23,6 +23,8 @@ public class CASTest {
                 initValue = counter.get();
                 // TODO: fix it to comply with CAS approach
 //                newValue = <...> + <...>;
+                newValue = addValue + initValue;
+
             }
         }
 

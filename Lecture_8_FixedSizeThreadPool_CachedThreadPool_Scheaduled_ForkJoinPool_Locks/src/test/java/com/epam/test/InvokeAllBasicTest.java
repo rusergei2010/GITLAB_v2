@@ -16,9 +16,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * TODO: Fix tests
- */
 public class InvokeAllBasicTest {
 
     private static class CallableTask implements Callable<String> {
@@ -81,19 +78,10 @@ public class InvokeAllBasicTest {
                 .sum();
 
 
-        // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
         putDown(service, 2);
     }
 
-    /**
-     * Execute() operation  doesn't return value unlike submit all invoke
-     * It demonstrates how difficult to work with Runnable nowadays and Callable<> is preferable
-     *
-     * TODO: Investigate the code. Pay attention to how many threads there and sleep delays.
-     * TODO: Fix the test by changing delays
-     * @throws InterruptedException
-     */
     @Test
     public void testRunnableTask() throws InterruptedException {
 
@@ -115,7 +103,7 @@ public class InvokeAllBasicTest {
                     // find square
                     service.execute(task); // put task into the executor and execute. See the timeout inside of the task
                     try {
-                        Thread.sleep(500); // TODO: increment this
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -123,12 +111,12 @@ public class InvokeAllBasicTest {
                 }
         );
 
-        Thread.sleep(500);// TODO: increment this
+        Thread.sleep(2000);
 
 
         // ### IMPOTRANT ###
         // Without delays we found it to be validated immediately and fail because Runnable had not been executed yet
-        assertEquals(100, referenceResult.get().intValue()); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10, referenceResult.get().intValue()); // Future will not return value (future.get()) until it is calculated
         putDown(service, 4);
     }
 

@@ -16,6 +16,8 @@ public class BlockingQueueEx {
         ExecutorService service = Executors.newCachedThreadPool();
 
         service.execute(cook);
+        service.execute(cook);
+        service.execute(cook);
         service.execute(waiter);
 //        service.execute(waiter);
     }

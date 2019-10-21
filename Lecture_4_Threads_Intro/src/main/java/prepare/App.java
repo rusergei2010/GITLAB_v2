@@ -51,7 +51,7 @@ public class App {
 
     private static class MyThread implements Runnable {
         private final int MAX_NUMBER;
-        public Counter counter;
+        public static Counter counter;
 
         public MyThread(Counter counter) {
             this(counter, 10000);

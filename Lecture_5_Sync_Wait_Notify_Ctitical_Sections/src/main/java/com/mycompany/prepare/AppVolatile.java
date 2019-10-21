@@ -4,8 +4,8 @@ package com.mycompany.prepare;
 // If the shared object 'running' is not declared as volatle then it is not guaranteed to be propogated and updated between threadS memory context
 public class AppVolatile {
 
-    private static boolean running = true;
-//    private static volatile boolean running = true;
+//    private static boolean running = true;
+    private static volatile boolean running = true;
 
     public static class ListenerThread extends Thread {
         public void run() {

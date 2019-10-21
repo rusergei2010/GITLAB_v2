@@ -30,17 +30,19 @@ public class CacheReentranReadWriteLockExample {
             writeLock = mutex.writeLock();
         }
 
-        public void put(K key, V value){
-            writeLock.lock();
+        public void put(K key, V value) {
+
+            writeLock.lock(); // synchronized(this){
             printThread("locked");
             try {
                 printThread("PUT value = " + value);
-                sleep();
+                sleep(); // this.wait -> Condition
                 map.put(key, value);
             } finally {
                 printThread("unlocked");
                 writeLock.unlock();
             }
+            //}
         }
 
 

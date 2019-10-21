@@ -15,6 +15,7 @@ public class InvokeAllBasic {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService serviceExecutor = Executors.newFixedThreadPool(1);
 
+
         Collection<Callable<String>> tasks = Collections.unmodifiableCollection(Arrays.asList(callable(), callable(), callable()));
 
         List<Future<String>> results = serviceExecutor.invokeAll(tasks);

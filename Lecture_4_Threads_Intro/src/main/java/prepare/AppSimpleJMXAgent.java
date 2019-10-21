@@ -9,7 +9,7 @@ import java.lang.management.ManagementFactory;
  * Problem: "How to signal server app without REST api"
  * Use Mission Control to connect to JMX API
  *
- * Add VM params to th launch params:
+ * Add VM params to the launch params:
  * -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false  -Djava.rmi.server.hostname=localhost
  *
  * Then use Mission Control to connect via port

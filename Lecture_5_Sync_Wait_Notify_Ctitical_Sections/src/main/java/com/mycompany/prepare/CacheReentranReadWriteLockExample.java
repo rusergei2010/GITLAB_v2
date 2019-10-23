@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /** Reading threads are paralleled and sequenced with Writing
- *
+ * Cache is a perfect sample to demo the parallel read operations when 1 write operation occurs per thousands of read operations
  */
 public class CacheReentranReadWriteLockExample {
 

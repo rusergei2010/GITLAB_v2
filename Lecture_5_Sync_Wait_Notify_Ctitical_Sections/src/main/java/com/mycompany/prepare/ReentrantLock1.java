@@ -49,7 +49,7 @@ public class ReentrantLock1 {
      */
     private static class CountLock {
 
-        private Lock lock = new java.util.concurrent.locks.ReentrantLock();
+        private Lock lock = new java.util.concurrent.locks.ReentrantLock(); // equivalent for the Mutex
         int counter = 0;
 
         public void inc() {

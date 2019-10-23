@@ -2,6 +2,7 @@ package com.mycompany.prepare;
 
 
 /**
+ * Appropriate wrapping up the thread with while loop (or any other)
  * How to Stop Thread (add boolean flag), interrupt itself
  * Priority
  */

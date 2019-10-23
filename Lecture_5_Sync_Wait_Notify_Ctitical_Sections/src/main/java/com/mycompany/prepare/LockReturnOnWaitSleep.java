@@ -3,7 +3,7 @@ package com.mycompany.prepare;
 
 import com.mycompany.prepare.utils.Utils;
 
-// Mutex, ctitical section in the static method, wait vs sleep
+// Mutex, critical section in the static method, wait vs sleep
 public class LockReturnOnWaitSleep {
 
     // how to make it thread safe - thread independent

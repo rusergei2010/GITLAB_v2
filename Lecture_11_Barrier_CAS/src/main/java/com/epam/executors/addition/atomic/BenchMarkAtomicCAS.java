@@ -13,7 +13,7 @@ import java.util.stream.LongStream;
  * CAS in implemented internally in concurrent library - no need to design a new algorithm
  * Test CAS reproduction
  */
-public class AtomicInteger4 {
+public class BenchMarkAtomicCAS {
     static class Counter {
         AtomicLong counter = new AtomicLong(0);
 

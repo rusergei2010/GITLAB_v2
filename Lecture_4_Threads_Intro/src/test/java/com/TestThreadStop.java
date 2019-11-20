@@ -39,9 +39,14 @@ public class TestThreadStop {
         //TODO: Employ TestThreadStop.Manageable.running = false inside of loop and stop thread when "aaa" is built
         for (int i = 0; i < 100; i++) {
             if (!Manageable.str.equals("aaa")) {
-                Thread.sleep(10);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Manageable.running = false;
+                thread.join();
             }
         }
 

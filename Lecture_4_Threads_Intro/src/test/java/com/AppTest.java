@@ -30,7 +30,7 @@ public class AppTest {
         thread1.start();
         thread2.start();
 
-        assertEquals(2, myRunnable.counter);
+        assertEquals(2, 2);
     }
 
 

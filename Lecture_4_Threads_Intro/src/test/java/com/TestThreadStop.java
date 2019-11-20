@@ -37,8 +37,13 @@ public class TestThreadStop {
         assertEquals(thread.getState(), Thread.State.RUNNABLE);
 
         //TODO: Employ TestThreadStop.Manageable.running = false inside of loop and stop thread when "aaa" is built
-        //for (int i = 0; i < 100; i ++) {
-        //}
+        for (int i = 0; i < 100; i++) {
+            if (!Manageable.str.equals("aaa")) {
+                Thread.sleep(10);
+            } else {
+                Thread.currentThread().interrupt();
+            }
+        }
 
         System.out.println("Received : " + Manageable.str);
         assertEquals("aaa", Manageable.str);

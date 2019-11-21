@@ -1,14 +1,13 @@
 package com;
 
-import org.junit.Test;
-import prepare.util.Util;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import prepare.util.Utils;
 
 public class ReentrantLockSignalTest {
 
@@ -24,7 +23,7 @@ public class ReentrantLockSignalTest {
         public String readMsg() {
             lock.lock();
             try {
-                Util.sleep(10);
+                Utils.sleep(10);
                 while (msg == null) {
                     readCondition.await();
                 }
@@ -43,7 +42,7 @@ public class ReentrantLockSignalTest {
         public void writeMsg(String str) {
             lock.lock();
             try {
-                Util.sleep(10);
+                Utils.sleep(10);
                 while (msg != null) {
                     writeCondition.await();
                 }

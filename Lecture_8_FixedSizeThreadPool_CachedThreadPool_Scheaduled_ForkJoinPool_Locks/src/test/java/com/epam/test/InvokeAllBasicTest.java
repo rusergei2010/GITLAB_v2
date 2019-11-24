@@ -115,7 +115,7 @@ public class InvokeAllBasicTest {
                     // find square
                     service.execute(task); // put task into the executor and execute. See the timeout inside of the task
                     try {
-                        Thread.sleep(1000); // TODO: increment this
+                        Thread.sleep(1100); // TODO: increment this
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -123,7 +123,7 @@ public class InvokeAllBasicTest {
                 }
         );
 
-        Thread.sleep(500);// TODO: increment this
+        Thread.sleep(4000);// TODO: increment this
 
 
         // ### IMPOTRANT ###

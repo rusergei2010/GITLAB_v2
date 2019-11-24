@@ -45,7 +45,7 @@ public class SyncCounterTest {
 
     public static class Counter {
 
-        private Integer counter;
+        private volatile Integer counter;
 
         public Counter(Integer counter) {
             this.counter = counter;

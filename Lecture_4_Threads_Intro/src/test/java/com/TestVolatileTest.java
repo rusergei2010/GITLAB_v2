@@ -56,7 +56,11 @@ public class TestVolatileTest extends Thread {
         listener.start();
         maker.start();
 
-        listener.join();
+        try {
+            listener.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 //        listener.join(1000 * (WAIT + 1)); // wait till listener thread is finished or 5 secs
 
         assertEquals(5, SIGNAL);

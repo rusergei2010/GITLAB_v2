@@ -19,7 +19,7 @@ public class TestThreadWaitNotify {
      * @throws InterruptedException
      */
     @Test
-    public void testThread() throws InterruptedException {
+    public void testThread() throws InterruptedException{
         Thread thread1 = createThread(() -> {
             try {
                 synchronized (counter) {
@@ -44,7 +44,10 @@ public class TestThreadWaitNotify {
         thread1.start();
         thread2.start();
 
-        Thread.sleep(100);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+        }
 
         // ensure WAITING
         // ensure WAITING

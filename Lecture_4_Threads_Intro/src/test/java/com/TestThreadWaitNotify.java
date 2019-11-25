@@ -47,6 +47,9 @@ public class TestThreadWaitNotify {
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
+            for (int i = 0; i < 100; i++) {
+                System.out.println();
+            }
         }
 
         // ensure WAITING

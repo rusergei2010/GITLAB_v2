@@ -13,8 +13,8 @@ public class TestThreadStop {
     static class Manageable extends Thread {
 
         // TODO: think of volatile, interrupt() or Atomic
-        public static  AtomicBoolean running = new AtomicBoolean(true);
-        public static  AtomicReference<String> str = new AtomicReference<>("");
+        public static  volatile AtomicBoolean running = new AtomicBoolean(true);
+        public static  volatile AtomicReference<String> str = new AtomicReference<>("");
 
         @Override
         public void run() {
@@ -45,7 +45,11 @@ public class TestThreadStop {
             if (Manageable.str.get().equals("aaa")) {
                 Manageable.running.set(false);
             }
-            TimeUnit.MILLISECONDS.sleep(3);
+            try {
+                TimeUnit.MILLISECONDS.sleep(3);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("Received : " + Manageable.str);

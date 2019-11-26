@@ -43,22 +43,19 @@ public class TestThreadJoin {
 
         // TODO: make TIMED_WAITING
         // TODO: make TIMED_WAITING
-        thread1.sleep(1000);
-        thread2.sleep(1000);
 
         assertEquals(thread1.getState(), State.TIMED_WAITING);
         assertEquals(thread2.getState(), State.TIMED_WAITING);
 
         // TODO: Wait till both threads are completed or terminated
-        thread1.join();
-        thread2.join();
-
+        Thread.sleep(1000);
         // threads should run task to be put on hold
         assertEquals(thread1.getState(), State.TERMINATED);
         assertEquals(thread2.getState(), State.TERMINATED);
 
         // TODO: fill in action with Thread to exit loop
         while (!Thread.currentThread().isInterrupted()) {
+            Thread.currentThread().interrupt();
         }
 
         assertTrue(Thread.currentThread().isInterrupted());

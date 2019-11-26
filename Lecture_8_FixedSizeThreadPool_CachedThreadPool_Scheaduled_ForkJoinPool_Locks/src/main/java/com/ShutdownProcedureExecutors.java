@@ -21,7 +21,7 @@ public class ShutdownProcedureExecutors {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        ForkJoinPool
+//        ForkJoinPool
 //        executorService.submit(App::increment);
 //        executorService.submit(App::increment);
         List<Callable<Integer>> promise = new ArrayList<>();

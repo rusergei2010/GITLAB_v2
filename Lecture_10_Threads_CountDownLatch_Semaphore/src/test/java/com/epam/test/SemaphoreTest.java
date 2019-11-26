@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +19,7 @@ public class SemaphoreTest {
     private static class Resource {
 
         private Semaphore semaphore;
-        int connections = 0;
+        volatile AtomicInteger connections = new AtomicInteger(0);
 
         public Resource(Semaphore semaphore) {
             this.semaphore = semaphore;
@@ -27,12 +28,11 @@ public class SemaphoreTest {
         public void connect(String uri) {
             boolean permit = false;
             try {
-                permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
+                permit = semaphore.tryAcquire(200, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
-
-                    connections++;
+                    Util.threadSleep(1); // Anchor 2
+                    connections.addAndGet(1);
                 } else {
                     System.out.println("Connection rejected");
                 }
@@ -47,9 +47,9 @@ public class SemaphoreTest {
     @Test
     public void testSemaphore() throws InterruptedException {
 
-        ExecutorService service = Executors.newFixedThreadPool(10);
+        ExecutorService service = Executors.newFixedThreadPool(5);
 
-        Semaphore semaphore = new Semaphore(5);
+        Semaphore semaphore = new Semaphore(10);
         SemaphoreTest.Resource resource = new SemaphoreTest.Resource(semaphore);
 
         IntStream.range(0, 10).forEach((port) -> {
@@ -60,7 +60,7 @@ public class SemaphoreTest {
         );
 
         Thread.sleep(4000);
-        assertEquals(10, resource.connections);
+        assertEquals(10, resource.connections.get());
 
         putDown(service, 4);
     }

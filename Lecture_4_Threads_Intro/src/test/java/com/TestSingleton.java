@@ -1,5 +1,6 @@
 package com;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -18,6 +19,7 @@ public class TestSingleton {
     public static TestSingleton getInstance(){
         if (instance == null) {
             // TODO: complete
+            instance = new TestSingleton();
         }
         return instance;
     }
@@ -29,18 +31,17 @@ public class TestSingleton {
      */
     @Test
     public void testThread() throws InterruptedException {
-        final AtomicReference<TestSingleton> instance = new AtomicReference<>();
+        final AtomicReference<TestSingleton> instant = new AtomicReference<>();
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null); // TODO
+            instant.compareAndSet(instance, TestSingleton.getInstance()); // TODO
         });
 
         thread1.start();
+        thread1.join(2000); // TODO
 
-//        thread1.join(); // TODO
-
-        assertEquals(TestSingleton.getInstance(), instance.get());
+        assertEquals(TestSingleton.getInstance(), instant.get());
     }
 
     private Thread createThread() {

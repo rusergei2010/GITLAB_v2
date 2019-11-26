@@ -9,7 +9,7 @@ public class TestThreadStop {
     static class Manageable extends Thread {
 
         // TODO: think of volatile, interrupt() or Atomic
-        public static boolean running = true;
+        public volatile static boolean running = true;
         public static String str = "";
 
         @Override

@@ -9,8 +9,11 @@ import static org.junit.Assert.assertEquals;
  * See console log to observe reaction
  */
 public class TestVolatileTest extends Thread {
-
-    private /*volatile*/ static int SIGNAL = 0; // TODO: volatile? What is its function?
+/*
+* volatile modifier telling to jvm when its created thread that value of the variable need to get
+* from heap only, it's not allowed to cached it.
+* */
+    private volatile static int SIGNAL = 0; // TODO: volatile? What is its function?
     public static final int WAIT = 5;
 
     static class ChangeListener extends Thread {

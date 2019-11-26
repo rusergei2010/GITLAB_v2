@@ -10,14 +10,14 @@ import static org.junit.Assert.assertEquals;
 public class LockTest {
 
     private static int counter = 0;
+    private static final Object object = new Object();
+
 
     public static void change() {
         synchronized (LockTest.class) {
             counter++;
         }
     }
-
-    private static final Object object = new Object();
 
     public static void changeX() {
         synchronized (object) {
@@ -34,10 +34,8 @@ public class LockTest {
             IntStream.range(0, 1000).forEach((x) -> changeX());
         }).start();
 
-
         Utils.sleep(1000);
 
-        // TODO: fix it
         assertEquals(2 * 1000, counter);
     }
 }

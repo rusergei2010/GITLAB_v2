@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ev
 echo $TRAVIS_BUILD_DIR
-cd $TRAVIS_BUILD_DIR/Lecture_4_Threads_1
+cd $TRAVIS_BUILD_DIR/Lecture_4_Threads_Intro
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_5_Sync_Wait_Notify_Ctitical_Sections
 mvn test

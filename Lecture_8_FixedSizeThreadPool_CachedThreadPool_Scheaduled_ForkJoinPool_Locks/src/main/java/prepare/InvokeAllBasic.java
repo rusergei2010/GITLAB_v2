@@ -18,6 +18,7 @@ public class InvokeAllBasic {
 
         Collection<Callable<String>> tasks = Collections.unmodifiableCollection(Arrays.asList(callable(), callable(), callable()));
 
+
         List<Future<String>> results = serviceExecutor.invokeAll(tasks);
         results.stream().map(future -> {
             try {

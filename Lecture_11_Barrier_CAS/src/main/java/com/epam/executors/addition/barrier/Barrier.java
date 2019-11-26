@@ -19,21 +19,22 @@ public class Barrier {
 
         private final CyclicBarrier cyclicBarrier;
         private final Counter counter;
+        private int index;
 
-        public Task(final CyclicBarrier cyclicBarrier, final Counter counter) {
+        public Task(final CyclicBarrier cyclicBarrier, final Counter counter, int index) {
             this.cyclicBarrier = cyclicBarrier;
             this.counter = counter;
+            this.index = index;
         }
 
         @Override public void run() {
             try {
-                System.out.println("Task has started");
-                System.out.println("Task is being executed.");
+                System.out.println("Task " + index + " has started");
                 Thread.sleep(1000);
 
                 counter.inc();
                 cyclicBarrier.await();
-                System.out.println("Task is completed");
+                System.out.println("Task " + index + " is completed");
             } catch (InterruptedException | BrokenBarrierException e) {
                 e.printStackTrace();
             }
@@ -67,13 +68,13 @@ public class Barrier {
             throws InterruptedException {
         IntStream.range(0, 3).forEach(i -> {
             ForkJoinPool.commonPool().submit(() -> {
-                new Task(cyclicBarrier, counter).run();
+                new Task(cyclicBarrier, counter, i).run();
             });
         });
 
+        Thread.currentThread().sleep(1000);
         System.out.println("Tasks are submitted");
-        Thread.currentThread().sleep(2000);
-        System.out.println("Call await on CyclicBarrier");
+        Thread.currentThread().sleep(1000);
         System.out.println("Counter = " + counter.counter.get());
     }
 

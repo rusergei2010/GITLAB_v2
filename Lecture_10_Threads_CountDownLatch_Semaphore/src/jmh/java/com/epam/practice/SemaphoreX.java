@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 /**
  * Example: http://tutorials.jenkov.com/java-util-concurrent/semaphore.html
  */
-public class RaceConditionSemaphore {
+public class SemaphoreX {
 
 
     private static class Resource {

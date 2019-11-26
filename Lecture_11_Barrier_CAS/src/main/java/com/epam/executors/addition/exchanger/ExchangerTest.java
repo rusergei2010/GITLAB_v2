@@ -18,9 +18,10 @@ public class ExchangerTest {
         @Override
         public void run() {
             try {
+                System.out.println(Thread.currentThread().getName() + " sends " + "Ready Object");
                 //create tasks & fill the queue
                 //exchange the full queue for a empty queue with Consumer
-                queue = exchanger.exchange("Ready Queue");
+                queue = exchanger.exchange("Ready Object");
                 System.out.println(Thread.currentThread().getName() + " now has " + queue);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -34,8 +35,9 @@ public class ExchangerTest {
         @Override
         public void run() {
             try {
+                System.out.println(Thread.currentThread().getName() + " sends " + "Empty Object");
                 //do procesing & empty the queue
-                queue = exchanger.exchange("Empty Queue");
+                queue = exchanger.exchange("Empty Object");
                 System.out.println(Thread.currentThread().getName() + " now has " + queue);
             } catch (InterruptedException e) {
                 e.printStackTrace();

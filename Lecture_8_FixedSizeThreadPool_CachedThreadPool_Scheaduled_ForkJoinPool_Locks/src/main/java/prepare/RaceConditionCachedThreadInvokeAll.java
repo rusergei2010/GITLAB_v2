@@ -37,7 +37,7 @@ public class RaceConditionCachedThreadInvokeAll {
 
         List<Callable<Integer>> callable = new ArrayList();
 
-        IntStream.range(0, 1000).forEach((i) -> {
+        IntStream.range(0, 10000).forEach((i) -> {
                     callable.add(counter::inc);
                 }
         );

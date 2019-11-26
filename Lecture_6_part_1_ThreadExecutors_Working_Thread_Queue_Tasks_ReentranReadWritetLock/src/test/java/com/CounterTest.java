@@ -1,7 +1,8 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+import prepare.util.Utils;
+
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,7 +22,7 @@ public class CounterTest {
         public void inc() throws InterruptedException {
             if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.sleep(200);
+                    Utils.sleep(20);
                     counter++;
                 } finally {
                     lock.unlock();

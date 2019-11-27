@@ -18,6 +18,12 @@ import static org.junit.Assert.assertEquals;
 
 public class Mapping {
 
+    public static List<JobHistoryEntry> addOneYear(List<JobHistoryEntry> history) {
+        List<JobHistoryEntry> result = new ArrayList<>();
+        history.forEach(a -> result.add(new JobHistoryEntry(a.getDuration() + 1, a.getPosition(), a.getEmployer())));
+        return result;
+    }
+
     private static class MapHelper<T> {
         private final List<T> list;
 
@@ -32,8 +38,9 @@ public class Mapping {
         // [T] -> (T -> R) -> [R]
         // [T1, T2, T3] -> (T -> R) -> [R1, R2, R3]
         public <R> MapHelper<R> map(Function<T, R> f) {
-            // TODO
-            throw new UnsupportedOperationException();
+            List<R> result = new ArrayList<>();
+            list.forEach(row -> result.add(f.apply(row)));
+            return new MapHelper<>(result);
         }
 
         // [T] -> (T -> [R]) -> [R]
@@ -76,6 +83,10 @@ public class Mapping {
 
         final List<Employee> mappedEmployees =
                 new MapHelper<>(employees)
+                    .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                    .map(e -> e.withJobHistory(new MapHelper<JobHistoryEntry>(e.getJobHistory())
+                        .map(his -> new JobHistoryEntry(his.getDuration() + 1, his.getPosition().equals("qa") ? his.getPosition().toUpperCase() : his.getPosition(), his.getEmployer()))
+                        .getList()))
                 /*
                 .map(TODO) // change name to John .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
                 .map(TODO) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))

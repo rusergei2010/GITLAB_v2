@@ -80,7 +80,7 @@ public class Lamdas04 {
 
         Integer sumAge = Stream.of(new Person("Elizaveta", 23, Person.GENDER.FEMALE),
                 new Person("Artem", 21, Person.GENDER.MALE),
-                new Person("Vera", 2, Person.GENDER.FEMALE))
+                new Person("Vera", 2, Person.GENDER.MALE))
                 .filter(((Predicate<Person>) Lamdas04::isMale).negate())
                 .mapToInt(Person::getAge)
                 .sum();

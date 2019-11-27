@@ -35,11 +35,11 @@ public class TestVolatileTest extends Thread {
       while (SIGNAL < WAIT) {
         System.out.println(String.format("Incrementing SIGNAL to : %d", local_value + 1));
         SIGNAL = ++local_value;
-//                try {
-//                    Thread.sleep(500);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
       }
     }
   }

@@ -59,7 +59,7 @@ public class CachedThreadPoolTest {
         ExecutorService service = Executors.newCachedThreadPool();
 
         Future<?> result1 = service.submit(runnable("Thread 1"));
-        service.shutdown();
+       // service.shutdown();
         Future<?> result2 = service.submit(runnable("Thread 2"));
 
         assertNotNull(result1);

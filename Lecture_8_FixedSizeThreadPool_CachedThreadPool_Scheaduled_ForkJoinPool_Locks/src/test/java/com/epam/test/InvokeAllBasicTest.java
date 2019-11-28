@@ -29,7 +29,8 @@ public class InvokeAllBasicTest {
             this.value = value;
         }
 
-        @Override public String call() throws Exception { // return value
+        @Override
+        public String call() throws Exception { // return value
             Thread.sleep(1000);
             value = value * value;
             return "" + value; // add "" to make mapping afterwards for fun
@@ -44,7 +45,8 @@ public class InvokeAllBasicTest {
             this.value = value;
         }
 
-        @Override public void run() {
+        @Override
+        public void run() {
             try {
                 Thread.sleep(1000); // Let it ibe delayed (REST call as an example then)
             } catch (InterruptedException e) {
@@ -82,16 +84,17 @@ public class InvokeAllBasicTest {
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10 * 10 + 100 * 100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
         putDown(service, 2);
     }
 
     /**
      * Execute() operation  doesn't return value unlike submit all invoke
      * It demonstrates how difficult to work with Runnable nowadays and Callable<> is preferable
-     *
+     * <p>
      * TODO: Investigate the code. Pay attention to how many threads there and sleep delays.
      * TODO: Fix the test by changing delays
+     *
      * @throws InterruptedException
      */
     @Test

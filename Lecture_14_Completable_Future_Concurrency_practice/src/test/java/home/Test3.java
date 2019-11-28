@@ -1,5 +1,8 @@
 package home;
 
+import java.util.Collections;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ForkJoinPool;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -24,9 +27,9 @@ public class Test3 {
      */
     @Test
     public void testConcurrentOperationFailure() throws ExecutionException, InterruptedException {
-//        ForkJoinPool.commonPool().submit(()->{});
+        ForkJoinPool.commonPool().submit(()->{});
 
-        Map<Integer, String> map = new HashMap();
+        Map<Integer, String> map = new ConcurrentHashMap<>();
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
@@ -65,7 +68,7 @@ public class Test3 {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.putIfAbsent(i, "X"); // Line 1
+                        concurrentHashMap.put(i, "X"); // Line 1
                         sleep(1);
                     }
             );
@@ -78,7 +81,7 @@ public class Test3 {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        concurrentHashMap.put(i, "O"); // Line 2
+                        concurrentHashMap.putIfAbsent(i, "O"); // Line 2
                         sleep(1);
                     }
             );
@@ -105,7 +108,7 @@ public class Test3 {
     public void immutableCollections() throws Throwable {
         ArrayList<Integer> mutableList = new ArrayList<>();
         IntStream.range(0, 10).forEach(mutableList::add);
-        List<Integer> immutable = new ArrayList<>(mutableList); // TODO: Fix in this line
+        List<Integer> immutable = Collections.unmodifiableList(mutableList); // TODO: Fix in this line
 
         try {
             CompletableFuture.supplyAsync(() -> {

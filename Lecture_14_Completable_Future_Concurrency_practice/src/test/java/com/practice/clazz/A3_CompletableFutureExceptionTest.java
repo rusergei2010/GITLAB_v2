@@ -1,5 +1,6 @@
 package com.practice.clazz;
 
+import java.util.function.Supplier;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -44,9 +45,10 @@ public class A3_CompletableFutureExceptionTest {
 
         handle.completeExceptionally(new Exception("My exception"));
         CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(
-                new Callable<String>() {
+                new Supplier<String>() {
 
-                    @Override public String call() throws Exception {
+                    @Override
+                    public String get() {
                         return null;
                     }
                 });

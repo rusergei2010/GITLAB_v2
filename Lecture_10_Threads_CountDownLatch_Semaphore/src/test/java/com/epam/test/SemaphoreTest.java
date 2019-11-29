@@ -30,7 +30,7 @@ public class SemaphoreTest {
                 permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
+                    //Util.threadSleep(400); // Anchor 2
 
                     connections++;
                 } else {

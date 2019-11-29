@@ -17,8 +17,13 @@ public class SyncTest {
     Lock lock = new ReentrantLock();
 
     public void change() {
-
-        lock.lock();
+        while(!lock.tryLock()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             try {
                 Thread.sleep(1000);

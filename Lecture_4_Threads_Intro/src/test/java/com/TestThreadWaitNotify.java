@@ -19,10 +19,12 @@ public class TestThreadWaitNotify {
      * @throws InterruptedException
      */
     @Test
-    public void testThread() throws InterruptedException {
+    public void testThread() throws InterruptedException{
         Thread thread1 = createThread(() -> {
             try {
-                counter.wait();
+                synchronized (counter) {
+                    counter.wait();
+                }
                 counter.incrementAndGet();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -30,7 +32,9 @@ public class TestThreadWaitNotify {
         });
         Thread thread2 = createThread(() -> {
             try {
-                counter.wait();
+                synchronized (counter) {
+                    counter.wait();
+                }
                 counter.incrementAndGet();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -40,7 +44,13 @@ public class TestThreadWaitNotify {
         thread1.start();
         thread2.start();
 
-        Thread.sleep(100);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            for (int i = 0; i < 100; i++) {
+                System.out.println();
+            }
+        }
 
         // ensure WAITING
         // ensure WAITING
@@ -49,6 +59,9 @@ public class TestThreadWaitNotify {
 
         // TODO: notify thread
         // TODO: notify thread
+        synchronized (counter) {
+            counter.notifyAll();
+        }
 
         // delay
         Thread.sleep(1000);

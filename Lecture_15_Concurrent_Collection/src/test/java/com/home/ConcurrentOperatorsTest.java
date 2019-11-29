@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class ConcurrentOperatorsTest {
 
-    private static Map<Integer, String> map = new HashMap();
+    private static Map<Integer, String> map = new ConcurrentHashMap<>();
     private static Map<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
     private static Map<Integer, String> syncMap = Collections.synchronizedMap(map);
 

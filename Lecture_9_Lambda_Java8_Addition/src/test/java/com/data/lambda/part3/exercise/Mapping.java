@@ -3,6 +3,7 @@ package com.data.lambda.part3.exercise;
 import com.data.Employee;
 import com.data.JobHistoryEntry;
 import com.data.Person;
+import java.util.stream.Collectors;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -122,7 +123,12 @@ public class Mapping {
 
     private static class LazyMapHelper<T, R> {
 
-        public LazyMapHelper(List<T> list, Function<T, R> function) {
+        private List list;
+        private Function function;
+
+        private LazyMapHelper(List<T> list, Function<T, R> function) {
+            this.function = function;
+            this.list = list;
         }
 
         public static <T> LazyMapHelper<T, T> from(List<T> list) {
@@ -130,13 +136,13 @@ public class Mapping {
         }
 
         public List<R> force() {
-            // TODO
-            throw new UnsupportedOperationException();
+            List out = new ArrayList<R>();
+            list.forEach(o -> out.add(function.apply(o)));
+            return out;
         }
 
         public <R2> LazyMapHelper<T, R2> map(Function<R, R2> f) {
-            // TODO
-            throw new UnsupportedOperationException();
+            return new LazyMapHelper<>(this.list, function.andThen(f));
         }
 
     }
@@ -204,11 +210,15 @@ public class Mapping {
 
         final List<Employee> mappedEmployees =
                 LazyMapHelper.from(employees)
-                /*
-                .map(TODO) // change name to John
-                .map(TODO) // add 1 year to experience duration
-                .map(TODO) // replace qa with QA
-                * */
+
+                .map(o -> o.withPerson(o.getPerson().withFirstName("John"))) // change name to John
+                .map(o -> o.withJobHistory(addOneYear(o.getJobHistory()))) // add 1 year to experience duration
+                .map(o -> o.withJobHistory(o.getJobHistory().stream().map(his -> {
+                    if (his.getPosition().equals("qa"))
+                        return new JobHistoryEntry(his.getDuration(), "QA", his.getEmployer());
+                    return his;
+                }).collect(Collectors.toList()))) // replace qa with QA
+
                 .force();
 
         final List<Employee> expectedResult =

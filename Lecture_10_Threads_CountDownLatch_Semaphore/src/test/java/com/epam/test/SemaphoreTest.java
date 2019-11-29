@@ -30,7 +30,7 @@ public class SemaphoreTest {
                 permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
+                    Util.threadSleep(30); // Anchor 2
 
                     connections++;
                 } else {
@@ -53,10 +53,10 @@ public class SemaphoreTest {
         SemaphoreTest.Resource resource = new SemaphoreTest.Resource(semaphore);
 
         IntStream.range(0, 10).forEach((port) -> {
-                    service.submit(() -> {
-                        resource.connect("localhost, " + (100 + port));
-                    });
-                }
+                service.submit(() -> {
+                    resource.connect("localhost, " + (100 + port));
+                });
+            }
         );
 
         Thread.sleep(4000);

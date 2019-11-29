@@ -50,6 +50,15 @@ public class Filtering {
         // Johns with dev experience worked in epam more then 1 year
         final List<Employee> result = new ArrayList<>();
         for (Employee employee : employees) {
+            long count = employee.getJobHistory().stream()
+                    .filter(h -> h.getPosition().equals("dev"))
+                    .filter(h -> h.getDuration() > 1)
+                    .filter(h -> h.getEmployer().equals("epam"))
+                    .filter(h -> employee.getPerson().getFirstName().equals("John"))
+                    .count();
+            if (count != 0) {
+                result.add(employee);
+            }
             // TODO: add the filter to store DEVELOPERS from EPAM with more than 1 year of experience in this collection
             // TODO: DEV name should be 'John'
             // Store all matching output in 'result' collection

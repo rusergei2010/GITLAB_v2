@@ -86,12 +86,12 @@ public class Lambda03 {
 //        Arrays.sort(personsAged, myComparator); // reference
 
         // TODO: Uncomment another expression then (replace with this one)
-//        Arrays.sort(personsAged,
-//                (person1_, person2_) -> {
-//                    model.setName("Lambda Expression");
-//                    list.add(person1_);
-//                    return person1_.name.compareTo(person2_.name); // statement
-//                });
+        Arrays.sort(personsAged,
+                (person1_, person2_) -> {
+                   // model.setName("Lambda Expression");
+                    list.add(person1_);
+                    return person1_.name.compareTo(person2_.name); // statement
+                });
 
         assertEquals("Sergey", personsAged[2].name);
         assertEquals(2, list.size());

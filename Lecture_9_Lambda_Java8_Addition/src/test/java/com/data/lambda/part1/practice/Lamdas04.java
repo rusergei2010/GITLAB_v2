@@ -32,10 +32,10 @@ public class Lamdas04 {
         @Override
         public String toString() {
             return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    ", gender=" + gender +
-                    '}';
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                '}';
         }
     }
 
@@ -79,13 +79,13 @@ public class Lamdas04 {
         PersonInterfacePredicate<Person> testAgeGenderAsStaticMethodRef = Lamdas04::isMale;
 
         Integer sumAge = Stream.of(new Person("Elizaveta", 23, Person.GENDER.FEMALE),
-                new Person("Artem", 21, Person.GENDER.MALE),
-                new Person("Vera", 2, Person.GENDER.FEMALE))
-                .filter(((Predicate<Person>) Lamdas04::isMale).negate())
-                .mapToInt(Person::getAge)
-                .sum();
+            new Person("Artem", 21, Person.GENDER.MALE),
+            new Person("Vera", 2, Person.GENDER.FEMALE))
+            .filter(((Predicate<Person>) Lamdas04::isMale).negate())
+            .mapToInt(Person::getAge)
+            .sum();
 
-        assertEquals(new Integer(23), sumAge); // TODO: fix the age
+        assertEquals(new Integer(23+2), sumAge); // TODO: fix the age
     }
 
     private boolean testAgeGender(Person p) {

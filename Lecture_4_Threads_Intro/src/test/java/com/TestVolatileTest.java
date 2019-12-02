@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestVolatileTest extends Thread {
 
-    private /*volatile*/ static int SIGNAL = 0; // TODO: volatile? What is its function?
+    private volatile static int SIGNAL = 0; // TODO: volatile? What is its function?
     public static final int WAIT = 5;
 
     static class ChangeListener extends Thread {
@@ -56,8 +56,11 @@ public class TestVolatileTest extends Thread {
         listener.start();
         maker.start();
 
-        listener.join(1000 * (WAIT + 1)); // wait till listener thread is finished or 5 secs
-
+        try {
+            listener.join(1000 * (WAIT + 1)); // wait till listener thread is finished or 5 secs
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         assertEquals(5, SIGNAL);
         assertEquals(State.TERMINATED, listener.getState());
     }

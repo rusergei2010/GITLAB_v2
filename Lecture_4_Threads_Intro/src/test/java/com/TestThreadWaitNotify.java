@@ -20,23 +20,23 @@ public class TestThreadWaitNotify {
      */
     @Test
     public void testThread() throws InterruptedException {
-        Thread thread1 = createThread(() -> {
-            try {
-                counter.wait();
-                counter.incrementAndGet();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        Thread thread2 = createThread(() -> {
-            try {
-                counter.wait();
-                counter.incrementAndGet();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    synchronized (counter) {
+                        counter.wait();
+                    }
+                    counter.incrementAndGet();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread thread1 = createThread(runnable);
+        Thread thread2 = createThread(runnable);
         thread1.start();
         thread2.start();
 
@@ -49,6 +49,9 @@ public class TestThreadWaitNotify {
 
         // TODO: notify thread
         // TODO: notify thread
+        synchronized (counter) {
+            counter.notifyAll();
+        }
 
         // delay
         Thread.sleep(1000);

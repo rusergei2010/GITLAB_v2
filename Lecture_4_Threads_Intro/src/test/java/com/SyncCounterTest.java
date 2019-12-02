@@ -1,12 +1,10 @@
 package com;
 
 
-import org.junit.Test;
-import prepare.util.Util;
-
-
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
+
+import org.junit.Test;
 
 
 /**
@@ -40,7 +38,6 @@ public class SyncCounterTest {
           counter.inc();
         }
         System.out.println(name + "; counter = " + counter.getCounter());
-
         threadSleep(5);
       }
     }

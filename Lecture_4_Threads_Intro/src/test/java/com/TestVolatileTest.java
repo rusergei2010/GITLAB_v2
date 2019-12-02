@@ -36,11 +36,11 @@ public class TestVolatileTest extends Thread {
       while (SIGNAL < WAIT) {
         System.out.println(String.format("Incrementing SIGNAL to : %d", local_value + 1));
         SIGNAL = ++local_value;
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        try {
+          Thread.sleep(500);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -51,7 +51,6 @@ public class TestVolatileTest extends Thread {
    *
    * @throws InterruptedException
    */
-  @Ignore
   @Test
   public void test() throws InterruptedException {
     Thread listener = new ChangeListener();
@@ -60,12 +59,7 @@ public class TestVolatileTest extends Thread {
     listener.start();
     maker.start();
 
-    try {
-//            listener.join();
-      listener.join(1000 * (WAIT + 1)); // wait till listener thread is finished or 5 secs
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    listener.join(1000 * (WAIT + 1)); // wait till listener thread is finished or 5 secs
 
     assertEquals(5, SIGNAL);
     assertEquals(State.TERMINATED, listener.getState());

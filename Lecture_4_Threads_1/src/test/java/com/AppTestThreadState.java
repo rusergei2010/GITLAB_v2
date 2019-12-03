@@ -1,8 +1,9 @@
 package com;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import prepare.util.Util;
 
 /**
  * Created by Admin on 8/6/2018.
@@ -16,23 +17,24 @@ public class AppTestThreadState {
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+        Thread thread1 = createThread(() -> Util.threadSleep(300));
+        Thread thread2 = createThread(() -> Util.threadSleep(300));
 
         assertEquals(thread1.getState(), Thread.State.NEW);
         assertEquals(thread2.getState(), Thread.State.NEW);
 
-
         // TODO: fill the gap
         // TODO: fill the gap
+        thread1.start();
+        thread2.start();
 
         assertEquals(thread1.getState(), Thread.State.RUNNABLE);
         assertEquals(thread2.getState(), Thread.State.RUNNABLE);
 
         // Add delay if necessary
         // TODO: fill the gap
-
         // threads should run task to be put on hold
+        Util.threadSleep(30);
         assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
         assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
         assertEquals(Thread.currentThread().getState(), Thread.State.RUNNABLE);

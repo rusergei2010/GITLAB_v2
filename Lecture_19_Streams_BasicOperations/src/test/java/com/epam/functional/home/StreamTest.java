@@ -1,9 +1,7 @@
 package com.epam.functional.home;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,8 +38,7 @@ public class StreamTest {
 
     @Test
     public void groupingBy() {
-        Map<Integer, List<Student>> collectByYear = new HashMap<>();
-
+        Map<Integer, List<Student>> collectByYear = students.stream().collect(Collectors.groupingBy(Student::getYear));
         // TODO: Collect and group students by year: 'groupingBy(Student::getYear)'
         // collectByYear = students. ...
 
@@ -51,7 +48,7 @@ public class StreamTest {
 
     @Test
     public void groupingByAndCount() {
-        Map<Student.Speciality, Long> countStudents = new HashMap<>();
+        Map<Student.Speciality, Long> countStudents = students.stream().collect(Collectors.groupingBy(Student::getSpeciality, Collectors.counting()));
 
         // TODO: Count students against its speciality using:
         // Collectors.groupingBy(
@@ -65,11 +62,13 @@ public class StreamTest {
 
     @Test
     public void partitionBy() {
-        Map<Boolean, List<Student>> collectHistorians = new HashMap<>();
-
+        Map<Boolean, List<Student>> collectHistorians = students.stream().collect(
+                Collectors.groupingBy(student -> student.getSpeciality().equals(Student.Speciality.History), Collectors.toList()));
         // TODO: Partition students and find 'historians' and all others use
         //  .partitioningBy('Student::isHistory')
         // collectHistorians = students. ...
+
+
 
         assertEquals(2, collectHistorians.get(true).size());
     }
@@ -81,7 +80,11 @@ public class StreamTest {
          * Sorting is necessary at first.
           */
 
-        Map<Student.Speciality, Map<Integer /*year*/, List<Student>>> groupedBySpecAndYear = new HashMap<>();
+        Map<Student.Speciality, Map<Integer /*year*/, List<Student>>> groupedBySpecAndYear = students.stream()
+                .sorted(Comparator.comparing(Student::getSpeciality, Comparator.comparing(Enum::name))
+                        .thenComparing(Student::getYear))
+                .collect(Collectors.groupingBy(
+                        Student::getSpeciality, Collectors.groupingBy(Student::getYear)));
 
 //                groupedBySpecAndYear = students.stream()
 

@@ -85,7 +85,7 @@ public class Lamdas04 {
                 .mapToInt(Person::getAge)
                 .sum();
 
-        assertEquals(new Integer(23), sumAge); // TODO: fix the age
+        assertEquals(new Integer(25), sumAge); // TODO: fix the age
     }
 
     private boolean testAgeGender(Person p) {
@@ -93,6 +93,6 @@ public class Lamdas04 {
     }
 
     private static boolean isMale(Person p) {
-        return p.gender != Person.GENDER.FEMALE;
+        return p.gender == Person.GENDER.MALE;
     }
 }

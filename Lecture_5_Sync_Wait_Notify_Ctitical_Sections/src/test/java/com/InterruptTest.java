@@ -12,18 +12,19 @@ import static org.junit.Assert.assertEquals;
 
 // TODO: fix the test using only volatile
 public class InterruptTest {
-    static boolean flag = true;
+    static volatile boolean flag = true;
 
     private boolean exec() {
         while (flag) {
             int counter = 0;
             counter++;
+            System.out.println(counter);
         }
         return true;
     }
 
     @Test
-    public void testSync() {
+    public void testSync() throws InterruptedException {
         AtomicReference<Boolean> ref = new AtomicReference<>();
         ref.set(false);
 
@@ -31,18 +32,23 @@ public class InterruptTest {
             ref.set(exec());
         }).start();
 
-        new Thread(() -> {
+Thread.sleep(1000);
+
+        Thread thread = new Thread(() -> {
             int counter = 0;
             while (true) {
                 counter++;
                 if (flag)
                     flag = false;
+                System.out.println("fffff" + counter);
             }
-        }).start();
+        });
+        thread.start();
 
         Utils.sleep(2000);
 
         assertEquals(true, ref.get());
+
     }
 
 }

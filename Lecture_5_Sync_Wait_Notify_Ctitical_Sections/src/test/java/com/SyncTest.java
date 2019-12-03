@@ -18,7 +18,7 @@ public class SyncTest {
 
     public void change() {
 
-        lock.lock();
+        if(lock.tryLock()){
         try {
             try {
                 Thread.sleep(1000);
@@ -28,6 +28,7 @@ public class SyncTest {
             counter++;
         } finally {
             lock.unlock();
+        }
         }
     }
 
@@ -43,6 +44,8 @@ public class SyncTest {
         Utils.sleep(2000);
 
         // TODO: fix it with use of 'if(tryLock())' for heavy calculations (~sleep(1000))
+
+
         assertEquals(1, counter);
     }
 }

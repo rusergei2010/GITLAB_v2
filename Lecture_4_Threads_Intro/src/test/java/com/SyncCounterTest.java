@@ -2,6 +2,8 @@ package com;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
@@ -27,17 +29,16 @@ public class SyncCounterTest {
             this.total = total;
         }
 
+
         @Override
-        public void run() {
+         public void run() {
             Thread.currentThread().setName(name);
             int i = 0;
             while (i < total) {
                 i++;
+                counter.met(name);
+                threadSleep(1);
 
-                counter.inc();
-                System.out.println(name + "; counter = " + counter.getCounter());
-
-                threadSleep(5);
             }
         }
     }
@@ -45,18 +46,22 @@ public class SyncCounterTest {
 
     public static class Counter {
 
-        private Integer counter;
+        private AtomicInteger counter;
 
-        public Counter(Integer counter) {
+        public Counter(AtomicInteger counter) {
             this.counter = counter;
         }
 
         public void inc() {
-            counter++;
+            counter.incrementAndGet();
         }
 
-        public Integer getCounter(){
+        public AtomicInteger getCounter(){
             return counter;
+        }
+        public synchronized void met(final String name){
+            inc();
+            System.out.println(name + "; counter = " + getCounter());
         }
     }
 
@@ -67,17 +72,19 @@ public class SyncCounterTest {
      * @throws InterruptedException
      */
     @Test
-    public void testSync() throws InterruptedException {
+    public void  testSync() throws InterruptedException {
 
         final int total = 200;
-        Counter counter = new Counter(0);
+        Counter counter = new Counter(new AtomicInteger(0));
         Thread thread1 = new Thread(new CounterThread("Thread - 1", counter, total));
         Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
 
         thread1.start();
         thread2.start();
 
-//        thread2.join(); // TODO?
+
+        thread1.join();
+        thread2.join(); // TODO?
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

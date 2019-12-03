@@ -14,18 +14,23 @@ public class TestThreadJoin {
      */
     @Test
     public void testThread() throws InterruptedException {
+               Thread main =Thread.currentThread();
         Thread thread1 = createThread(() -> {
+
             try {
-                // TODO: design wait right way
-                wait(1000);
+                synchronized (this) {// TODO: design wait right way
+                wait(1500);}
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         Thread thread2 = createThread(() -> {
+
             try {
-                // TODO: design wait right way
-                wait(1000);
+                synchronized (this){ // TODO: design wait right way
+
+                    wait(1500);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -34,22 +39,30 @@ public class TestThreadJoin {
         thread1.start();
         thread2.start();
 
-        Thread.sleep(100);
+
+        Thread.sleep(1000);
 
         // TODO: make TIMED_WAITING
         // TODO: make TIMED_WAITING
 
-        assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
-        assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
+        assertEquals(Thread.State.TIMED_WAITING,thread1.getState());
+        assertEquals(Thread.State.TIMED_WAITING,thread2.getState());
 
         // TODO: Wait till both threads are completed or terminated
 
+        thread1.join();
+        thread2.join();
+
         // threads should run task to be put on hold
-        assertEquals(thread1.getState(), Thread.State.TERMINATED);
-        assertEquals(thread2.getState(), Thread.State.TERMINATED);
+        assertEquals(Thread.State.TERMINATED, thread1.getState());
+        assertEquals(Thread.State.TERMINATED, thread2.getState());
+
+
 
         // TODO: fill in action with Thread to exit loop
         while (!Thread.currentThread().isInterrupted()) {
+            Thread.currentThread().interrupt();
+
         }
 
         assertTrue(Thread.currentThread().isInterrupted());
@@ -61,9 +74,11 @@ public class TestThreadJoin {
         return thread;
     }
 
-    private Thread createThread(Runnable runnable) {
+    private  Thread createThread(Runnable runnable) {
         final Thread thread = new Thread(runnable);
         return thread;
     }
 
-}
+
+
+    }

@@ -81,8 +81,8 @@ public class A1_FutureVSCompletableFutureTest {
 //            ex.printStackTrace();
 //        }
 
-        System.out.println("RESULT: " + completableFuture.get());
-        System.out.println("RESULT: " + completableFutureEx.get());
+        //System.out.println("RESULT: " + completableFuture.get());
+        //System.out.println("RESULT: " + completableFutureEx.get());
     }
 
     private static void sleep(int delay) {

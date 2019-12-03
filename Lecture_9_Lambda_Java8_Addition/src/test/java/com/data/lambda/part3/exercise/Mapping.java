@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -76,11 +74,11 @@ public class Mapping {
 
         final List<Employee> mappedEmployees =
                 new MapHelper<>(employees)
-                /*
-                .map(TODO) // change name to John .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
-                .map(TODO) // add 1 year to experience duration .map(e -> e.withJobHistory(addOneYear(e.getJobHistory())))
-                .map(TODO) // replace qa with QA
-                * */
+                        .map(e -> e.withPerson(e.getPerson().withFirstName("John")))
+                        .map(employee -> employee.withJobHistory(plusYear(employee.getJobHistory())))
+                        .map(employee -> employee
+                                .withJobHistory(employee.getJobHistory().stream().filter(p -> p.getPosition().equalsIgnoreCase("qa"))
+                                        .map(h -> h.withPosition("QA")).collect(Collectors.toList())))
                 .getList();
 
         final List<Employee> expectedResult =
@@ -223,5 +221,9 @@ public class Mapping {
                 );
 
         assertEquals(mappedEmployees, expectedResult);
+    }
+
+    private static List<JobHistoryEntry> plusYear(List<JobHistoryEntry> jobHistory) {
+        return jobHistory.stream().map(h -> h.withDuration(h.getDuration() + 1)).collect(Collectors.toList());
     }
 }

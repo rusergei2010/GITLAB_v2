@@ -44,7 +44,7 @@ public class Test1 {
 
         new Thread(() -> {
             sleep(1000);
-            completableFuture.complete("XXXX"); // TODO: Fix it in the string
+            completableFuture.complete("Result");
         }).start();
 
         assertEquals("Result", completableFuture.get());
@@ -63,8 +63,9 @@ public class Test1 {
             }
         }).start();
         sleep(100);
-        // TODO: Complete Exceptionally with RuntimeException
-        // TODO: Code the exception in this line
+        if (Thread.currentThread().getState().equals(Thread.State.RUNNABLE)) {
+            throw new RuntimeException();
+        }
         try {
             System.err.println("Print: " + completableFuture.get());
         } catch (Throwable ex) {

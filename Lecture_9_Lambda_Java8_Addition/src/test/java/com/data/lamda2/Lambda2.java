@@ -132,6 +132,7 @@ public class Lambda2 {
 
         StringBuilder sb = new StringBuilder();
         for (Person p : list) {
+
           // TODO: make the statement
           //  (p) -> {
           //      sb.append(getName); // with ::

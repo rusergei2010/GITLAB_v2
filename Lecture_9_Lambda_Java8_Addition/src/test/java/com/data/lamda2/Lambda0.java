@@ -7,7 +7,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Lambda0 {
 
-
     @Test
     public void testTHreadPoolSize() throws InterruptedException {
         new Thread(() -> {foo();}).start();

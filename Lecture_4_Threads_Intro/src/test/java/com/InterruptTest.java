@@ -14,6 +14,7 @@ public class InterruptTest {
     static class MyThread extends Thread {
         @Override
         public void run() {
+
             System.out.println("MyThread: " + Thread.currentThread().getName() + " started");
 
             while(isInterrupted())
@@ -27,7 +28,8 @@ public class InterruptTest {
     @Test
     public void testInterrupt() throws InterruptedException {
         final Thread thread = new MyThread();
-        thread.run();
+        thread.start();
+        Thread.currentThread().sleep(500);
         thread.interrupt();
 
         thread.join(1000);

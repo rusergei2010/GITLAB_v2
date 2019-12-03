@@ -6,7 +6,7 @@ public class Util {
 
         try {
             synchronized (mutex) {
-                mutex.wait();
+                mutex.wait(mil);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

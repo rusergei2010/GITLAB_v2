@@ -28,11 +28,15 @@ public class CountDownLatchTest {
             System.out.println("Task is started");
             try {
                 latchStart.await();
+                executeJob();
+                System.out.println("Job is Executed");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            executeJob();
-            System.out.println("Job is Executed");
+            finally {
+                latchStop.countDown();
+            }
+
         }
 
         private void executeJob() {

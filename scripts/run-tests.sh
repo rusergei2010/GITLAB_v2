@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ev
 echo $TRAVIS_BUILD_DIR
-#cd $TRAVIS_BUILD_DIR/Lecture_4_Threads_Intro
-#mvn test
+cd $TRAVIS_BUILD_DIR/Lecture_4_Threads_Intro
+mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_5_Sync_Wait_Notify_Ctitical_Sections
 mvn test
 cd $TRAVIS_BUILD_DIR/Lecture_6_part_1_ThreadExecutors_Working_Thread_Queue_Tasks_ReentranReadWritetLock

@@ -44,11 +44,14 @@ public class TestThreadStop {
                 thread.join();
             }
             else{
-                threadSleep(100);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
         }
-
         System.out.println("Received : " + Manageable.str);
         assertEquals("aaa", Manageable.str);
     }

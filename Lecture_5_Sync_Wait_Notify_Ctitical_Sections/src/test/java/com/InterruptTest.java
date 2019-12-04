@@ -3,16 +3,13 @@ package com;
 import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
-import java.lang.ref.Reference;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
 
 // TODO: fix the test using only volatile
 public class InterruptTest {
-    static boolean flag = true;
+    static volatile boolean flag = true;
 
     private boolean exec() {
         while (flag) {

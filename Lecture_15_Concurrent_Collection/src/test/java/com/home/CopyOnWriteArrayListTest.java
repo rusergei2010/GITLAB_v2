@@ -33,7 +33,7 @@ public class CopyOnWriteArrayListTest {
         }).start();
 
         // TODO: remove this delay if necessary
-        sleep(3000);
+        // sleep(3000);
 
         // concurrent modification in the list
         final Iterator<Integer> iterator = mutable.iterator();
@@ -58,7 +58,7 @@ public class CopyOnWriteArrayListTest {
                     immutable.add(-1);
                 } catch (Throwable t) {
                     // TODO: uncomment this if necessary
-                    // exception.set(t);
+                    exception.set(t);
                     throw new RuntimeException(t);
                 }
                 sleep(100);
@@ -83,7 +83,7 @@ public class CopyOnWriteArrayListTest {
     // TODO: Fix the timeout. Adjust 'TIMEOUT' to let more element to be added to the CopyOnWriteArrayList before thread-safe Iteration is started
     @Test
     public void syncCollections() throws InterruptedException {
-        final long TIMEOUT = 150;
+        final long TIMEOUT = 250;
         List<Integer> cowArrayList = new CopyOnWriteArrayList<>();
 
         Thread thread = new Thread(() -> {

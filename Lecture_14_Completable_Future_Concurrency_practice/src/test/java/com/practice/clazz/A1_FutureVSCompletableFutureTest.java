@@ -57,7 +57,7 @@ public class A1_FutureVSCompletableFutureTest {
         System.out.println("Print: " + completableFuture.get());
     }
 
-    @Test
+    @Test(expected =  Exception.class)
     public void deferredCompleteResultExceptionally() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
 

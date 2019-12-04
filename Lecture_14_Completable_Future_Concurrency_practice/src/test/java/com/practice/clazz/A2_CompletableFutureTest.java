@@ -4,33 +4,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static org.junit.Assert.assertEquals;
 
 @Ignore
 public class A2_CompletableFutureTest {
 
-
     @Test
     public void testFuture() throws ExecutionException, InterruptedException {
-
-//        Future<String> future = new FutureTask<String>(() -> {
-//            Thread.sleep(2000);
-//            System.out.println("Task is executed");
-//            return "Future result";
-//        });
-//        ((FutureTask<String>) future).run();
-//        System.out.println(future.get());
-
-
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
 
         new Thread(() -> {
@@ -74,6 +56,7 @@ public class A2_CompletableFutureTest {
 
     /**
      * Timings...
+     *
      * @throws ExecutionException
      * @throws InterruptedException
      */

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestVolatileTest extends Thread {
 
-    private /*volatile*/ static int SIGNAL = 0; // TODO: volatile? What is its function?
+    private volatile static int SIGNAL = 0; // TODO: volatile? What is its function?
     public static final int WAIT = 5;
 
     static class ChangeListener extends Thread {
@@ -35,7 +35,7 @@ public class TestVolatileTest extends Thread {
                 System.out.println(String.format("Incrementing SIGNAL to : %d", local_value + 1));
                 SIGNAL = ++local_value;
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -47,6 +47,8 @@ public class TestVolatileTest extends Thread {
     /**
      * TODO: use volatile and explain why it fixes the problem?
      * @throws InterruptedException
+     *
+     * Answer: volatile makes both threads use variable's heaped value, not the local cached one
      */
     @Test
     public void test() throws InterruptedException {

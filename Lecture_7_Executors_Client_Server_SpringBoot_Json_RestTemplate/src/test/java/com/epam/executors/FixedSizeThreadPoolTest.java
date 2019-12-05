@@ -28,6 +28,8 @@ public class FixedSizeThreadPoolTest {
 
         Future<String> res1 = service.submit(callable());
         Future<String> res2 = service.submit(callable());
+        Future<String> res3 = service.submit(callable());
+
 
         try {
             assertEquals("Result", res1.get());
@@ -58,7 +60,7 @@ public class FixedSizeThreadPoolTest {
     // TODO: Fix - change the size of the ThreadPool
     @Test
     public void testSizedThreadPool2() {
-        ExecutorService service = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newFixedThreadPool(3);
 
         Future<String> res1 = service.submit(callable());
         Future<String> res2 = service.submit(callable());

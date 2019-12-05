@@ -30,6 +30,11 @@ public class LockTest {
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> change());
         }).start();
+        try {
+            Thread.sleep(12);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> changeX());
         }).start();

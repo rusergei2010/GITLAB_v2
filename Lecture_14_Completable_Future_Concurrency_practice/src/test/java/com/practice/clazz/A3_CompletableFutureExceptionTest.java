@@ -1,17 +1,12 @@
 package com.practice.clazz;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.Serializable;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.ThreadLocalRandom;
 
-@Ignore
+
 public class A3_CompletableFutureExceptionTest {
 
 
@@ -41,15 +36,6 @@ public class A3_CompletableFutureExceptionTest {
 
             return "Sergey";
         }, Executors.newSingleThreadExecutor()).handle((result, ex) -> result != null ? result : "Cause : " + ex.getCause().toString());
-
-        handle.completeExceptionally(new Exception("My exception"));
-        CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(
-                new Callable<String>() {
-
-                    @Override public String call() throws Exception {
-                        return null;
-                    }
-                });
 
         System.out.println("Result: " + handle.get());
     }

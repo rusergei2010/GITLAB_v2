@@ -1,15 +1,10 @@
 package com.practice.clazz;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
-@Ignore
+
 public class A1_FutureVSCompletableFutureTest {
 
     /**
@@ -72,17 +67,14 @@ public class A1_FutureVSCompletableFutureTest {
         sleep(100);
         CompletableFuture<String> completableFutureEx = new CompletableFuture<>();
         completableFutureEx.completeExceptionally(new RuntimeException("Complete with exception"));
-//        try {
-//            System.err.println("Print: " + completableFuture.get());
-//        } catch (Throwable ex) {
-//            System.out.println("Cause: " + ex.getCause());
-//            System.out.println("Exception: " + ex.getCause().getClass());
-//            System.out.println("Top class Exception: " + ex.getClass());
-//            ex.printStackTrace();
-//        }
-
-        System.out.println("RESULT: " + completableFuture.get());
-        System.out.println("RESULT: " + completableFutureEx.get());
+        try {
+            System.err.println("Print: " + completableFuture.get());
+        } catch (Throwable ex) {
+            System.out.println("Cause: " + ex.getCause());
+            System.out.println("Exception: " + ex.getCause().getClass());
+            System.out.println("Top class Exception: " + ex.getClass());
+            ex.printStackTrace();
+        }
     }
 
     private static void sleep(int delay) {

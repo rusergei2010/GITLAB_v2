@@ -3,6 +3,7 @@ package com.epam.barrier;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -22,8 +23,10 @@ public class Barrier {
             System.out.println("Barrier has been executed");
         });
 
-        calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        for (int i = 0; i < 3; i++) {
+            calculate(counter, cyclicBarrier);
+            cyclicBarrier.reset();
+        }
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed

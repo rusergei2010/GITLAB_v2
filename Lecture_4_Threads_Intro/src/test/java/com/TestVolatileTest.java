@@ -43,11 +43,6 @@ public class TestVolatileTest extends Thread {
         }
     }
 
-
-    /**
-     * TODO: use volatile and explain why it fixes the problem?
-     * @throws InterruptedException
-     */
     @Test
     public void test() throws InterruptedException {
         Thread listener = new ChangeListener();

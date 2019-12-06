@@ -44,7 +44,7 @@ public class ConcurrentOperatorsTest {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key); // use putIfAbsent for performance enhancement
+                        map.putIfAbsent(key, "A" + key); // use putIfAbsent for performance enhancement
                         String returnValue = map.get(key);
                         if (!value.equals(returnValue)){
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
@@ -58,7 +58,7 @@ public class ConcurrentOperatorsTest {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key);
+                        map.putIfAbsent(key, "A" + key);
                         String returnValue = map.get(key);
                         if (!value.equals(returnValue)){
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
@@ -90,7 +90,7 @@ public class ConcurrentOperatorsTest {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        map.put(i, "O");
+                        concurrentHashMap.put(i, "O");
                         sleep(1);
                     }
             );
@@ -101,7 +101,6 @@ public class ConcurrentOperatorsTest {
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
         CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
-        map.clear();
         concurrentHashMap.clear();
     }
     /**
@@ -114,7 +113,7 @@ public class ConcurrentOperatorsTest {
         CompletableFuture<Void> futureA = CompletableFuture.supplyAsync(() -> {
             IntStream.range(0, 100).forEach(
                     (i) -> {
-                        map.put(i, "O");
+                        syncMap.put(i, "O");
                         sleep(1);
                     }
             );
@@ -122,9 +121,9 @@ public class ConcurrentOperatorsTest {
         });
 
         // iteration over the Map
-        CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
+        CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(syncMap));
         CompletableFuture.allOf(futureA, futureB).get();
-        map.clear();
+        syncMap.clear();
         concurrentHashMap.clear();
     }
 

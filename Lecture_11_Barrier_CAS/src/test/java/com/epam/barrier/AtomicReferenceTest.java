@@ -13,7 +13,6 @@ import static org.junit.Assert.assertEquals;
  * TODO: fix it
  */
 public class AtomicReferenceTest {
-//?????????????????????????????????
     @Test
     public void testAtomicReference() {
         AtomicReference reference = new AtomicReference();
@@ -21,14 +20,10 @@ public class AtomicReferenceTest {
         // TODO: Fix it in one line (any)
         final String strBefore = "Before changes";
         final String afterChanges = "After Changes";
-
-        reference.compareAndSet(null, "Not a Bug");
-
-        /*reference.compareAndSet(null, "Not a bug");
+        reference.compareAndSet(null, "Not a bug");
         reference.compareAndSet(null, "This is a bug");
-
-        reference.compareAndSet("This is a bug", "Not a Bug");*/
-        //reference.compareAndSet("Not a bug", "This is a bug");
+        reference.compareAndSet("Not a bug", "Not a Bug");
+        reference.compareAndSet("Not a bug", "This is a bug");
 
         assertEquals("Not a Bug", reference.get());
     }

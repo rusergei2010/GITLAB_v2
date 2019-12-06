@@ -23,7 +23,7 @@ public class InvokeAllBasicTest {
 
     private static class CallableTask implements Callable<String> {
 
-        int value = 0;
+        int value;
 
         public CallableTask(final int value) {
             this.value = value;
@@ -38,7 +38,7 @@ public class InvokeAllBasicTest {
 
     private static class RunnableTask implements Runnable {
 
-        public int value = 0;
+        public int value;
 
         public RunnableTask(final int value) {
             this.value = value;
@@ -82,7 +82,7 @@ public class InvokeAllBasicTest {
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10100 /*What is expected value, and why? - Expected sum of 2 task result*/, sum); // Future will not return value (future.get()) until it is calculated
         putDown(service, 2);
     }
 
@@ -107,7 +107,7 @@ public class InvokeAllBasicTest {
 
 
         // problematic - gather results for executable tasks.
-        // How to return value from the Rannable interface that doesn't return Future or value????
+        // How to return value from the Runnable interface that doesn't return Future or value????
         // We have to imply atomic reference class to solve this issue (really weired solution)
         // Use Future and submit() instead!
         callableTaskCollection.forEach(
@@ -115,7 +115,7 @@ public class InvokeAllBasicTest {
                     // find square
                     service.execute(task); // put task into the executor and execute. See the timeout inside of the task
                     try {
-                        Thread.sleep(500); // TODO: increment this
+                        Thread.sleep(5000); // TODO: increment this
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -123,7 +123,7 @@ public class InvokeAllBasicTest {
                 }
         );
 
-        Thread.sleep(500);// TODO: increment this
+        Thread.sleep(5000);// TODO: increment this
 
 
         // ### IMPOTRANT ###

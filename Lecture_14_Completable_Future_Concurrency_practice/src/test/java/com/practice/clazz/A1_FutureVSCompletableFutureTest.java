@@ -57,7 +57,7 @@ public class A1_FutureVSCompletableFutureTest {
         System.out.println("Print: " + completableFuture.get());
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void deferredCompleteResultExceptionally() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
 
@@ -72,15 +72,6 @@ public class A1_FutureVSCompletableFutureTest {
         sleep(100);
         CompletableFuture<String> completableFutureEx = new CompletableFuture<>();
         completableFutureEx.completeExceptionally(new RuntimeException("Complete with exception"));
-//        try {
-//            System.err.println("Print: " + completableFuture.get());
-//        } catch (Throwable ex) {
-//            System.out.println("Cause: " + ex.getCause());
-//            System.out.println("Exception: " + ex.getCause().getClass());
-//            System.out.println("Top class Exception: " + ex.getClass());
-//            ex.printStackTrace();
-//        }
-
         System.out.println("RESULT: " + completableFuture.get());
         System.out.println("RESULT: " + completableFutureEx.get());
     }

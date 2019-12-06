@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestVolatileTest extends Thread {
 
-    private /*volatile*/ static int SIGNAL = 0; // TODO: volatile? What is its function?
+    private volatile static int SIGNAL = 0;
     public static final int WAIT = 5;
 
     static class ChangeListener extends Thread {
@@ -43,11 +43,6 @@ public class TestVolatileTest extends Thread {
         }
     }
 
-
-    /**
-     * TODO: use volatile and explain why it fixes the problem?
-     * @throws InterruptedException
-     */
     @Test
     public void test() throws InterruptedException {
         Thread listener = new ChangeListener();

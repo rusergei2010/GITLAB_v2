@@ -1,14 +1,13 @@
 package com.epam.test;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * TODO: fix the test (hint - countDown() is missing)
@@ -33,6 +32,7 @@ public class CountDownLatchTest {
             }
             executeJob();
             System.out.println("Job is Executed");
+            latchStop.countDown();
         }
 
         private void executeJob() {

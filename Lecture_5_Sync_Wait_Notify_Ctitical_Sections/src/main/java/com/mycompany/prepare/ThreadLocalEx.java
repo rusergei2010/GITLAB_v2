@@ -11,7 +11,7 @@ public class ThreadLocalEx {
 
     public static class CounterFactory {
 
-        private static ThreadLocal<ThreadLocalEx.CountContext> local = new ThreadLocal<ThreadLocalEx.CountContext>() {
+        private static ThreadLocal<CountContext> local = new ThreadLocal<CountContext>() {
             @Override
             protected ThreadLocalEx.CountContext initialValue() {
                 System.out.println("Thread " + Thread.currentThread().getName() + " initialized");
@@ -31,14 +31,14 @@ public class ThreadLocalEx {
             IntStream.range(0, 1000).forEach((x) -> {
                 ThreadLocalEx.CounterFactory.getCounter().count++;
             });
-            System.out.println("Thread : " + Thread.currentThread().getName() + "; Counter= " +ThreadLocalEx.CounterFactory.getCounter().count);
+            System.out.println("Thread : " + Thread.currentThread().getName() + "; Counter= " + ThreadLocalEx.CounterFactory.getCounter().count);
         }).start();
 
         new Thread(() -> {
             IntStream.range(0, 1000).forEach((x) -> {
                 ThreadLocalEx.CounterFactory.getCounter().count++;
             });
-            System.out.println("Thread : " + Thread.currentThread().getName() + "; Counter= " +ThreadLocalEx.CounterFactory.getCounter().count);
+            System.out.println("Thread : " + Thread.currentThread().getName() + "; Counter= " + ThreadLocalEx.CounterFactory.getCounter().count);
         }).start();
 
         Thread.sleep(1000);

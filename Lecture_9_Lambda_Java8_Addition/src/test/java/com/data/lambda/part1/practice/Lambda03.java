@@ -1,15 +1,12 @@
 package com.data.lambda.part1.practice;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.Test;
 
 public class Lambda03 {
 
@@ -83,15 +80,15 @@ public class Lambda03 {
 
 
         // TODO: Uncomment this first
-//        Arrays.sort(personsAged, myComparator); // reference
+        Arrays.sort(personsAged, myComparator); // reference
 
         // TODO: Uncomment another expression then (replace with this one)
-//        Arrays.sort(personsAged,
-//                (person1_, person2_) -> {
-//                    model.setName("Lambda Expression");
-//                    list.add(person1_);
-//                    return person1_.name.compareTo(person2_.name); // statement
-//                });
+        Arrays.sort(personsAged,
+                (person1_, person2_) -> {
+                  //person2_.setName("Lambda Expression");
+                  list.add(person1_);
+                  return person1_.name.compareTo(person2_.name); // statement
+                });
 
         assertEquals("Sergey", personsAged[2].name);
         assertEquals(2, list.size());

@@ -1,8 +1,8 @@
 package com.data.lambda.part1.example;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class Lambdas03 {
 

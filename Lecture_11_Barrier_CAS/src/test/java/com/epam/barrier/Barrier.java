@@ -5,7 +5,6 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,12 +17,13 @@ public class Barrier {
     public void testBarrier() throws InterruptedException {
 
         Counter counter = new Counter();
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(3, () -> {
-            System.out.println("Barrier has been executed");
-        });
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(3, () ->
+            System.out.println("Barrier has been executed"));
 
+      for (int i = 0; i < 3; i++) {
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        cyclicBarrier.reset();
+      }
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
@@ -55,6 +55,7 @@ public class Barrier {
                 counter.inc();
                 cyclicBarrier.await();
                 System.out.println("Task is completed");
+                //cyclicBarrier.reset();
             } catch (InterruptedException | BrokenBarrierException e) {
                 e.printStackTrace();
             }
@@ -63,11 +64,8 @@ public class Barrier {
 
     private static void calculate(final Counter counter, final CyclicBarrier cyclicBarrier)
             throws InterruptedException {
-        IntStream.range(0, 3).forEach(i -> {
-            ForkJoinPool.commonPool().submit(() -> {
-                new Task(cyclicBarrier, counter).run();
-            });
-        });
+        IntStream.range(0, 3).forEach(i -> ForkJoinPool.commonPool().submit(() ->
+            new Task(cyclicBarrier, counter).run()));
 
         Thread.currentThread().sleep(2000);
     }

@@ -26,12 +26,8 @@ public class LockTest {
 
     @Test
     public void testSync() {
-        new Thread(() -> {
-            IntStream.range(0, 1000).forEach((x) -> change());
-        }).start();
-        new Thread(() -> {
-            IntStream.range(0, 1000).forEach((x) -> changeX());
-        }).start();
+        new Thread(() -> IntStream.range(0, 1000).forEach((x) -> change())).start();
+        new Thread(() -> IntStream.range(0, 1000).forEach((x) -> changeX())).start();
 
 
         Utils.sleep(1000);

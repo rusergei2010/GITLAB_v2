@@ -33,12 +33,8 @@ public class SyncTest {
 
     @Test
     public void testSync() {
-        new Thread(() -> {
-            change();
-        }).start();
-        new Thread(() -> {
-            change();
-        }).start();
+        new Thread(() -> change()).start();
+        new Thread(() -> change()).start();
 
         Utils.sleep(2000);
 

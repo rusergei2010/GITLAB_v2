@@ -24,9 +24,7 @@ public class InterruptTest {
         AtomicReference<Boolean> ref = new AtomicReference<>();
         ref.set(false);
 
-        new Thread(() -> {
-            ref.set(exec());
-        }).start();
+        new Thread(() -> ref.set(exec())).start();
 
         new Thread(() -> {
             int counter = 0;

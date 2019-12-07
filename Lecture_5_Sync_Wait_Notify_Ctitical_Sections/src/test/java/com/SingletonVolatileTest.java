@@ -48,15 +48,11 @@ public class SingletonVolatileTest {
             SingletonVolatile.getInstance().setCounter(0);
 
             new Thread(() -> {
-                IntStream.range(0, 1000).forEach((x) -> {
-                    SingletonVolatile.getInstance().inc();
-                });
+                IntStream.range(0, 1000).forEach((x) -> SingletonVolatile.getInstance().inc());
             }).start();
 
             new Thread(() -> {
-                IntStream.range(0, 1000).forEach((x) -> {
-                    SingletonVolatile.getInstance().inc();
-                });
+                IntStream.range(0, 1000).forEach((x) -> SingletonVolatile.getInstance().inc());
             }).start();
 
             Thread.sleep(500);

@@ -1,12 +1,12 @@
 package com;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class ViolateInfiniteAppRun {
 
-    private static boolean running = true;
+    private static volatile boolean running = true;
 
     public static class MyThread extends Thread {
         public void run() {

@@ -4,7 +4,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,6 +21,7 @@ public class CASTest {
             while (!counter.compareAndSet(initValue, newValue)) {
                 initValue = counter.get();
                 // TODO: fix it to comply with CAS approach
+              newValue = addValue + initValue;
 //                newValue = <...> + <...>;
             }
         }
@@ -36,9 +36,8 @@ public class CASTest {
         Counter counter = new Counter();
         CountDownLatch latch = new CountDownLatch(100000);
 
-        IntStream.range(0, 100000).forEach((i) -> {
-            ForkJoinPool.commonPool().execute(() -> this.increment(counter, latch));
-        });
+        IntStream.range(0, 100000).forEach((i) -> ForkJoinPool.commonPool().execute(() ->
+            this.increment(counter, latch)));
 
         latch.await(); // await '0'
 

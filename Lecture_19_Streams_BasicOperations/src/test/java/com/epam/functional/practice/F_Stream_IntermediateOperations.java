@@ -1,15 +1,14 @@
 package com.epam.functional.practice;
 
+import static java.util.stream.Collectors.joining;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
-
 import org.junit.Ignore;
 import org.junit.Test;
-
-import static java.util.stream.Collectors.joining;
 
 @Ignore
 public class F_Stream_IntermediateOperations {

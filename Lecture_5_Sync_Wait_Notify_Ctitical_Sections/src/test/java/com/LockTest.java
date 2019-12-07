@@ -1,11 +1,10 @@
 package com;
 
-import com.mycompany.prepare.utils.Utils;
-import org.junit.Test;
-
-import java.util.stream.IntStream;
-
 import static org.junit.Assert.assertEquals;
+
+import com.mycompany.prepare.utils.Utils;
+import java.util.stream.IntStream;
+import org.junit.Test;
 
 public class LockTest {
 
@@ -20,19 +19,15 @@ public class LockTest {
     private static final Object object = new Object();
 
     public static void changeX() {
-        synchronized (object) {
+        synchronized (LockTest.class) {
             counter++;
         }
     }
 
     @Test
     public void testSync() {
-        new Thread(() -> {
-            IntStream.range(0, 1000).forEach((x) -> change());
-        }).start();
-        new Thread(() -> {
-            IntStream.range(0, 1000).forEach((x) -> changeX());
-        }).start();
+        new Thread(() -> IntStream.range(0, 1000).forEach((x) -> change())).start();
+        new Thread(() -> IntStream.range(0, 1000).forEach((x) -> changeX())).start();
 
 
         Utils.sleep(1000);

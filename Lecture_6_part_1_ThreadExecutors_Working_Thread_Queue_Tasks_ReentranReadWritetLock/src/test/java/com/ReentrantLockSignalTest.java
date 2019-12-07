@@ -1,14 +1,13 @@
 package com;
 
-import org.junit.Test;
-import prepare.util.Util;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import prepare.util.Utils;
 
 public class ReentrantLockSignalTest {
 
@@ -19,12 +18,12 @@ public class ReentrantLockSignalTest {
         private Condition readCondition = lock.newCondition();
         private Condition writeCondition = lock.newCondition();
 
-        private String msg;
+        private volatile String msg;
 
         public String readMsg() {
             lock.lock();
             try {
-                Util.sleep(10);
+                Utils.sleep(10);
                 while (msg == null) {
                     readCondition.await();
                 }
@@ -34,8 +33,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
-                writeCondition.signal();
+              writeCondition.signal();
+              lock.unlock();
             }
             return msg;
         }
@@ -43,7 +42,7 @@ public class ReentrantLockSignalTest {
         public void writeMsg(String str) {
             lock.lock();
             try {
-                Util.sleep(10);
+                Utils.sleep(10);
                 while (msg != null) {
                     writeCondition.await();
                 }
@@ -51,8 +50,8 @@ public class ReentrantLockSignalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                lock.unlock();
-                readCondition.signal();
+              readCondition.signal();
+              lock.unlock();
             }
         }
     }

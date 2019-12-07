@@ -1,16 +1,14 @@
 package com.epam.functional.practice;
 
-import java.util.stream.IntStream;
-
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import static com.epam.functional.model.Gear.MANUAL;
 
 import com.epam.functional.model.Car;
 import com.epam.functional.model.Gear;
 import com.epam.functional.model.Vehicle;
-
-import static com.epam.functional.model.Gear.MANUAL;
+import java.util.stream.IntStream;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * ##########                ###########################                #######################

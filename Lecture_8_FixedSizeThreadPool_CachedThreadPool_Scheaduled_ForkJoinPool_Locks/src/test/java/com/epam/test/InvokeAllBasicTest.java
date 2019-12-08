@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * TODO: Fix tests
  */
+
 public class InvokeAllBasicTest {
 
     private static class CallableTask implements Callable<String> {
@@ -82,7 +83,7 @@ public class InvokeAllBasicTest {
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10 * 10 + 100 * 100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
         putDown(service, 2);
     }
 
@@ -128,7 +129,7 @@ public class InvokeAllBasicTest {
 
         // ### IMPOTRANT ###
         // Without delays we found it to be validated immediately and fail because Runnable had not been executed yet
-        assertEquals(100, referenceResult.get().intValue()); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10, referenceResult.get().intValue()); // Future will not return value (future.get()) until it is calculated
         putDown(service, 4);
     }
 

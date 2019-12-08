@@ -1,7 +1,5 @@
 package com;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -27,7 +25,7 @@ public class ShutdownProcedureExecutors {
 
         IntStream.range(0, 10).forEach(i -> promise.add(i, () -> {
             try {
-                Util.sleep(1000);
+                com.Util.sleep(1000);
                 System.out.println(i);
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -39,7 +37,7 @@ public class ShutdownProcedureExecutors {
 
         new Thread(() -> {
             try {
-                Util.sleep(2000);
+                com.Util.sleep(2000);
                 ShutdownProcedureExecutors.shutdown(executorService);
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -2,6 +2,8 @@ package com;
 
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -16,25 +18,46 @@ public class AppTestThreadState {
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+//        Thread thread_1 = null;
+//        Thread thread_2 = null;
 
-        assertEquals(thread1.getState(), Thread.State.NEW);
-        assertEquals(thread2.getState(), Thread.State.NEW);
+        Thread thread_1 = createThread(()->{
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        Thread thread_2 = createThread(()->{
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        assertEquals(thread_1.getState(), Thread.State.NEW);
+        assertEquals(thread_2.getState(), Thread.State.NEW);
 
 
         // TODO: fill the gap
         // TODO: fill the gap
 
-        assertEquals(thread1.getState(), Thread.State.RUNNABLE);
-        assertEquals(thread2.getState(), Thread.State.RUNNABLE);
+        thread_1.start();
+        thread_2.start();
+
+        assertEquals(thread_1.getState(), Thread.State.RUNNABLE);
+        assertEquals(thread_2.getState(), Thread.State.RUNNABLE);
 
         // Add delay if necessary
         // TODO: fill the gap
 
         // threads should run task to be put on hold
-        assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
-        assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
+
+        TimeUnit.SECONDS.sleep(4);
+
+        assertEquals(thread_1.getState(), Thread.State.TIMED_WAITING);
+        assertEquals(thread_2.getState(), Thread.State.TIMED_WAITING);
         assertEquals(Thread.currentThread().getState(), Thread.State.RUNNABLE);
     }
 

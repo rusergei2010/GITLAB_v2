@@ -93,7 +93,7 @@ public class Filtering {
 
     private static boolean hasDevExperience(Employee e) {
         return new FilterUtil<>(e.getJobHistory())
-                .filter(j -> j.getPosition().equals("QA")) // TODO: fix here
+                .filter(j -> j.getPosition().equals("dev")) // TODO: fix here
                 .getList()
                 .size() > 0;
     }
@@ -185,7 +185,7 @@ public class Filtering {
     private static boolean workedInEpamMoreThenOneYearLazy(Employee e) {
         return new LazyFilterUtil<>(e.getJobHistory())
                 .filter(j -> j.getEmployer().equals("epam"))
-                .filter(j -> j.getDuration() > 2)// TODO: fix it in this line (1,2 or more?)
+                .filter(j -> j.getDuration() > 1)// TODO: fix it in this line (1,2 or more?)
                 .force()
                 .size() > 0;
     }

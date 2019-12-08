@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
  * Good example of real value/usage of volatile
  * See console log to observe reaction
  */
-@Ignore
+
 public class TestVolatileTest extends Thread {
 
     private volatile static int SIGNAL = 0;

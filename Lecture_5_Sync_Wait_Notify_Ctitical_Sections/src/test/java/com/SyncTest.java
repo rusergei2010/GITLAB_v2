@@ -19,20 +19,22 @@ public class SyncTest {
     public void change() {
 
         lock.lock();
-        try {
+        if (lock.tryLock()) {
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 
     @Test
-    public void testSync() {
+    public void testSync(){
         new Thread(() -> {
             change();
         }).start();

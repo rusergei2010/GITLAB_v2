@@ -22,15 +22,17 @@ public class SingletonVolatileTest {
 
         public static SingletonVolatile getInstance() {
             //TODO: Fix it here
-            if (instance == null) {
-                try {
-                    Thread.sleep(100); // keep sleep()
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            synchronized (SingletonVolatile.class) {
+                if (instance == null) {
+                    try {
+                        Thread.sleep(100); // keep sleep()
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    instance = new SingletonVolatile();
                 }
-                instance = new SingletonVolatile();
+                return instance;
             }
-            return instance;
         }
 
         public int getCounter() {
@@ -61,7 +63,6 @@ public class SingletonVolatileTest {
             }).start();
 
             Thread.sleep(500);
-
             assertEquals(2 * 1000, SingletonVolatile.getInstance().getCounter());
         }
     }

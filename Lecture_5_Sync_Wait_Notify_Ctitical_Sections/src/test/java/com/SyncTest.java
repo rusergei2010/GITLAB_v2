@@ -12,22 +12,23 @@ import static org.junit.Assert.assertEquals;
 // Extrinsic lock is associated with a particular dynamic object (not the Class instance)
 public class SyncTest {
 
-    private static int counter = 0;
+    private volatile static int counter = 0;
 
     Lock lock = new ReentrantLock();
 
     public void change() {
 
-        lock.lock();
-        try {
+        if (lock.tryLock()) {
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 

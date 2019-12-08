@@ -37,7 +37,9 @@ public class CountDownLatchTest {
 
         private void executeJob() {
             try {
+                latchStart.countDown();
                 Thread.sleep(500);
+                latchStop.countDown();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -12,14 +12,25 @@ public class ReentrantLockTest {
 
     public static class Counter implements Runnable {
         ReentrantLock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
         private int count = 0;
 
         @Override
         public void run() {
             lock.lock();
-            Util.sleep(100);
-            count++;
-            validate();
+            try {
+                Util.sleep(100);
+                count++;
+                while (count == 2) {
+                    condition.await();
+                }
+                validate();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                condition.signal();
+                lock.unlock();
+            }
         }
 
         private void validate() {

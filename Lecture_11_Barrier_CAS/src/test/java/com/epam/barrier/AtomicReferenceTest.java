@@ -18,7 +18,6 @@ public class AtomicReferenceTest {
         final String strBefore = "Before changes";
         final String afterChanges = "After Changes";
 
-        reference.compareAndSet(null, "Not a bug");
         reference.compareAndSet(null, "This is a bug");
 
         reference.compareAndSet("This is a bug", "Not a Bug");
@@ -36,6 +35,7 @@ public class AtomicReferenceTest {
 
         new Thread(() -> {
             reference.set("One");
+            latchOne.countDown();
             // TODO: fix by using .countDown() for the first Latcher to hit the second Thread
         }).start();
 
@@ -46,6 +46,7 @@ public class AtomicReferenceTest {
                 e.printStackTrace();
             }
             String str = reference.get() + "Two";
+            reference.set(str);
             // TODO: fix here - Use reference.set()
 
             latchTwo.countDown();

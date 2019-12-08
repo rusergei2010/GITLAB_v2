@@ -38,9 +38,9 @@ public class CachedThreadPoolTest {
     public void testCallableAndFuture() throws ExecutionException, InterruptedException {
         ExecutorService service = Executors.newCachedThreadPool();
 
-        Future<String> result1 = service.submit(callable("Thread 1"));
-        Future<String> result2 = service.submit(callable("Thread 2"));
-        Future<String> result3 = service.submit(callable("Thread 3"));
+        String result1 = service.submit(callable("Thread 1")).get();
+        String result2 = service.submit(callable("Thread 2")).get();
+        String result3 = service.submit(callable("Thread 3")).get();
 
 
         assertEquals("Result Thread 1", result1);
@@ -59,7 +59,7 @@ public class CachedThreadPoolTest {
         ExecutorService service = Executors.newCachedThreadPool();
 
         Future<?> result1 = service.submit(runnable("Thread 1"));
-        service.shutdown();
+
         Future<?> result2 = service.submit(runnable("Thread 2"));
 
         assertNotNull(result1);

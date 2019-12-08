@@ -1,5 +1,6 @@
 package home;
 
+import java.lang.Thread.State;
 import org.junit.Test;
 
 import java.util.concurrent.CancellationException;
@@ -42,7 +43,7 @@ public class Test1 {
 
         new Thread(() -> {
             sleep(1000);
-            completableFuture.complete("XXXX"); // TODO: Fix it in the string
+            completableFuture.complete("Result"); // TODO: Fix it in the string
         }).start();
 
         assertEquals("Result", completableFuture.get());

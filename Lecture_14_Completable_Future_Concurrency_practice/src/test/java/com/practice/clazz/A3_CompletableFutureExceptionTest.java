@@ -43,13 +43,13 @@ public class A3_CompletableFutureExceptionTest {
         }, Executors.newSingleThreadExecutor()).handle((result, ex) -> result != null ? result : "Cause : " + ex.getCause().toString());
 
         handle.completeExceptionally(new Exception("My exception"));
-        CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(
+        /*CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(
                 new Callable<String>() {
 
                     @Override public String call() throws Exception {
                         return null;
                     }
-                });
+                });*/
 
         System.out.println("Result: " + handle.get());
     }

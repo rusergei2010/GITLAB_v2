@@ -33,7 +33,7 @@ public class CopyOnWriteArrayListTest {
         }).start();
 
         // TODO: remove this delay if necessary
-        sleep(3000);
+        //sleep(3000);
 
         // concurrent modification in the list
         final Iterator<Integer> iterator = mutable.iterator();
@@ -58,7 +58,7 @@ public class CopyOnWriteArrayListTest {
                     immutable.add(-1);
                 } catch (Throwable t) {
                     // TODO: uncomment this if necessary
-                    // exception.set(t);
+                    exception.set(t);
                     throw new RuntimeException(t);
                 }
                 sleep(100);
@@ -94,7 +94,7 @@ public class CopyOnWriteArrayListTest {
         });
         thread.start();
 
-        Thread.sleep(TIMEOUT); // wait till two elements are added
+        Thread.sleep(TIMEOUT*2); // wait till two elements are added
 
         final Iterator<Integer> cowIterator = cowArrayList.iterator(); // COWIterator is used
         int coutner = 0;

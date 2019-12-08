@@ -11,14 +11,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestSingleton {
 
-    static TestSingleton instance;
+    private static final TestSingleton instance = new TestSingleton();
 
     public TestSingleton(){}
 
     public static TestSingleton getInstance(){
-        if (instance == null) {
-            // TODO: complete
-        }
         return instance;
     }
 
@@ -33,12 +30,12 @@ public class TestSingleton {
 
         Thread thread1 = createThread(() -> {
             // TODO: replace with working code
-            instance.compareAndSet(null, null); // TODO
+            instance.compareAndSet(null, TestSingleton.getInstance());
         });
 
         thread1.start();
 
-//        thread1.join(); // TODO
+        thread1.join(); // TODO
 
         assertEquals(TestSingleton.getInstance(), instance.get());
     }

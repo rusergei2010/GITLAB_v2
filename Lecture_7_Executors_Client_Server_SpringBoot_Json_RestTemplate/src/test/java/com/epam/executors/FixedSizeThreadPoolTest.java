@@ -24,7 +24,7 @@ public class FixedSizeThreadPoolTest {
     // TODO: Fix - one line should be relocated
     @Test
     public void testSizedThreadPool() {
-        ExecutorService service = Executors.newFixedThreadPool(1);
+        ExecutorService service = Executors.newFixedThreadPool(3);
 
         Future<String> res1 = service.submit(callable());
         Future<String> res2 = service.submit(callable());
@@ -38,9 +38,10 @@ public class FixedSizeThreadPoolTest {
             e.printStackTrace();
         }
 
-        shutdownWithDelay(service, 1000);
+
 
         Future<String> res3 = service.submit(callable());
+        shutdownWithDelay(service, 1000);
         try {
             assertEquals("Result", res3.get());
         } catch (InterruptedException e) {

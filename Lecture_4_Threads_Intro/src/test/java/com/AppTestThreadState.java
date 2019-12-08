@@ -16,26 +16,39 @@ public class AppTestThreadState {
     @Test
     public void testThreadState() throws InterruptedException {
         // TODO: change instantiation
-        Thread thread1 = null;
-        Thread thread2 = null;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.currentThread().join(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread thread1 = createThread(runnable);
+        Thread thread2 = createThread(runnable);
 
-        assertEquals(thread1.getState(), Thread.State.NEW);
-        assertEquals(thread2.getState(), Thread.State.NEW);
-
+        assertEquals(Thread.State.NEW, thread1.getState());
+        assertEquals(Thread.State.NEW, thread1.getState());
 
         // TODO: fill the gap
+        thread1.start();
         // TODO: fill the gap
+        thread2.start();
 
-        assertEquals(thread1.getState(), Thread.State.RUNNABLE);
-        assertEquals(thread2.getState(), Thread.State.RUNNABLE);
+        assertEquals(Thread.State.RUNNABLE, thread1.getState());
+        assertEquals(Thread.State.RUNNABLE, thread2.getState());
 
         // Add delay if necessary
         // TODO: fill the gap
 
+        Thread.sleep(10);
+
         // threads should run task to be put on hold
-        assertEquals(thread1.getState(), Thread.State.TIMED_WAITING);
-        assertEquals(thread2.getState(), Thread.State.TIMED_WAITING);
-        assertEquals(Thread.currentThread().getState(), Thread.State.RUNNABLE);
+        assertEquals(Thread.State.TIMED_WAITING, thread1.getState());
+        assertEquals(Thread.State.TIMED_WAITING, thread2.getState());
+        assertEquals(Thread.State.RUNNABLE, Thread.currentThread().getState());
     }
 
     private Thread createThread() {

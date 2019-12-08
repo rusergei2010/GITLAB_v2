@@ -25,14 +25,18 @@ public class InterruptTest {
 
 
     @Test
-    public void testInterrupt() throws InterruptedException {
+    public void testInterrupt(){
         final Thread thread = new MyThread();
-        thread.run();
+        thread.start();
         thread.interrupt();
 
-        thread.join(1000);
+        try {
+            thread.join(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        assertEquals(thread.getState(), Thread.State.TERMINATED);
+        assertEquals(Thread.State.TERMINATED, thread.getState());
         // outdated version
 //        thread.suspend();
 //        thread.resume();

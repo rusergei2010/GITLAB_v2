@@ -1,9 +1,7 @@
 package com.epam.functional.home;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,10 +38,11 @@ public class StreamTest {
 
     @Test
     public void groupingBy() {
-        Map<Integer, List<Student>> collectByYear = new HashMap<>();
+        Map<Integer, List<Student>> collectByYear;
 
         // TODO: Collect and group students by year: 'groupingBy(Student::getYear)'
-        // collectByYear = students. ...
+        collectByYear = students.stream()
+                .collect(Collectors.groupingBy(Student::getYear));
 
         assertEquals(5, collectByYear.size());
         assertEquals(4, collectByYear.get(1).size());
@@ -51,13 +50,14 @@ public class StreamTest {
 
     @Test
     public void groupingByAndCount() {
-        Map<Student.Speciality, Long> countStudents = new HashMap<>();
+        Map<Student.Speciality, Long> countStudents;
 
         // TODO: Count students against its speciality using:
         // Collectors.groupingBy(
         //        Student::getSpeciality, Collectors.counting())
 
-        // countStudents = students.stream().
+        countStudents = students.stream().
+                collect(Collectors.groupingBy(Student::getSpeciality, Collectors.counting()));
 
         assertEquals(3, countStudents.get(Student.Speciality.Biology).intValue());
         assertEquals(1, countStudents.get(Student.Speciality.Physics).intValue());
@@ -65,11 +65,12 @@ public class StreamTest {
 
     @Test
     public void partitionBy() {
-        Map<Boolean, List<Student>> collectHistorians = new HashMap<>();
+        Map<Boolean, List<Student>> collectHistorians;
 
         // TODO: Partition students and find 'historians' and all others use
         //  .partitioningBy('Student::isHistory')
-        // collectHistorians = students. ...
+         collectHistorians = students.stream()
+                 .collect(Collectors.partitioningBy(Student::isHistory));
 
         assertEquals(2, collectHistorians.get(true).size());
     }
@@ -81,19 +82,19 @@ public class StreamTest {
          * Sorting is necessary at first.
           */
 
-        Map<Student.Speciality, Map<Integer /*year*/, List<Student>>> groupedBySpecAndYear = new HashMap<>();
+        Map<Student.Speciality, Map<Integer /*year*/, List<Student>>> groupedBySpecAndYear;
 
-//                groupedBySpecAndYear = students.stream()
+                groupedBySpecAndYear = students.stream()
 
-//                .sorted(Comparator
-//                        .comparing(Student::getSpeciality, Comparator.comparing(Enum::name))
-//                        .thenComparing(Student::getYear)
-//                )
+                .sorted(Comparator
+                        .comparing(Student::getSpeciality, Comparator.comparing(Enum::name))
+                        .thenComparing(Student::getYear)
+                )
 
-//                .collect(Collectors.groupingBy(
-//                        Student::getSpeciality,
-//                        LinkedHashMap::new,
-//                        Collectors.groupingBy(Student::getYear)));
+                .collect(Collectors.groupingBy(
+                        Student::getSpeciality,
+                        LinkedHashMap::new,
+                        Collectors.groupingBy(Student::getYear)));
 
         assertEquals(new Student("Alex", Student.Speciality.Physics, 1)
                 ,groupedBySpecAndYear.get(Student.Speciality.Physics).get(1).get(0));

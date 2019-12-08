@@ -82,7 +82,7 @@ public class InvokeAllBasicTest {
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10* 10 + 100 * 100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
         putDown(service, 2);
     }
 
@@ -115,7 +115,7 @@ public class InvokeAllBasicTest {
                     // find square
                     service.execute(task); // put task into the executor and execute. See the timeout inside of the task
                     try {
-                        Thread.sleep(500); // TODO: increment this
+                        Thread.sleep(1100); // TODO: increment this
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

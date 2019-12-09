@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ViolateInfiniteAppRun {
 
+    private static volatile boolean running = true;
     private static boolean running = true;
 
     public static class MyThread extends Thread {

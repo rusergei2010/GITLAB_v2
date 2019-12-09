@@ -182,14 +182,4 @@ public class OtherClasses {
         assertEquals(new Person("John", "Doe", 22), johnDoeWithoutAge.apply(22));
         assertEquals(new Person("John", "Doe", 33), johnDoeWithoutAge.apply(33));
     }
-
-
-
-
-
-
-
-
-
-
 }

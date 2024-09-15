@@ -1,5 +1,7 @@
 package com.data.lambda.part1.exercise;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.junit.Test;
 
 import java.util.StringJoiner;
@@ -8,47 +10,56 @@ import static org.junit.Assert.assertEquals;
 
 public class Lambdas03Exercise {
 
-    private interface GenericProduct<T> {
-        T prod(T a, int i);
+  private interface GenericProduct<T> {
 
-        default T twice(T t) {
-            return prod(t, 2);
-        }
+    T prod(T a, int i);
+
+    default T twice(T t) {
+      return prod(t, 2);
     }
+  }
 
-    @Test
-    public void generic0() {
-        final GenericProduct<Integer> prod = null; // TODO: Use anonymous class
+  @Test
+  public void generic0() {
+    final GenericProduct<Integer> prod = new GenericProduct<Integer>() {
+      @Override
+      public Integer prod(Integer a, int i) {
+        return a * i;
+      }
+    }; // TODO: Use anonymous class
 
-        assertEquals(prod.prod(3, 2), Integer.valueOf(6));
+    assertEquals(prod.prod(3, 2), Integer.valueOf(6));
+  }
+
+  @Test
+  public void generic1() {
+    final GenericProduct<Integer> prod = (a, i) -> {
+      return a * i;
+    }; // TODO: Use statement lambda
+
+    assertEquals(prod.prod(3, 2), Integer.valueOf(6));
+  }
+
+  @Test
+  public void generic2() {
+    final GenericProduct<Integer> prod = (a, i) -> a * i; // TODO: Use expression lambda
+
+    assertEquals(prod.prod(3, 2), Integer.valueOf(6));
+  }
+
+  private static String stringProd(String s, int i) {
+    final StringBuilder sb = new StringBuilder();
+    for (int j = 0; j < i; j++) {
+      sb.append(s);
     }
+    return sb.toString();
+  }
 
-    @Test
-    public void generic1() {
-        final GenericProduct<Integer> prod = null; // TODO: Use statement lambda
+  @Test
+  public void strSum() {
+    final GenericProduct<String> prod = (a, i) -> IntStream.range(0, i).mapToObj(num ->"a")
+        .collect(Collectors.joining()); // TODO: use convertion to str
 
-        assertEquals(prod.prod(3, 2), Integer.valueOf(6));
-    }
-
-    @Test
-    public void generic2() {
-        final GenericProduct<Integer> prod = null; // TODO: Use expression lambda
-
-        assertEquals(prod.prod(3, 2), Integer.valueOf(6));
-    }
-
-    private static String stringProd(String s, int i) {
-        final StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < i; j++) {
-            sb.append(s);
-        }
-        return sb.toString();
-    }
-
-    @Test
-    public void strSum() {
-        final GenericProduct<String> prod = null; // TODO: use convertion to str
-
-        assertEquals(prod.prod("a", 2), "aa");
-    }
+    assertEquals(prod.prod("a", 2), "aa");
+  }
 }

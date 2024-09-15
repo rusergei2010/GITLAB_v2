@@ -49,6 +49,7 @@ public class E_Stream_ParallelStream {
             parallel.add(x); // non thread safe
         });
         assertNotEquals(parallel.size(), list.size()); // unpredictable
+      //Funny. Its failed the first time and never after
     }
 
 

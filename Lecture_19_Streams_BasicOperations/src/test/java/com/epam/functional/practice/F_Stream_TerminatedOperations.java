@@ -85,35 +85,7 @@ public class F_Stream_TerminatedOperations {
                     return s.length() > 1; // length > 1
                 })
                 .map(String::toUpperCase) // to upper case
-                .collect(
-                        new Collector<CharSequence, StringBuilder, String>() { // see Collectors.joining() and simply copy here
-
-                            @Override public Supplier<StringBuilder> supplier() {
-                                return StringBuilder::new;
-                            }
-
-                            @Override public BiConsumer<StringBuilder, CharSequence> accumulator() {
-                                return StringBuilder::append;
-                            }
-
-                            @Override public BinaryOperator<StringBuilder> combiner() {
-                                return (StringBuilder r1, StringBuilder r2) -> {
-                                    r1.append(r2);
-                                    return r1;
-                                };
-                            }
-
-                            @Override public Function<StringBuilder, String> finisher() {
-                                return StringBuilder::toString;
-                            }
-
-                            @Override public Set<Characteristics> characteristics() {
-                                return new HashSet() {{
-                                    add(Characteristics.UNORDERED);
-                                }};
-                            }
-                        }
-                );
+                .collect(Collectors.joining());
 
         System.out.println(result);
     }
@@ -167,8 +139,8 @@ public class F_Stream_TerminatedOperations {
         Map<Integer, List<String>> map = Stream.of("9", "a", "b", "ab", "8", "abc", "ggg", "mmm", "kk").collect(
                 Collectors.groupingBy(
                         String::length)); // function classifier - String:length. It can be boolean or another.
-        //        Map<Boolean, List<String>> map = Stream.of("9", "a", "b", "ab", "8", "abc", "ggg", "mmm", "kk").collect(
-        //                Collectors.groupingBy(s -> s.length() > 2)); // function classifier - String:length. It can be boolean or another.
+        Map<Boolean, List<String>> map2 = Stream.of("9", "a", "b", "ab", "8", "abc", "ggg", "mmm", "kk").collect(
+                Collectors.groupingBy(s -> s.length() > 2)); // function classifier - String:length. It can be boolean or another.
 
         // forEach is the same as peek but terminal operation
         map.entrySet().stream()
@@ -177,6 +149,7 @@ public class F_Stream_TerminatedOperations {
                     System.out.println(entry.getKey() + " -> ");
                     entry.getValue().stream().map(s -> " " + s).forEach(System.out::print);
                 });
+      System.out.println("\n" + map2);
     }
 
     /**
@@ -193,7 +166,7 @@ public class F_Stream_TerminatedOperations {
                 .forEach(entry -> {
                     System.out.println();
                     System.out.println(entry.getKey() + " -> ");
-                    entry.getValue().stream().map(s -> s).forEach(System.out::println);
+                    entry.getValue().stream().map(s -> s + s).forEach(System.out::println);
                 });
     }
 
@@ -220,8 +193,8 @@ public class F_Stream_TerminatedOperations {
                     entry.getValue().stream().map(s -> " " + s).forEach(System.out::print);
                 });
 
-        System.out.println("");
-        System.out.println("");
+        System.out.println();
+        System.out.println();
         System.out.println("---PARTITION_BY---");
         map2.entrySet().stream()
                 .forEach(entry -> {

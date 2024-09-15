@@ -10,7 +10,7 @@ public class TestThreadStop {
 
         // TODO: think of volatile, interrupt() or Atomic
         public static boolean running = true;
-        public static String str = "";
+        public volatile static String str = "";
 
         @Override
         public void run() {
@@ -37,8 +37,9 @@ public class TestThreadStop {
         assertEquals(thread.getState(), Thread.State.RUNNABLE);
 
         //TODO: Employ TestThreadStop.Manageable.running = false inside of loop and stop thread when "aaa" is built
-        //for (int i = 0; i < 100; i ++) {
-        //}
+        while (!Manageable.str.equals("aaa")) {
+        }
+
 
         System.out.println("Received : " + Manageable.str);
         assertEquals("aaa", Manageable.str);

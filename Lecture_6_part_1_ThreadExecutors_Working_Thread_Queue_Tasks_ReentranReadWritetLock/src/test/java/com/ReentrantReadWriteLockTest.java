@@ -33,7 +33,7 @@ public class ReentrantReadWriteLockTest {
                 }
             } finally {
                 if (locked) {
-//                    readLock.unlock();
+                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }
@@ -70,9 +70,6 @@ public class ReentrantReadWriteLockTest {
                     System.out.println("Write is locked");
                     Util.threadSleep(1000);
                     this.name = name;
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             } finally {
                 if (locked) {
                     writeLock.unlock();

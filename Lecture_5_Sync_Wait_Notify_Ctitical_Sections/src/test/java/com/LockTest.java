@@ -10,14 +10,14 @@ import static org.junit.Assert.assertEquals;
 public class LockTest {
 
     private static int counter = 0;
+    private static final Object object = new Object();
+
 
     public static void change() {
-        synchronized (LockTest.class) {
+        synchronized (object) {
             counter++;
         }
     }
-
-    private static final Object object = new Object();
 
     public static void changeX() {
         synchronized (object) {

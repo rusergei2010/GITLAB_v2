@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class ConcurrentOperatorsTest {
 
-    private static Map<Integer, String> map = new HashMap();
+    private static Map<Integer, String> map = new ConcurrentHashMap<>();
     private static Map<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
     private static Map<Integer, String> syncMap = Collections.synchronizedMap(map);
 
@@ -44,7 +44,7 @@ public class ConcurrentOperatorsTest {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key); // use putIfAbsent for performance enhancement
+                        map.putIfAbsent(key, "A" + key); // use putIfAbsent for performance enhancement
                         String returnValue = map.get(key);
                         if (!value.equals(returnValue)){
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
@@ -58,7 +58,7 @@ public class ConcurrentOperatorsTest {
                     (i) -> {
                         Integer key = ThreadLocalRandom.current().nextInt(1000);
                         String value = "A" + key;
-                        map.put(key, "A" + key);
+                        map.putIfAbsent(key, "A" + key);
                         String returnValue = map.get(key);
                         if (!value.equals(returnValue)){
                             ref.compareAndSet(null, "Non Thread Safe Map presents");

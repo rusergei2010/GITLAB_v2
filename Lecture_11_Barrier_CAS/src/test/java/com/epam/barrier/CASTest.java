@@ -21,8 +21,7 @@ public class CASTest {
             long newValue = addValue + initValue;
             while (!counter.compareAndSet(initValue, newValue)) {
                 initValue = counter.get();
-                // TODO: fix it to comply with CAS approach
-//                newValue = <...> + <...>;
+                newValue = addValue + initValue;
             }
         }
 

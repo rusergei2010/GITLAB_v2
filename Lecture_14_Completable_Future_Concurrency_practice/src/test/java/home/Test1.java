@@ -1,5 +1,6 @@
 package home;
 
+import java.lang.Thread.State;
 import org.junit.Test;
 
 import java.util.concurrent.CancellationException;
@@ -10,9 +11,6 @@ import java.util.concurrent.FutureTask;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * TODO: Fix every test
- */
 public class Test1 {
 
 
@@ -44,8 +42,8 @@ public class Test1 {
 
         new Thread(() -> {
             sleep(1000);
-            completableFuture.complete("XXXX"); // TODO: Fix it in the string
-        }).start();
+            completableFuture.complete("Result");
+    }).start();
 
         assertEquals("Result", completableFuture.get());
     }
@@ -62,9 +60,12 @@ public class Test1 {
                 System.out.println("Exception: " + th.getMessage());
             }
         }).start();
+
         sleep(100);
-        // TODO: Complete Exceptionally with RuntimeException
-        // TODO: Code the exception in this line
+
+        if (Thread.currentThread().getState().equals(State.RUNNABLE)) {
+            throw new RuntimeException();
+        }
         try {
             System.err.println("Print: " + completableFuture.get());
         } catch (Throwable ex) {

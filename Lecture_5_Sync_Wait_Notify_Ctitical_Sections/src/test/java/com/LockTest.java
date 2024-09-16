@@ -8,16 +8,17 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 
 public class LockTest {
+    private static final Object object = new Object();
 
     private static int counter = 0;
 
     public static void change() {
-        synchronized (LockTest.class) {
+        synchronized (object) {
             counter++;
         }
     }
 
-    private static final Object object = new Object();
+
 
     public static void changeX() {
         synchronized (object) {

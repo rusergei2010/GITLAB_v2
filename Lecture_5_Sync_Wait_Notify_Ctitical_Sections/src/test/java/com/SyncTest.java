@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import static org.junit.Assert.assertEquals;
 
 // Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
@@ -12,22 +13,22 @@ import static org.junit.Assert.assertEquals;
 // Extrinsic lock is associated with a particular dynamic object (not the Class instance)
 public class SyncTest {
 
-    private static int counter = 0;
+    private static volatile int counter = 0;
 
     Lock lock = new ReentrantLock();
 
     public void change() {
-
-        lock.lock();
-        try {
+        if (lock.tryLock()) {
             try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
+            } finally {
+                lock.unlock();
             }
-            counter++;
-        } finally {
-            lock.unlock();
         }
     }
 

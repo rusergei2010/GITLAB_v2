@@ -1,29 +1,21 @@
 package com.home;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * TODO: fit it
  */
 public class ConcurrentOperatorsTest {
 
-    private static Map<Integer, String> map = new HashMap();
+    private static Map<Integer, String> map = new ConcurrentHashMap();
     private static Map<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
     private static Map<Integer, String> syncMap = Collections.synchronizedMap(map);
 
@@ -46,7 +38,7 @@ public class ConcurrentOperatorsTest {
                         String value = "A" + key;
                         map.put(key, "A" + key); // use putIfAbsent for performance enhancement
                         String returnValue = map.get(key);
-                        if (!value.equals(returnValue)){
+                        if (!value.equals(returnValue)) {
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
                         }
                     }
@@ -60,7 +52,7 @@ public class ConcurrentOperatorsTest {
                         String value = "A" + key;
                         map.put(key, "A" + key);
                         String returnValue = map.get(key);
-                        if (!value.equals(returnValue)){
+                        if (!value.equals(returnValue)) {
                             ref.compareAndSet(null, "Non Thread Safe Map presents");
                         }
                     }
@@ -81,6 +73,7 @@ public class ConcurrentOperatorsTest {
 
     /**
      * TODO: Fix the test with Concurrent Map
+     *
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -97,15 +90,16 @@ public class ConcurrentOperatorsTest {
             return null;
         });
 
-        // iteration over the Map
         CompletableFuture<Void> futureB = CompletableFuture.supplyAsync(read(map));
         CompletableFuture.allOf(futureA, futureB).get(); // blocking operator - wait till two completablefuture are finished and return result
 
         map.clear();
         concurrentHashMap.clear();
     }
+
     /**
      * TODO: Fix the test using Collections.synchronizedMap(map) - wrapper
+     *
      * @throws ExecutionException
      * @throws InterruptedException
      */

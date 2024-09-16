@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 // TODO: Fix in one line
 public class ReentrantReadWriteLockTest {
 
-
     private static class Cache {
         Optional<String> name = Optional.empty();
         ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
@@ -33,7 +32,7 @@ public class ReentrantReadWriteLockTest {
                 }
             } finally {
                 if (locked) {
-//                    readLock.unlock();
+                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }

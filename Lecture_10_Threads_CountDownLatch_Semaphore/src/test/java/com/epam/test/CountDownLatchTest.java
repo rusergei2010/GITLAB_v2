@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class CountDownLatchTest {
 
-    public static class Task implements Runnable{
+    public static class Task implements Runnable {
         private final CountDownLatch latchStop;
         private final CountDownLatch latchStart;
 
@@ -52,8 +52,9 @@ public class CountDownLatchTest {
 
         ExecutorService service = Executors.newFixedThreadPool(3);
 
-        IntStream.range(0,3).forEach((x) -> {
+        IntStream.range(0, 3).forEach((x) -> {
             service.submit(new Task(latchStop, latchStart));
+            latchStop.countDown();
         });
         Thread.sleep(100);
 
@@ -69,7 +70,7 @@ public class CountDownLatchTest {
 
     private static void shutdown(ExecutorService service) throws InterruptedException {
         service.shutdown();
-        if(service.awaitTermination(5000,TimeUnit.MILLISECONDS)) {
+        if (service.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
             service.shutdownNow();
         }
     }

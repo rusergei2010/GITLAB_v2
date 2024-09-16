@@ -30,7 +30,7 @@ public class SemaphoreTest {
                 permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
+                    Util.threadSleep(0); // Anchor 2
 
                     connections++;
                 } else {
@@ -44,11 +44,11 @@ public class SemaphoreTest {
             }
         }
     }
+
     @Test
     public void testSemaphore() throws InterruptedException {
 
         ExecutorService service = Executors.newFixedThreadPool(10);
-
         Semaphore semaphore = new Semaphore(5);
         SemaphoreTest.Resource resource = new SemaphoreTest.Resource(semaphore);
 
@@ -58,10 +58,8 @@ public class SemaphoreTest {
                     });
                 }
         );
-
         Thread.sleep(4000);
         assertEquals(10, resource.connections);
-
         putDown(service, 4);
     }
 

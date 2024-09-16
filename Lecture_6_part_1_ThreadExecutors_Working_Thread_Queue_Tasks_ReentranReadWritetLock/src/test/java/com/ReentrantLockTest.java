@@ -1,7 +1,7 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+import prepare.util.Utils;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,12 +12,14 @@ public class ReentrantLockTest {
 
     public static class Counter implements Runnable {
         ReentrantLock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
         private int count = 0;
 
         @Override
         public void run() {
-            lock.lock();
-            Util.sleep(100);
+//            lock.lock();
+
+            Utils.sleep(100);
             count++;
             validate();
         }

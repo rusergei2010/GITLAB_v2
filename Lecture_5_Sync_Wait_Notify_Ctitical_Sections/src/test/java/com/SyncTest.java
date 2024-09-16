@@ -3,8 +3,10 @@ package com;
 import com.mycompany.prepare.utils.Utils;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import static org.junit.Assert.assertEquals;
 
 // Mutex, ctitical section in the static method, acquire lock in the same thread (Mutex knows who locked it)
@@ -18,14 +20,15 @@ public class SyncTest {
 
     public void change() {
 
-        lock.lock();
         try {
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e){
-                e.printStackTrace();
+            if (lock.tryLock()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                counter++;
             }
-            counter++;
         } finally {
             lock.unlock();
         }

@@ -18,6 +18,7 @@ public class CountDownLatchTwoThreads {
 
         new Thread(() -> {
             atomic.getAndIncrement();
+            latchOne.countDown();
             // TODO: fix by using .countDown() for the first Latcher to hit the second Thread
         }).start();
 

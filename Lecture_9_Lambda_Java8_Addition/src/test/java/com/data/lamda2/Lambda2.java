@@ -76,12 +76,17 @@ public class Lambda2 {
         // ###############################
         // Filter all MALES
 
-        for (Person p : list) { // replace with com.data.lambda and stream().forEach()
+        list.forEach((person)->{
+            if (person.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
+                males.add(person);
+            }
+        });
+        /*for (Person p : list) { // replace with com.data.lambda and stream().forEach()
             // TODO: make Java 8 filter
             if (p.gender == Person.Gender.MALE) { // replace with '::' access method from the Person instance
                 males.add(p);
             }
-        }
+        }*/
         assertArrayEquals(males.toArray(), Arrays.asList(person1, person2).toArray());
 
         // ###############################

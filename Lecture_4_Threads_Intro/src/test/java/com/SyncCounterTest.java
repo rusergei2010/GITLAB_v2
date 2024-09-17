@@ -2,6 +2,8 @@ package com;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
@@ -9,9 +11,9 @@ import static prepare.util.Util.threadSleep;
  * Cover Thread-Sage approach
  * Race Condition - when two threads access the shared object in the memory at the same time competing for changing/reading it
  * IMPORTANT!!!
- *  <p><b>
- *     synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
- *  </b></p>
+ * <p><b>
+ * synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
+ * </b></p>
  */
 public class SyncCounterTest {
 
@@ -45,17 +47,21 @@ public class SyncCounterTest {
 
     public static class Counter {
 
-        private Integer counter;
+        private volatile Integer counter;
 
         public Counter(Integer counter) {
             this.counter = counter;
         }
 
+        //one of the way to solve it is using AtomicInteger
+        //another way is synchronize + volatile
         public void inc() {
-            counter++;
+            synchronized (this) {
+                counter++;
+            }
         }
 
-        public Integer getCounter(){
+        public Integer getCounter() {
             return counter;
         }
     }
@@ -76,8 +82,8 @@ public class SyncCounterTest {
 
         thread1.start();
         thread2.start();
-
-//        thread2.join(); // TODO?
+        thread1.join();
+        thread2.join(); // TODO?
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

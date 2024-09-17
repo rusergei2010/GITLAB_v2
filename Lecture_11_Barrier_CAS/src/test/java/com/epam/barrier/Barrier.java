@@ -27,7 +27,10 @@ public class Barrier {
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
-
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
         Assert.assertEquals(9, counter.counter.get());
     }
 

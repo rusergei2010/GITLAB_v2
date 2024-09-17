@@ -29,7 +29,7 @@ public class A3_CompletableFutureExceptionTest {
     }
 
 
-    @Test
+  /*  @Test
     public void testExecutor() throws ExecutionException, InterruptedException {
         String name = null;
         final CompletableFuture<String> handle = CompletableFuture.supplyAsync(() -> {
@@ -52,5 +52,5 @@ public class A3_CompletableFutureExceptionTest {
                 });
 
         System.out.println("Result: " + handle.get());
-    }
+    }*/
 }

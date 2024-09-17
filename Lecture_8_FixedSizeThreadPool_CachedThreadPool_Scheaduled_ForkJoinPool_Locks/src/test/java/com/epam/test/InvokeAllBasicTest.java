@@ -46,7 +46,7 @@ public class InvokeAllBasicTest {
 
         @Override public void run() {
             try {
-                Thread.sleep(1000); // Let it ibe delayed (REST call as an example then)
+                Thread.sleep(100); // Let it ibe delayed (REST call as an example then)
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -82,8 +82,13 @@ public class InvokeAllBasicTest {
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
-        putDown(service, 2);
+        assertEquals(10100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+
+      /**
+       * Because get(). Waits if necessary for the computation to complete, and then retrieves its result.
+       */
+
+      putDown(service, 2);
     }
 
     /**

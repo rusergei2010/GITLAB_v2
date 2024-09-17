@@ -22,8 +22,10 @@ public class Barrier {
             System.out.println("Barrier has been executed");
         });
 
+      for (int i = 0; i < 3; i++) {
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        cyclicBarrier.reset();
+      }
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
@@ -55,6 +57,7 @@ public class Barrier {
                 counter.inc();
                 cyclicBarrier.await();
                 System.out.println("Task is completed");
+                //cyclicBarrier.reset();
             } catch (InterruptedException | BrokenBarrierException e) {
                 e.printStackTrace();
             }

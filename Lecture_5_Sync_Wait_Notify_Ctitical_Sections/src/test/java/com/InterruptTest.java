@@ -12,13 +12,14 @@ import static org.junit.Assert.assertEquals;
 
 // TODO: fix the test using only volatile
 public class InterruptTest {
-    static boolean flag = true;
+    static volatile  boolean flag = true;
 
     private boolean exec() {
         while (flag) {
             int counter = 0;
             counter++;
         }
+
         return true;
     }
 

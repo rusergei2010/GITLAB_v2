@@ -6,35 +6,36 @@ import prepare.util.Util;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: Fix the test case
- * Read the code and corect it a better way
+ * TODO: Fix the test case Read the code and corect it a better way
  */
 public class InterruptTest {
 
-    static class MyThread extends Thread {
-        @Override
-        public void run() {
-            System.out.println("MyThread: " + Thread.currentThread().getName() + " started");
+  static class MyThread extends Thread {
 
-            while(isInterrupted())
-                Util.threadSleep(100);
+    @Override
+    public void run() {
+      System.out.println("MyThread: " + Thread.currentThread().getName() + " started");
 
-            System.out.println("MyThread: " + Thread.currentThread().getName() + " completed");
-        }
+      while (isInterrupted()) {
+        Util.threadSleep(100);
+      }
+
+      System.out.println("MyThread: " + Thread.currentThread().getName() + " completed");
     }
+  }
 
 
-    @Test
-    public void testInterrupt() throws InterruptedException {
-        final Thread thread = new MyThread();
-        thread.run();
-        thread.interrupt();
+  @Test
+  public void testInterrupt() throws InterruptedException {
+    final Thread thread = new MyThread();
+    //thread.run();
+    thread.start();
+    thread.join(1000);
+    thread.interrupt();
 
-        thread.join(1000);
-
-        assertEquals(thread.getState(), Thread.State.TERMINATED);
-        // outdated version
+    assertEquals(thread.getState(), Thread.State.TERMINATED);
+    // outdated version
 //        thread.suspend();
 //        thread.resume();
-    }
+  }
 }

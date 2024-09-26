@@ -2,6 +2,12 @@ package com.epam.test;// Benchmark Шипилев: @link{https://www.youtube.com
 
 
 import com.epam.test.util.Util;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -27,11 +33,10 @@ public class SemaphoreTest {
         public void connect(String uri) {
             boolean permit = false;
             try {
-                permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
+                permit = semaphore.tryAcquire(1000, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
-
+                    //Util.threadSleep(50); // Anchor 2
                     connections++;
                 } else {
                     System.out.println("Connection rejected");

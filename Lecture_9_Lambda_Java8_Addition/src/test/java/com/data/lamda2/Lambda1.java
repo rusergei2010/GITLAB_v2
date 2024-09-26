@@ -24,7 +24,7 @@ public class Lambda1 {
         list.add("Work");
         list.add("speed");
         List<String> result =  list.stream()
-                .map(str -> str) // TODO: replace with other com.data.lambda '::' expression
+                .map(String::toUpperCase) // TODO: replace with other com.data.lambda '::' expression
                 .collect(Collectors.toList());
 
 
@@ -43,7 +43,8 @@ public class Lambda1 {
         list.add("speed man man");
 
         long sum1 = list.stream().mapToInt(str->{
-            return 1; // TODO: replace '1' with com.data.lambda expression
+            String[] s = str.split(" ");
+            return s.length; // TODO: replace '1' with com.data.lambda expression
         }).sum();
 
         Long sum = sum1;

@@ -1,6 +1,7 @@
 package com;
 
 import org.junit.Test;
+import org.junit.experimental.theories.Theories;
 
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
@@ -36,7 +37,6 @@ public class SyncCounterTest {
 
                 counter.inc();
                 System.out.println(name + "; counter = " + counter.getCounter());
-
                 threadSleep(5);
             }
         }
@@ -45,7 +45,7 @@ public class SyncCounterTest {
 
     public static class Counter {
 
-        private Integer counter;
+        private volatile Integer counter;
 
         public Counter(Integer counter) {
             this.counter = counter;
@@ -75,9 +75,9 @@ public class SyncCounterTest {
         Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
 
         thread1.start();
+        thread1.join();
         thread2.start();
-
-//        thread2.join(); // TODO?
+        thread2.join();// TODO?
 
         assertEquals(2 * total, counter.getCounter().longValue());
     }

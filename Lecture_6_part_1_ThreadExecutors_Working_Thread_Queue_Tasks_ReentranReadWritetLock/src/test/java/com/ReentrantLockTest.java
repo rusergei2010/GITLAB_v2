@@ -1,9 +1,8 @@
 package com;
 
+import com.util.Util;
 import org.junit.Test;
-import prepare.util.Util;
 
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
@@ -17,15 +16,13 @@ public class ReentrantLockTest {
         @Override
         public void run() {
             lock.lock();
-            Util.sleep(100);
-            count++;
-            validate();
-        }
-
-        private void validate() {
-            if (count == 2) {
-                throw new RuntimeException();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            count++;
+            lock.unlock();
         }
     }
 
@@ -43,11 +40,10 @@ public class ReentrantLockTest {
         thread1.start();
         thread2.start();
         thread3.start();
-//
-//        thread1.join();
-//        thread2.join();
-//        thread3.join();
-//
+
+        thread2.join();
+        thread3.join();
+
         Thread.sleep(1000);
 
         assertEquals(3, count.count);

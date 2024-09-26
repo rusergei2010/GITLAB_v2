@@ -1,9 +1,8 @@
 package prepare;
 
+import java.lang.management.ManagementFactory;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
-
-import java.lang.management.ManagementFactory;
 
 /**
  * Problem: "How to signal server app without REST api"

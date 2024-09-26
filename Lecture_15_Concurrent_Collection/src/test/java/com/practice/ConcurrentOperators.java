@@ -1,11 +1,7 @@
 package com.practice;
 
-import org.junit.Ignore;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -16,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Demonstrates all essential mechanisms of work of collections (immutable, concurernt)

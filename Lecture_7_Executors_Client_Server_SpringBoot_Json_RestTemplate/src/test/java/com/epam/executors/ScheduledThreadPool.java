@@ -1,16 +1,14 @@
 package com.epam.executors;
 
-import com.epam.threads.util.Util;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import java.util.concurrent.Callable;
+import com.epam.threads.util.Util;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 // TODO: Fix the Future (cancellation)
 public class ScheduledThreadPool {
@@ -21,6 +19,7 @@ public class ScheduledThreadPool {
 
         ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
+        result.cancel(false);
         Thread.sleep(100);
 
         assertEquals(true, result.isCancelled());
@@ -34,10 +33,10 @@ public class ScheduledThreadPool {
         ScheduledFuture<String> result = executor.schedule(ScheduledThreadPool::healthCheck, 500, TimeUnit.MILLISECONDS);
 
         Thread.sleep(100);
-        result.cancel(false);
 
-        assertEquals("Result", result.get());
-        executor.shutdown();
+      assertEquals("Result", result.get());
+      result.cancel(false);
+      executor.shutdown();
     }
 
     private static String healthCheck() {

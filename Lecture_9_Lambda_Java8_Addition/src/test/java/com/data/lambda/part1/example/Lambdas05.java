@@ -1,11 +1,10 @@
 package com.data.lambda.part1.example;
 
 import com.data.Person;
-import org.junit.Test;
-
 import java.io.Serializable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import org.junit.Test;
 
 public class Lambdas05 {
     private <T> void printResult(T t, Function<T, String> f) {

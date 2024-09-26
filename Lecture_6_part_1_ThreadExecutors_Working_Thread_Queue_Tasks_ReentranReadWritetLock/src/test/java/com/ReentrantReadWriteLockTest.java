@@ -1,16 +1,14 @@
 package com;
 
+import static org.junit.Assert.assertEquals;
+
 import com.util.Util;
-
-import org.junit.Test;
-
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 // TODO: Fix in one line
 public class ReentrantReadWriteLockTest {
@@ -33,7 +31,7 @@ public class ReentrantReadWriteLockTest {
                 }
             } finally {
                 if (locked) {
-//                    readLock.unlock();
+                    readLock.unlock();
                     System.out.println("Read is unlocked");
                 }
             }

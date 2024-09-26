@@ -1,13 +1,12 @@
 package com.data.lambda.part2.example;
 
-import com.data.Person;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
+import com.data.Person;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class ArrowNotation {
 

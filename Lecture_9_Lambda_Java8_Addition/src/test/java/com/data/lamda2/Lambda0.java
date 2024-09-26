@@ -1,9 +1,8 @@
 package com.data.lamda2;
 
-import org.junit.Test;
-
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+import org.junit.Test;
 
 public class Lambda0 {
 

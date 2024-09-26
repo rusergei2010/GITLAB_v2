@@ -1,17 +1,16 @@
 package com;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class SingletonVolatileTest {
 
     private static class SingletonVolatile {
         private AtomicInteger counter = new AtomicInteger();
-        private static /*TODO: fix here*/ SingletonVolatile instance = null;
+        private static /*TODO: fix here*/ volatile SingletonVolatile instance = null;
 
         private SingletonVolatile() {
         }
@@ -20,7 +19,7 @@ public class SingletonVolatileTest {
             counter.incrementAndGet();
         }
 
-        public static SingletonVolatile getInstance() {
+        public static synchronized SingletonVolatile getInstance() {
             //TODO: Fix it here
             if (instance == null) {
                 try {
@@ -49,15 +48,11 @@ public class SingletonVolatileTest {
             SingletonVolatile.getInstance().setCounter(0);
 
             new Thread(() -> {
-                IntStream.range(0, 1000).forEach((x) -> {
-                    SingletonVolatile.getInstance().inc();
-                });
+                IntStream.range(0, 1000).forEach((x) -> SingletonVolatile.getInstance().inc());
             }).start();
 
             new Thread(() -> {
-                IntStream.range(0, 1000).forEach((x) -> {
-                    SingletonVolatile.getInstance().inc();
-                });
+                IntStream.range(0, 1000).forEach((x) -> SingletonVolatile.getInstance().inc());
             }).start();
 
             Thread.sleep(500);

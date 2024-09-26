@@ -1,6 +1,6 @@
 package com.epam.test;// Benchmark Шипилев: @link{https://www.youtube.com/watch?v=8pMfUopQ9Es}
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,8 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * TODO: Fix tests
@@ -46,7 +45,7 @@ public class InvokeAllBasicTest {
 
         @Override public void run() {
             try {
-                Thread.sleep(1000); // Let it ibe delayed (REST call as an example then)
+                Thread.sleep(100); // Let it ibe delayed (REST call as an example then)
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -82,7 +81,12 @@ public class InvokeAllBasicTest {
 
 
         // TODO: fix just value. Investigate the stream mapping/filter  above
-        assertEquals(1 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+        assertEquals(10100 /*What is expected value, and why?*/, sum); // Future will not return value (future.get()) until it is calculated
+
+      /**
+       * Because get(). Waits if necessary for the computation to complete, and then retrieves its result.
+       */
+
         putDown(service, 2);
     }
 

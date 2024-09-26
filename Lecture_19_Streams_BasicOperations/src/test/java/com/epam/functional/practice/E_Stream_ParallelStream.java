@@ -1,14 +1,12 @@
 package com.epam.functional.practice;
 
+import static org.junit.Assert.assertNotEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.junit.Ignore;
 import org.junit.Test;
-
-
-import static org.junit.Assert.assertNotEquals;
 
 @Ignore
 public class E_Stream_ParallelStream {

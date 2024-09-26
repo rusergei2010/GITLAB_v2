@@ -1,16 +1,14 @@
 package com.epam.test;// Benchmark Шипилев: @link{https://www.youtube.com/watch?v=8pMfUopQ9Es}
 
 
-import com.epam.test.util.Util;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 // TODO: Fix one of the timeouts in Anchor 1 or Anchor 2
 public class SemaphoreTest {
@@ -27,11 +25,10 @@ public class SemaphoreTest {
         public void connect(String uri) {
             boolean permit = false;
             try {
-                permit = semaphore.tryAcquire(100, TimeUnit.MILLISECONDS); // Anchor 1
+                permit = semaphore.tryAcquire(1000, TimeUnit.MILLISECONDS); // Anchor 1
                 if (permit) {
                     System.out.println("Connection established to " + uri);
-                    Util.threadSleep(400); // Anchor 2
-
+                    //Util.threadSleep(50); // Anchor 2
                     connections++;
                 } else {
                     System.out.println("Connection rejected");

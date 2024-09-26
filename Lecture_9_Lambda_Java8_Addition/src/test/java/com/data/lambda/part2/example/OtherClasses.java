@@ -1,13 +1,32 @@
 package com.data.lambda.part2.example;
 
-import com.data.Person;
-import org.junit.Test;
-
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.*;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
+import com.data.Person;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BinaryOperator;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.DoubleSupplier;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntSupplier;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongSupplier;
+import java.util.function.ObjIntConsumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.function.ToIntBiFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.UnaryOperator;
+import org.junit.Test;
 
 public class OtherClasses {
 
@@ -158,7 +177,7 @@ public class OtherClasses {
 
     public void currying() {
         // (String, String, int) -> Person
-        final PersonFactory factory = (n, ln, a) -> new Person(n, ln, a);
+        final PersonFactory factory = Person::new;
 
 
         final BiFunction<String, Integer, Person> doe =
@@ -182,14 +201,4 @@ public class OtherClasses {
         assertEquals(new Person("John", "Doe", 22), johnDoeWithoutAge.apply(22));
         assertEquals(new Person("John", "Doe", 33), johnDoeWithoutAge.apply(33));
     }
-
-
-
-
-
-
-
-
-
-
 }

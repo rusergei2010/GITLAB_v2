@@ -1,7 +1,7 @@
 package prepare;
 
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Add VM params to th launch params:

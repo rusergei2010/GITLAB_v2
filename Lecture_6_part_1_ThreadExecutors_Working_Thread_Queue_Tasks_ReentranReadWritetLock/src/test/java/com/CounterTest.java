@@ -1,15 +1,14 @@
 package com;
 
-import org.junit.Test;
-import prepare.util.Util;
+import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import prepare.util.Utils;
 
 public class CounterTest {
     static class Counter {
@@ -19,9 +18,9 @@ public class CounterTest {
         Lock lock = new ReentrantLock();
 
         public void inc() throws InterruptedException {
-            if(lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+            if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 try {
-                    Util.sleep(200);
+                    Utils.sleep(200);
                     counter++;
                 } finally {
                     lock.unlock();

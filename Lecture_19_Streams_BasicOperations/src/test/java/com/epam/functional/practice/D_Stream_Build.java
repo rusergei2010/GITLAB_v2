@@ -1,5 +1,10 @@
 package com.epam.functional.practice;
 
+import static com.epam.functional.model.Gear.MANUAL;
+
+import com.epam.functional.model.Car;
+import com.epam.functional.model.Gear;
+import com.epam.functional.model.Vehicle;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,16 +18,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import com.epam.functional.model.Car;
-import com.epam.functional.model.Gear;
-import com.epam.functional.model.Vehicle;
-
-import static com.epam.functional.model.Gear.MANUAL;
 
 @Ignore
 public class D_Stream_Build {

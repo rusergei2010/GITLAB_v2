@@ -1,7 +1,7 @@
 package com;
 
 import org.junit.Test;
-import prepare.util.Util;
+import prepare.util.Utils;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,9 +16,9 @@ public class ReentrantLockTest {
 
         @Override
         public void run() {
-            lock.lock();
-            Util.sleep(100);
+            //lock.lock();
             count++;
+            Utils.sleep(100);
             validate();
         }
 

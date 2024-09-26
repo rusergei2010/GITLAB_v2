@@ -23,7 +23,11 @@ public class Barrier {
         });
 
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
@@ -32,11 +36,14 @@ public class Barrier {
     }
 
     static class Counter {
+
         public AtomicInteger counter = new AtomicInteger(0);
+
         public void inc() {
             counter.getAndIncrement();
         }
     }
+
     static class Task implements Runnable {
 
         private final CyclicBarrier cyclicBarrier;
@@ -47,7 +54,8 @@ public class Barrier {
             this.counter = counter;
         }
 
-        @Override public void run() {
+        @Override
+        public void run() {
             try {
                 System.out.println("Task has started");
                 System.out.println("Task is being executed.");

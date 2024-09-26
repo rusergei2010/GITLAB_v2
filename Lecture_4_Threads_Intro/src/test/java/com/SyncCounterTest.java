@@ -3,7 +3,6 @@ package com;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static prepare.util.Util.threadSleep;
 
 /**
  * Cover Thread-Sage approach
@@ -37,11 +36,14 @@ public class SyncCounterTest {
                 counter.inc();
                 System.out.println(name + "; counter = " + counter.getCounter());
 
-                threadSleep(5);
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
-
 
     public static class Counter {
 
@@ -51,7 +53,7 @@ public class SyncCounterTest {
             this.counter = counter;
         }
 
-        public void inc() {
+        public synchronized void inc() {
             counter++;
         }
 
@@ -59,7 +61,6 @@ public class SyncCounterTest {
             return counter;
         }
     }
-
 
     /**
      * TODO: Fix the test and the code to make it Thread-Safe
@@ -76,6 +77,8 @@ public class SyncCounterTest {
 
         thread1.start();
         thread2.start();
+        thread1.join();
+        thread2.join();
 
 //        thread2.join(); // TODO?
 

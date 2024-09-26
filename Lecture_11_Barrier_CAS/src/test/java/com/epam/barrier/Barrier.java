@@ -23,7 +23,11 @@ public class Barrier {
         });
 
         calculate(counter, cyclicBarrier);
-        // cyclicBarrier.reset();
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
+        calculate(counter, cyclicBarrier);
+        cyclicBarrier.reset();
 
         // TODO: clone the 'calculate' operation to reuse it three (3) time. Do not forget
         // TODO: cyclicBarrier.reset(); after every operation being completed
@@ -37,6 +41,7 @@ public class Barrier {
             counter.getAndIncrement();
         }
     }
+
     static class Task implements Runnable {
 
         private final CyclicBarrier cyclicBarrier;
@@ -47,7 +52,8 @@ public class Barrier {
             this.counter = counter;
         }
 
-        @Override public void run() {
+        @Override
+        public void run() {
             try {
                 System.out.println("Task has started");
                 System.out.println("Task is being executed.");
@@ -62,7 +68,7 @@ public class Barrier {
     }
 
     private static void calculate(final Counter counter, final CyclicBarrier cyclicBarrier)
-            throws InterruptedException {
+        throws InterruptedException {
         IntStream.range(0, 3).forEach(i -> {
             ForkJoinPool.commonPool().submit(() -> {
                 new Task(cyclicBarrier, counter).run();

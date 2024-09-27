@@ -24,12 +24,15 @@ public class AppTest {
 
         MyRunnable myRunnable = new MyRunnable();
 
-        //
         Thread thread1 = createThread(myRunnable);
         Thread thread2 = createThread(myRunnable);
         thread1.start();
         thread2.start();
-
+        //Thread.sleep(1000);
+        thread1.join();
+        //Thread.sleep(1000);
+        thread2.join();
+        //Thread.sleep(1000);
         assertEquals(2, myRunnable.counter);
     }
 

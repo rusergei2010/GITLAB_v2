@@ -2,6 +2,8 @@ package com;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.junit.Assert.assertEquals;
 import static prepare.util.Util.threadSleep;
 
@@ -9,19 +11,17 @@ import static prepare.util.Util.threadSleep;
  * Cover Thread-Sage approach
  * Race Condition - when two threads access the shared object in the memory at the same time competing for changing/reading it
  * IMPORTANT!!!
- *  <p><b>
- *     synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
- *  </b></p>
+ * <p><b>
+ * synchronized() - allows to guaranty sequence access from different threads and avoid Race Condition
+ * </b></p>
  */
 public class SyncCounterTest {
-
     public static class CounterThread implements Runnable {
-
         private final String name;
         private final Counter counter;
         private final int total;
 
-        public CounterThread(final String name, final Counter counter, int total) {
+        CounterThread(final String name, final Counter counter, int total) {
             this.name = name;
             this.counter = counter;
             this.total = total;
@@ -33,33 +33,28 @@ public class SyncCounterTest {
             int i = 0;
             while (i < total) {
                 i++;
-
                 counter.inc();
                 System.out.println(name + "; counter = " + counter.getCounter());
-
                 threadSleep(5);
             }
         }
     }
 
-
     public static class Counter {
+        private AtomicInteger counter;
 
-        private Integer counter;
-
-        public Counter(Integer counter) {
+        Counter(AtomicInteger counter) {
             this.counter = counter;
         }
 
-        public void inc() {
-            counter++;
+        void inc() {
+            counter.getAndIncrement();
         }
 
-        public Integer getCounter(){
+        AtomicInteger getCounter() {
             return counter;
         }
     }
-
 
     /**
      * TODO: Fix the test and the code to make it Thread-Safe
@@ -68,17 +63,14 @@ public class SyncCounterTest {
      */
     @Test
     public void testSync() throws InterruptedException {
-
         final int total = 200;
-        Counter counter = new Counter(0);
+        Counter counter = new Counter(new AtomicInteger(0));
         Thread thread1 = new Thread(new CounterThread("Thread - 1", counter, total));
         Thread thread2 = new Thread(new CounterThread("Thread - 2", counter, total));
-
         thread1.start();
         thread2.start();
-
-//        thread2.join(); // TODO?
-
+        thread1.join();
+        thread2.join();
         assertEquals(2 * total, counter.getCounter().longValue());
     }
 }

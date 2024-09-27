@@ -21,6 +21,7 @@ public class CASTest {
             long newValue = addValue + initValue;
             while (!counter.compareAndSet(initValue, newValue)) {
                 initValue = counter.get();
+                newValue = addValue + initValue;
                 // TODO: fix it to comply with CAS approach
 //                newValue = <...> + <...>;
             }
@@ -36,9 +37,8 @@ public class CASTest {
         Counter counter = new Counter();
         CountDownLatch latch = new CountDownLatch(100000);
 
-        IntStream.range(0, 100000).forEach((i) -> {
-            ForkJoinPool.commonPool().execute(() -> this.increment(counter, latch));
-        });
+        IntStream.range(0, 100000).forEach((i) -> ForkJoinPool.commonPool().execute(() ->
+                this.increment(counter, latch)));
 
         latch.await(); // await '0'
 

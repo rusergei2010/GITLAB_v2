@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -23,8 +24,8 @@ public class Lambda1 {
         list.add("Berlin");
         list.add("Work");
         list.add("speed");
-        List<String> result =  list.stream()
-                .map(str -> str) // TODO: replace with other com.data.lambda '::' expression
+        List<String> result = list.stream()
+                .map(String::toUpperCase)
                 .collect(Collectors.toList());
 
 
@@ -42,9 +43,10 @@ public class Lambda1 {
         list.add("Work Two Thres");
         list.add("speed man man");
 
-        long sum1 = list.stream().mapToInt(str->{
-            return 1; // TODO: replace '1' with com.data.lambda expression
-        }).sum();
+        long sum1 = list.stream()
+                .mapToInt(str-> new StringTokenizer(str)
+                        .countTokens())
+                .sum();
 
         Long sum = sum1;
         assertEquals(sum, Long.valueOf("8"));

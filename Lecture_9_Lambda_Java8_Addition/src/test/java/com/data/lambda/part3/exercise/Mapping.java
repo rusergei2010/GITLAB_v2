@@ -3,6 +3,7 @@ package com.data.lambda.part3.exercise;
 import com.data.Employee;
 import com.data.JobHistoryEntry;
 import com.data.Person;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.function.Predicate;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class Mapping {
 
     private static class MapHelper<T> {

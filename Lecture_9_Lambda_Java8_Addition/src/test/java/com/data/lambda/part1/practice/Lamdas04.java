@@ -10,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class Lamdas04 {
 
     static class Person {
+
         public String name;
         public int age;
         public GENDER gender;
@@ -41,16 +42,19 @@ public class Lamdas04 {
 
     @FunctionalInterface
     public interface PersonInterface {
+
         void accept();
     }
 
     @FunctionalInterface
     public interface PersonInterfacePredicate<Person> {
+
         boolean test(Person p);
     }
 
     @FunctionalInterface
     public interface PersonInterfaceCompare<Person> {
+
         int compare(Person p1, Person p2);
     }
 
@@ -58,14 +62,14 @@ public class Lamdas04 {
     @Test
     public void testLamda01() {
 
-
         Person anton = new Person("Anton", 22, Person.GENDER.MALE);
 
         // expression as arrow function without params
         PersonInterface peronInterface = () -> System.out.println("Person: " + anton); // Closure
 
         // expression as arrow function with param
-        PersonInterfacePredicate<Person> personInterfaceIsFemale = (Person p) -> p.gender == Person.GENDER.FEMALE;
+        PersonInterfacePredicate<Person> personInterfaceIsFemale = (Person p) -> p.gender
+                == Person.GENDER.FEMALE;
         PersonInterfacePredicate<Person> testAgeGender = this::testAgeGender;
 
         // com.data.lambda as statement
@@ -82,6 +86,7 @@ public class Lamdas04 {
                 new Person("Artem", 21, Person.GENDER.MALE),
                 new Person("Vera", 2, Person.GENDER.FEMALE))
                 .filter(((Predicate<Person>) Lamdas04::isMale).negate())
+                .filter(this::testAgeGender)
                 .mapToInt(Person::getAge)
                 .sum();
 

@@ -43,9 +43,9 @@ public class CachedThreadPoolTest {
         Future<String> result3 = service.submit(callable("Thread 3"));
 
 
-        assertEquals("Result Thread 1", result1);
-        assertEquals("Result Thread 2", result2);
-        assertEquals("Result Thread 3", result3);
+        assertEquals("Result Thread 1", result1.get());
+        assertEquals("Result Thread 2", result2.get());
+        assertEquals("Result Thread 3", result3.get());
 
         System.out.println("Exiting...");
 
